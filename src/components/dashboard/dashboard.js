@@ -68,12 +68,12 @@ export default class Dashboard extends React.Component {
 
     return (
       <div className="centered-container">
-        <h2>My Albums</h2>
+        <p>My Albums</p>
         <div>
           <a href="">Add a New Album</a>
         </div>
         <div className="search-wrapper">
-          <input type="text" className="" />
+          <input type="text" className="" placeholder="Search"/>
           <button type="submit">
             <FaSearch />
           </button>

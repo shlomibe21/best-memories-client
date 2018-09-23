@@ -1,6 +1,7 @@
 import React from "react";
 
 import "./album-tile.css";
+import Tooltip from "../tooltip";
 
 import { MdPhotoAlbum, MdModeEdit, MdDeleteForever } from "react-icons/md";
 
@@ -20,16 +21,26 @@ export default function AlbumTile(props) {
       <div className="ctrl-icons-wrapper">
         <div>
           <button>
-            <MdPhotoAlbum />
+            <Tooltip message={"Display Album"} position={"top"}>
+              <MdPhotoAlbum />
+            </Tooltip>
           </button>
           <button>
-            <MdModeEdit />
+            <Tooltip message={"Edit Album"} position={"top"}>
+              <MdModeEdit />
+            </Tooltip>
           </button>
           <button>
-            <MdDeleteForever />
+            <Tooltip message={"Delete Album"} position={"top"}>
+              <MdDeleteForever />
+            </Tooltip>
           </button>
         </div>
       </div>
     </div>
   );
 }
+
+AlbumTile.defaultProps = {
+  name: "[Album Name...] "
+};
