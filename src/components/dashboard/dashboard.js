@@ -1,5 +1,6 @@
 import React from "react";
 import AlbumTile from "./album-tile";
+import {Link} from 'react-router-dom';
 
 import "./dashboard.css";
 
@@ -70,10 +71,10 @@ export default class Dashboard extends React.Component {
       <div className="centered-container">
         <p>My Albums</p>
         <div>
-          <a href="">Add a New Album</a>
+          <Link to="/newAlbum">Add a New Album</Link>
         </div>
         <div className="search-wrapper">
-          <input type="text" className="" placeholder="Search"/>
+          <input type="text" className="" placeholder="Search" />
           <button type="submit">
             <FaSearch />
           </button>
