@@ -1,9 +1,11 @@
 import React from "react";
-import "./media-file.css";
 
 import Tooltip from "../tooltip";
 
+import { Link } from "react-router-dom";
 import { MdModeEdit, MdDeleteForever } from "react-icons/md";
+
+import "./media-file.css";
 
 export default function MediaFile(props) {
   return (
@@ -27,7 +29,9 @@ export default function MediaFile(props) {
       <div className="ctrl-icons-wrapper">
         <button>
           <Tooltip message={"Edit"} position={"top"}>
-            <MdModeEdit />
+            <Link to="/editMedia" className="link-icon">
+              <MdModeEdit />
+            </Link>
           </Tooltip>
         </button>
         <button>

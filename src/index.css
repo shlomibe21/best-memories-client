@@ -115,10 +115,10 @@ ul {
   background: #0b7dda;
 }
 
-.link {
+.link-icon {
   color: #0b7dda;
 }
 
-.link:active {
-  color: purple;
+.link-icon:active {
+  color: red;
 }

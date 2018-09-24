@@ -11,7 +11,7 @@ export default function NewAlbum(props) {
     >
       <div>
         <label for="album-name">Album Name:</label>
-        <input type="text" id="album-name" class="form-input" required/>
+        <input type="text" id="album-name" className="form-input" required/>
       </div>
       <div>
         <label for="file">Add New Media:</label>
@@ -24,7 +24,7 @@ export default function NewAlbum(props) {
         />
       </div>
       <div>
-        <button class="btn">Submit</button>
+        <button className="btn">Submit</button>
       </div>
       <div className="dragdrop-container">
         To add new media, click on the 'Choose Files' button or drag and drop
