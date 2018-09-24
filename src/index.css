@@ -52,8 +52,8 @@ ul {
 }
 
 .search-wrapper {
-    margin-top: 20px;
-    margin-bottom: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .search-wrapper input[type="text"] {
@@ -81,4 +81,12 @@ ul {
 
 .search-wrapper button:hover {
   background: #0b7dda;
+}
+
+.link {
+  color: #0b7dda;
+}
+
+.link:active {
+  color: purple;
 }

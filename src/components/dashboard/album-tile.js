@@ -1,5 +1,5 @@
 import React from "react";
-
+import {Link} from 'react-router-dom';
 import "./album-tile.css";
 import Tooltip from "../tooltip";
 
@@ -22,7 +22,7 @@ export default function AlbumTile(props) {
         <div>
           <button>
             <Tooltip message={"Display Album"} position={"top"}>
-              <MdPhotoAlbum />
+              <Link className="link" to="/album"><MdPhotoAlbum /></Link>
             </Tooltip>
           </button>
           <button>
