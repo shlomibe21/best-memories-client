@@ -19,22 +19,6 @@
   /*cursor: pointer;*/
 }
 
-.ctrl-icons-wrapper {
-  margin-top: 0px;
-  margin-bottom: 10px;
-  padding: 2px;
-  border: solid 1px lightgrey;
-  border-top: 0;
-}
-
-.ctrl-icons-wrapper button {
-  width: 40px;
-  height: 40px;
-  margin: 0px;
-  padding: 5px;
-  font-size: 23px;
-  border: none;
-  color: #0b7dda;
-  background: none;
-  cursor: pointer;
+.album-tile .ctrl-icons-wrapper {
+  border-top: none;
 }

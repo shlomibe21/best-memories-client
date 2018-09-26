@@ -1,15 +1,11 @@
 import React from "react";
 
-import "./edit-media.css"
+import "./edit-media.css";
 
 export default function EditMedia(props) {
   return (
     <div className="edit-media-file centered-container">
-      <img
-        className="media-file"
-        src="./images/ATT-OCTET-ST1.JPG"
-        alt="Media File"
-      />
+      <img className="media-file" src={props.match.params.index} alt="Media File" />
       <div>
         <input type="text" className="form-input" placeholder="Name" />
       </div>
@@ -25,5 +21,3 @@ export default function EditMedia(props) {
     </div>
   );
 }
-
-//<img className="media-file" src={props.mediaFile} alt="Media File" />

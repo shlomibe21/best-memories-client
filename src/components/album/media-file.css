@@ -1,30 +1,16 @@
-.media-file-container {
+.media-file {
   width: 300px;
-  padding: 0.5em;
+  padding: 15px;
   margin: 15px;
   border: solid 1px lightgrey;
   background: #eee;
 }
 
-.media-file-container img {
+.media-file img {
   width: 100%;
   cursor: -webkit-grab;
 }
 
-.ctrl-icons-wrapper {
-  margin-top: 0px;
-  margin-bottom: 10px;
-  padding: 2px;
-}
-
-.ctrl-icons-wrapper button {
-  width: 40px;
-  height: 40px;
-  margin: 0px;
-  padding: 5px;
-  font-size: 23px;
+.media-file .ctrl-icons-wrapper {
   border: none;
-  color: #0b7dda;
-  background: none;
-  cursor: pointer;
 }

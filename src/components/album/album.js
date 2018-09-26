@@ -11,39 +11,44 @@ export default class Album extends React.Component {
     this.state = {
       files: [
         {
+          id: "1",
           name: "Art Trip",
           date: "02/23/2018",
           description:
             "This is the photo decription and it can be a long one very long...",
           mediaFile: "./images/ATT-OCTET-ST1.JPG",
-          top: "0px",
+          top: "70px",
           left: "50px"
         },
         {
+          id: "2",
           name: "Summer Getaway and a lot of more text to",
           date: "02/23/2018",
           description:
             "This is the photo decription and it can be a long one very long...",
           mediaFile: "./images/pic_the_scream.png",
-          top: "100px",
+          top: "0px",
           left: "400px"
         },
         {
+          id: "3",
           name: "My Spring Vacation",
           date: "02/23/2018",
           description:
             "This is the photo decription and it can be a long one very long...",
           mediaFile: "/images/ATT-OCTET-ST2.JPG",
-          top: "50px",
+          top: "150px",
           left: "750px"
         },
         {
+          id: "4",
           name: "Art Trip",
           mediaFile: "./images/woman-1459220_1280.png",
-          top: "130px",
+          top: "80px",
           left: "1100px"
         },
         {
+          id: "5",
           name: "Summer Getaway",
           mediaFile: "./images/ATT-OCTET-ST4.JPG",
           top: "10px",

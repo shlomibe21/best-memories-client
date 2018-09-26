@@ -7,7 +7,7 @@ import { MdPhotoAlbum, MdModeEdit, MdDeleteForever } from "react-icons/md";
 
 export default function AlbumTile(props) {
   return (
-    <div>
+    <div className="album-tile">
       <div id={`album-${props.index}`} className="album-tile-container">
         <p className="album-name">{props.name}</p>
         <a className="thumbnail">

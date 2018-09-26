@@ -11,12 +11,12 @@ export default function MediaFile(props) {
   return (
     <div
       id={`file-${props.index}`}
-      className="media-file-container"
+      className="media-file"
       style={{ position: "absolute", top: props.top, left: props.left }}
     >
       <a className="thumbnail">
         <img
-          className="media-file"
+          className=""
           src={props.mediaFile}
           alt={`${props.name}`}
         />
@@ -29,7 +29,7 @@ export default function MediaFile(props) {
       <div className="ctrl-icons-wrapper">
         <button>
           <Tooltip message={"Edit"} position={"top"}>
-            <Link to="/editMedia" className="link-icon">
+            <Link to={"/editMedia/"+props.id} className="link-icon">
               <MdModeEdit />
             </Link>
           </Tooltip>

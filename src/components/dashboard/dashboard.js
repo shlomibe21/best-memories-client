@@ -68,7 +68,7 @@ export default class Dashboard extends React.Component {
     ));
 
     return (
-      <div className="centered-container">
+      <div className="dashboard centered-container">
         <p>My Albums</p>
         <div>
           <Link to="/newAlbum">Add a New Album</Link>
