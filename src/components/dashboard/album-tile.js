@@ -1,5 +1,5 @@
 import React from "react";
-import {Link} from 'react-router-dom';
+import { Link } from "react-router-dom";
 import "./album-tile.css";
 import Tooltip from "../tooltip";
 
@@ -9,20 +9,19 @@ export default function AlbumTile(props) {
   return (
     <div className="album-tile">
       <div id={`album-${props.index}`} className="album-tile-container">
-        <p className="album-name">{props.name}</p>
+        <p className="album-name">{props.albumName}</p>
         <a className="thumbnail">
-          <img
-            className="media-file"
-            src={props.mediaFile}
-            alt={`${props.name}`}
-          />
+          <img className="media-file" src={props.mediaFile} alt="Thumbnail" />
         </a>
+        <p className="album-date-created">{props.dateCreated}</p>
       </div>
       <div className="ctrl-icons-wrapper">
         <div>
           <button>
             <Tooltip message={"Display Album"} position={"top"}>
-              <Link className="link-icon" to="/album"><MdPhotoAlbum /></Link>
+              <Link className="link-icon" to="/album">
+                <MdPhotoAlbum />
+              </Link>
             </Tooltip>
           </button>
           <button>
@@ -42,5 +41,5 @@ export default function AlbumTile(props) {
 }
 
 AlbumTile.defaultProps = {
-  name: "[Album Name...] "
+  albumName: "[Album Name...] "
 };

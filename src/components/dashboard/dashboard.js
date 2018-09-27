@@ -1,67 +1,22 @@
 import React from "react";
+import { connect } from "react-redux";
+
 import AlbumTile from "./album-tile";
-import {Link} from 'react-router-dom';
+import { Link } from "react-router-dom";
+
+import { fetchAlbums } from "../../actions/albums";
 
 import "./dashboard.css";
 
 import { FaSearch } from "react-icons/fa";
 
-export default class Dashboard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      albums: [
-        {
-          name: "Art Trip",
-          mediaFile: "./images/ATT-OCTET-ST1.JPG"
-        },
-        {
-          name: "Summer Getaway and a lot of more text to",
-          mediaFile: "./images/pic_the_scream.png"
-        },
-        {
-          name: "My Spring Vacation",
-          mediaFile: "/images/ATT-OCTET-ST2.JPG"
-        },
-        {
-          name: "Beautiful Places",
-          mediaFile: "/images/ATT-OCTET-ST3.JPG"
-        },
-        {
-          name: "My Spring Vacation",
-          mediaFile: "/images/pic_the_scream.png"
-        },
-        {
-          name: "Art Trip",
-          mediaFile: "./images/woman-1459220_1280.png"
-        },
-        {
-          name: "Summer Getaway",
-          mediaFile: "./images/ATT-OCTET-ST4.JPG"
-        },
-        {
-          name: "Great Photos",
-          mediaFile: "/images/ATT-OCTET-ST3.JPG"
-        },
-        {
-          name: "My Spring Vacation",
-          mediaFile: "/images/ATT-OCTET-ST1.JPG"
-        },
-        {
-          name: "My Spring Vacation",
-          mediaFile: "/images/ATT-OCTET-ST4.JPG"
-        },
-        {
-          name: "My Spring Vacation",
-          mediaFile: "/images/ATT-OCTET-ST3.JPG"
-        }
-      ]
-    };
+export class Dashboard extends React.Component {
+  componentDidMount() {
+    this.props.dispatch(fetchAlbums());
   }
 
   render() {
-    // T.B.D: Do i need key and index?
-    const albums = this.state.albums.map((album, index) => (
+    const albums = this.props.albums.map((album, index) => (
       <li key={index} className="col-3">
         <AlbumTile index={index} {...album} />
       </li>
@@ -84,3 +39,9 @@ export default class Dashboard extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  albums: state.albums
+});
+
+export default connect(mapStateToProps)(Dashboard);
