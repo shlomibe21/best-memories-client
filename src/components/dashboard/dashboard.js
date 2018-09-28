@@ -41,7 +41,7 @@ export class Dashboard extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  albums: state.albums
+  albums: state.albums.albums
 });
 
 export default connect(mapStateToProps)(Dashboard);
