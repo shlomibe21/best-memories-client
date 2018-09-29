@@ -7,7 +7,7 @@ export const addAlbum = albumName => ({
   albumName
 });
 
-export const addNewAlbum = (albumName, dateCreated) => dispatch => {
+export const addNewAlbum = (albumName, dateCreated, comment, files) => dispatch => {
   return fetch(`${API_BASE_URL}/albums`, {
     method: "POST",
     headers: {
@@ -15,7 +15,9 @@ export const addNewAlbum = (albumName, dateCreated) => dispatch => {
     },
     body: JSON.stringify({
       albumName,
-      dateCreated
+      dateCreated,
+      comment,
+      files
     })
   })
     .then(res => {

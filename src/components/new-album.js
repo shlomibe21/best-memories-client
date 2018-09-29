@@ -1,17 +1,42 @@
 import React from "react";
 import { reduxForm, Field, focus } from "redux-form";
+import * as moment from "moment";
+
 import Input from "./input";
+import { renderDropzoneInput } from "./dropzone";
+
 import { addNewAlbum } from "../actions/albums";
 import { required, nonEmpty } from "../validators";
 
 import "./new-album.css";
 
+const FILE_FIELD_NAME = "files";
+
 export class NewAlbum extends React.Component {
   onSubmit(values) {
     console.log(values);
+    // Get the desired data from each media file and create a new array of objects to send to db
+    let files = [];
+    const dateNow = moment.utc(new Date(), "DD-MM-YYYY");
+    if (values.files) {
+      values.files.map((file, i) =>
+        files.push({
+          fileName: file.name,
+          dateAdded: dateNow,
+          comment: values.comment,
+          storageLocation: "",
+          positionTop: "0px",
+          positionLeft: "0px"
+        })
+      );
+    }
+
     // TODO: remove the row below after debug!!!
     //this.props.router.push('/');
-    return this.props.dispatch(addNewAlbum(values.albumname, "02/01/2018"));
+
+    return this.props.dispatch(
+      addNewAlbum(values.albumname, dateNow, values.comment, files)
+    );
   }
   render() {
     let errorMessage;
@@ -26,18 +51,34 @@ export class NewAlbum extends React.Component {
         onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}
       >
         {errorMessage}
-        <label htmlFor="name">Name</label>
-        <Field
-          component={Input}
-          type="text"
-          name="albumname"
-          className="form-input"
-          id="albumname"
-          validate={[required, nonEmpty]}
-        />
+        <div>
+          <label htmlFor="name">Album Name</label>
+          <Field
+            component={Input}
+            type="text"
+            name="albumname"
+            label="Album Name"
+            id="albumname"
+            validate={[required, nonEmpty]}
+          />
+        </div>
+        <div>
+          <label htmlFor="comment">Comment</label>
+          <Field
+            name="comment"
+            id="comment"
+            element="textarea"
+            component={Input}
+            label="Comment"
+          />
+        </div>
         <button type="submit" className="btn">
           New Album Submit
         </button>
+        <div>
+          <label htmlFor={FILE_FIELD_NAME} />
+          <Field name={FILE_FIELD_NAME} component={renderDropzoneInput} />
+        </div>
       </form>
     );
   }
@@ -49,6 +90,10 @@ export default reduxForm({
     console.log("onSubmitSuccess called!!!");
     //this.props.router.push('/dashboard/');
   },
-  onSubmitFail: (errors, dispatch) =>
-    dispatch(focus("newalbum", Object.keys(errors)[0]))
+  onSubmitFail: (errors, dispatch) => {
+    dispatch(focus("newalbum", "albumname"));
+    if (!errors) {
+      alert("Error: couldn't add a new album!");
+    }
+  }
 })(NewAlbum);
