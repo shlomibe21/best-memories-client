@@ -19,7 +19,7 @@ export default function AlbumTile(props) {
         <div>
           <button>
             <Tooltip message={"Display Album"} position={"top"}>
-              <Link className="link-icon" to="/album">
+              <Link className="link-icon" to={`/album/${props.id}`}>
                 <MdPhotoAlbum />
               </Link>
             </Tooltip>

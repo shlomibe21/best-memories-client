@@ -1,16 +1,15 @@
-import {createStore, applyMiddleware, combineReducers} from 'redux';
+import {createStore, applyMiddleware, combineReducers, compose } from 'redux';
 import {reducer as formReducer} from 'redux-form';
 import thunk from 'redux-thunk';
 
 import {albumsReducer} from './reducers/albums';
-
-//const store = createStore(albumsReducer, applyMiddleware(thunk));
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
     combineReducers({
         form: formReducer,
-        albums: albumsReducer
+        bestmemories: albumsReducer
     }),
-    applyMiddleware(thunk)
+    composeEnhancers (applyMiddleware(thunk))
 );
 
 export default store;

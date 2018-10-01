@@ -58,6 +58,25 @@ export const fetchAlbums = () => dispatch => {
       return res.json();
     })
     .then(albums => {
-      dispatch(fetchAlbumsSuccess(albums));
+      dispatch(fetchAlbumsSuccess(albums.albums));
+    });
+};
+
+export const FETCH_SINGLE_ALBUM_SUCCESS = "FETCH_SINGLE_ALBUM_SUCCESS";
+export const fetchSingleAlbumSuccess = album => ({
+  type: FETCH_SINGLE_ALBUM_SUCCESS,
+  album
+});
+
+export const fetchSingleAlbum = (id) => dispatch => {
+  fetch(`${API_BASE_URL}/albums/${id}`)
+    .then(res => {
+      if (!res.ok) {
+        return Promise.reject(res.statusText);
+      }
+      return res.json();
+    })
+    .then(album => {
+      dispatch(fetchSingleAlbumSuccess(album));
     });
 };

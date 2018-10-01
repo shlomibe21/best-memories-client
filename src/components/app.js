@@ -22,7 +22,7 @@ export default function App(props) {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/dashboard/" component={Dashboard} />
-            <Route exact path="/album/" component={Album} />
+            <Route exact path="/album/:index" component={Album} />
             <Route exact path="/newAlbum/" component={NewAlbum} />
             <Route exact path="/editMedia/:index" component={EditMedia} />
           </Switch>
