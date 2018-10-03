@@ -26,12 +26,16 @@ export default function AlbumTile(props) {
           </button>
           <button>
             <Tooltip message={"Edit Album"} position={"top"}>
-              <MdModeEdit />
+              <Link className="link-icon" to={`/edit-album/${props.id}`}>
+                <MdModeEdit />
+              </Link>
             </Tooltip>
           </button>
           <button>
             <Tooltip message={"Delete Album"} position={"top"}>
-              <MdDeleteForever />
+              <Link className="link-icon" to={`/delete-album/${props.id}`}>
+                <MdDeleteForever />
+              </Link>
             </Tooltip>
           </button>
         </div>

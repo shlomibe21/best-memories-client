@@ -17,7 +17,8 @@ export class NewAlbum extends React.Component {
     //console.log(values);
     // Get the desired data from each media file and create a new array of objects to send to db
     let files = [];
-    const dateNow = moment.utc(new Date(), "DD-MM-YYYY");
+    const dateNow = moment(new Date()).format("YYYY-MM-DD");
+    console.log('dateNow', dateNow);
     if (values.files) {
       values.files.map((file, i) =>
         files.push({
@@ -34,7 +35,7 @@ export class NewAlbum extends React.Component {
     // TODO: remove the row below after debug!!!
     //this.props.router.push('/');
     return this.props.dispatch(
-      addNewAlbum(values.albumname, dateNow, values.comment, files)
+      addNewAlbum(values.albumName, dateNow, values.comment, files)
     );
   }
   render() {
@@ -55,7 +56,7 @@ export class NewAlbum extends React.Component {
           <Field
             component={Input}
             type="text"
-            name="albumname"
+            name="albumName"
             label="Album Name"
             id="albumname"
             validate={[required, nonEmpty]}
@@ -84,12 +85,12 @@ export class NewAlbum extends React.Component {
 }
 
 export default reduxForm({
-  form: "newalbum",
+  form: "newAlbum",
   onSubmitSuccess: (results, dispatch) => {
     window.location = "/dashboard";
   },
   onSubmitFail: (errors, dispatch) => {
-    dispatch(focus("newalbum", "albumname"));
+    dispatch(focus("newAlbum", "albumName"));
     if (!errors) {
       alert("Error: couldn't add a new album!");
     }

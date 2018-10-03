@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export default class Input extends React.Component {
   componentDidUpdate(prevProps) {
@@ -21,9 +21,22 @@ export default class Input extends React.Component {
     if (this.props.type === "textarea") {
       input = (
         <textarea
+          {...this.props.input}
+          {...this.props}
           id={this.props.input.name}
           type={this.props.type}
           className="form-input"
+          ref={input => (this.input = input)}
+        />
+      );
+    } else if (this.props.type === "date") {
+      input = (
+        <input
+          {...this.props.input}
+          {...this.props}
+          id={this.props.input.name}
+          type={this.props.type}
+          className="form-input disabled-date"
           ref={input => (this.input = input)}
         />
       );
@@ -31,6 +44,7 @@ export default class Input extends React.Component {
       input = (
         <input
           {...this.props.input}
+          {...this.props}
           id={this.props.input.name}
           type={this.props.type}
           className="form-input"
@@ -40,11 +54,13 @@ export default class Input extends React.Component {
     }
     return (
       <div className="form-input-field">
-        <label htmlFor={this.props.input.name}>
-          {this.props.label}
-          {error}
-          {warning}
-        </label>
+        <div>
+          <label htmlFor={this.props.input.name}>
+            {this.props.label}
+            {error}
+            {warning}
+          </label>
+        </div>
         {input}
       </div>
     );
