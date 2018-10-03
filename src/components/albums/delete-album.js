@@ -1,8 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { fetchSingleAlbum } from "../actions/albums";
-import { deleteSingleAlbum } from "../actions/albums";
+import { fetchSingleAlbum, deleteSingleAlbum } from "../../actions/albums";
 
 export class DeleteAlbum extends React.Component {
   componentDidMount() {

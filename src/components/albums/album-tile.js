@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./album-tile.css";
-import Tooltip from "../tooltip";
+import Tooltip from "../common/tooltip";
 
 import { MdPhotoAlbum, MdModeEdit, MdDeleteForever } from "react-icons/md";
 

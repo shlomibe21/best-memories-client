@@ -3,11 +3,11 @@ import { reduxForm, Field, focus } from "redux-form";
 import { withRouter } from "react-router-dom";
 import moment from "moment";
 
-import Input from "./input";
-import { renderDropzoneInput } from "./dropzone";
+import Input from "../Forms/input";
+import { renderDropzoneInput } from "../common/dropzone";
 
-import { addNewAlbum } from "../actions/albums";
-import { required, nonEmpty } from "../validators";
+import { addNewAlbum } from "../../actions/albums";
+import { required, nonEmpty } from "../../validators";
 
 import "./new-album.css";
 

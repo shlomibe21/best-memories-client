@@ -4,14 +4,14 @@ import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
 import moment from "moment";
 
-import MediaFile from "./album/media-file";
-import { fetchSingleAlbum } from "../actions/albums";
-import { updateSingleAlbum } from "../actions/albums";
-import { required, nonEmpty } from "../validators";
+import MediaFile from "./media-file";
+import { fetchSingleAlbum } from "../../actions/albums";
+import { updateSingleAlbum } from "../../actions/albums";
+import { required, nonEmpty } from "../../validators";
 
 import "./edit-album.css";
 
-import Input from "./input";
+import Input from "../Forms/input";
 
 class EditAlbum extends React.Component {
   componentDidMount() {

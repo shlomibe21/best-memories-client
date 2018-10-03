@@ -1,15 +1,15 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import Home from "./home";
-import Navbar from "./navbar";
-import Footer from "./footer";
-import Dashboard from "./dashboard/dashboard";
-import Album from "./album/album";
-import NewAlbum from "./new-album";
-import EditAlbum from "./edit-album";
-import DeleteAlbum from "./delete-album";
-import EditMedia from "./edit-media";
+import Home from "./home/home";
+import Navbar from "./common/navbar";
+import Footer from "./common/footer";
+import Dashboard from "./albums/dashboard";
+import Album from "./albums/album";
+import NewAlbum from "./albums/new-album";
+import EditAlbum from "./albums/edit-album";
+import DeleteAlbum from "./albums/delete-album";
+import EditMedia from "./albums/edit-media";
 
 import "./app.css";
 
