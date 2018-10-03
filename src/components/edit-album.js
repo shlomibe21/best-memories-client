@@ -1,8 +1,8 @@
 import React from "react";
 import { reduxForm, Field, focus } from "redux-form";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import moment from 'moment'
+import { withRouter, Link } from "react-router-dom";
+import moment from "moment";
 
 import MediaFile from "./album/media-file";
 import { fetchSingleAlbum } from "../actions/albums";
@@ -19,9 +19,9 @@ class EditAlbum extends React.Component {
   }
   onSubmit(values) {
     //console.log("values", values);
-    this.props.dispatch(
-      updateSingleAlbum(values.id, values.albumName, values.comment)
-    );
+    this.props
+      .dispatch(updateSingleAlbum(values.id, values.albumName, values.comment))
+      .then(() => this.props.history.push("/dashboard"));
   }
   render() {
     //console.log("this.props.initialValues", this.props.initialValues);
@@ -84,7 +84,7 @@ EditAlbum = reduxForm({
   form: "EditAlbum", // a unique identifier for this form
   enableReinitialize: false,
   onSubmitSuccess: (results, dispatch) => {
-    window.location = "/dashboard";
+    //window.location = "/dashboard";
   },
   onSubmitFail: (errors, dispatch) => {
     dispatch(focus("EditAlbum", "albumName"));
@@ -99,4 +99,4 @@ EditAlbum = connect(state => ({
   initialValues: state.bestmemories.album // pull initial values from account reducer
 }))(EditAlbum);
 
-export default EditAlbum;
+export default withRouter(EditAlbum);

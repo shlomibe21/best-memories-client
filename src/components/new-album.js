@@ -1,6 +1,7 @@
 import React from "react";
 import { reduxForm, Field, focus } from "redux-form";
-import * as moment from "moment";
+import { withRouter } from "react-router-dom";
+import moment from "moment";
 
 import Input from "./input";
 import { renderDropzoneInput } from "./dropzone";
@@ -18,7 +19,6 @@ export class NewAlbum extends React.Component {
     // Get the desired data from each media file and create a new array of objects to send to db
     let files = [];
     const dateNow = moment(new Date()).format("YYYY-MM-DD");
-    console.log('dateNow', dateNow);
     if (values.files) {
       values.files.map((file, i) =>
         files.push({
@@ -32,11 +32,9 @@ export class NewAlbum extends React.Component {
       );
     }
 
-    // TODO: remove the row below after debug!!!
-    //this.props.router.push('/');
-    return this.props.dispatch(
-      addNewAlbum(values.albumName, dateNow, values.comment, files)
-    );
+    return this.props
+      .dispatch(addNewAlbum(values.albumName, dateNow, values.comment, files))
+      .then(() => this.props.history.push("/dashboard"));
   }
   render() {
     let errorMessage;
@@ -84,15 +82,17 @@ export class NewAlbum extends React.Component {
   }
 }
 
-export default reduxForm({
-  form: "newAlbum",
-  onSubmitSuccess: (results, dispatch) => {
-    window.location = "/dashboard";
-  },
-  onSubmitFail: (errors, dispatch) => {
-    dispatch(focus("newAlbum", "albumName"));
-    if (!errors) {
-      alert("Error: couldn't add a new album!");
+export default withRouter(
+  reduxForm({
+    form: "newAlbum",
+    onSubmitSuccess: (results, dispatch) => {
+      //window.location = "/dashboard";
+    },
+    onSubmitFail: (errors, dispatch) => {
+      dispatch(focus("newAlbum", "albumName"));
+      if (!errors) {
+        alert("Error: couldn't add a new album!");
+      }
     }
-  }
-})(NewAlbum);
+  })(NewAlbum)
+);
