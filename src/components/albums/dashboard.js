@@ -1,9 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-
-import AlbumTile from "./album-tile";
 import { Link } from "react-router-dom";
 
+import AlbumTile from "./album-tile";
 import { fetchAlbums } from "../../actions/albums";
 
 import "./dashboard.css";
@@ -26,7 +25,7 @@ export class Dashboard extends React.Component {
       <div className="dashboard centered-container">
         <p>My Albums</p>
         <div>
-          <Link to="/newAlbum">Add a New Album</Link>
+          <Link to="/new-album">Add a New Album</Link>
         </div>
         <div className="search-wrapper">
           <input type="text" className="" placeholder="Search" />

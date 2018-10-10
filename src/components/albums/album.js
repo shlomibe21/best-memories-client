@@ -1,5 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+
 import MediaFile from "./media-file";
 import { fetchSingleAlbum } from "../../actions/albums";
 
@@ -15,15 +17,16 @@ export class Album extends React.Component {
   render() {
     const files = this.props.album.files.map((file, index) => (
       <li key={index} className="col-3">
-        <MediaFile index={index} {...file} />
+        <MediaFile index={index} albumIndex = {this.props.match.params.index} {...file} />
       </li>
     ));
 
     return (
       <div className="centered-container">
         <p>{this.props.album.albumName}</p>
-        <div>
-          <a href="">Add a New File</a>
+        <div className="selection-area">
+          <Link to="/dashboard">Dashboard</Link>
+          <Link to={`/new-files/${this.props.album.id}`}>Add Files</Link>
         </div>
         <div className="search-wrapper">
           <input type="text" className="" placeholder="Search" />
@@ -38,7 +41,7 @@ export class Album extends React.Component {
 }
 
 Album.defaultProps = {
-  album: {files: []}
+  album: { files: [] }
 };
 
 const mapStateToProps = state => ({

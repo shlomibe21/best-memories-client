@@ -6,12 +6,18 @@ import Tooltip from "../common/tooltip";
 import { MdPhotoAlbum, MdModeEdit, MdDeleteForever } from "react-icons/md";
 
 export default function AlbumTile(props) {
+    // Check if this album has at least one media file
+    // and if yes display thumbnail of it on the album tile
+    let storageLocation
+    if((props.files[0]) && (props.files[0].storageLocation)) {
+        storageLocation = props.files[0].storageLocation;
+    }
   return (
     <div className="album-tile">
       <div id={`album-${props.index}`} className="album-tile-container">
         <p className="album-name">{props.albumName}</p>
         <a className="thumbnail">
-          <img className="media-file" src={props.mediaFile} alt="Thumbnail" />
+          <img className="media-file" src={storageLocation ? storageLocation : ""} alt="Thumbnail" />
         </a>
         <p className="album-date-created">{props.dateCreated}</p>
       </div>

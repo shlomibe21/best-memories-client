@@ -8,18 +8,16 @@ import { MdModeEdit, MdDeleteForever } from "react-icons/md";
 import "./media-file.css";
 
 export default function MediaFile(props) {
+  const mediaFile = props.storageLocation;
+
   return (
     <div
-      id={`file-${props.index}`}
+      id={`file-${props.albumIndex}`}
       className="media-file"
       style={{ /*position: "absolute",*/ top: props.top, left: props.left }}
     >
       <a className="image-wrapper">
-        <img
-          className=""
-          src={props.mediaFile}
-          alt='media file'
-        />
+        <img className="" src={mediaFile} alt="media file" />
       </a>
       <div>
         <p className="file-name">{props.fileName}</p>
@@ -29,14 +27,22 @@ export default function MediaFile(props) {
       <div className="ctrl-icons-wrapper">
         <button>
           <Tooltip message={"Edit"} position={"top"}>
-            <Link to={`/editMedia/${props.id}`} className="link-icon">
+            <Link
+              to={`/editMedia/${props.albumIndex}/${props._id}`}
+              className="link-icon"
+            >
               <MdModeEdit />
             </Link>
           </Tooltip>
         </button>
         <button>
           <Tooltip message={"Delete"} position={"top"}>
-            <MdDeleteForever />
+            <Link
+              to={`/deleteMedia/${props.albumIndex}/${props._id}`}
+              className="link-icon"
+            >
+              <MdDeleteForever />
+            </Link>
           </Tooltip>
         </button>
       </div>

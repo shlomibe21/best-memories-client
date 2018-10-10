@@ -1,15 +1,28 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { fetchSingleAlbum, deleteSingleAlbum } from "../../actions/albums";
+import { fetchSingleAlbum, deleteSingleAlbum, awsS3DeleteFile } from "../../actions/albums";
 
 export class DeleteAlbum extends React.Component {
   componentDidMount() {
     this.props.dispatch(fetchSingleAlbum(this.props.match.params.index));
   }
   deleteAlbum() {
-    this.props.dispatch(deleteSingleAlbum(this.props.match.params.index));
+    let promises = [];
+    // If there are files in this album delete then first and only then delete the 
+    // album's data from the DB
+    if (this.props.album.files.length > 0) {
+      promises = this.props.album.files.map((file, i) => {
+        return this.props.dispatch(awsS3DeleteFile(file.fileName));
+      });
+    }
+    Promise.all(promises).then(() => {
+      this.props
+        .dispatch(deleteSingleAlbum(this.props.match.params.index))
+        .then(() => this.props.history.push("/dashboard"));
+    });
   }
+
   render() {
     return (
       <div>
@@ -28,11 +41,11 @@ export class DeleteAlbum extends React.Component {
 }
 
 DeleteAlbum.defaultProps = {
-    album: {}
+  album: {}
 };
 
 const mapStateToProps = state => ({
-  album: state.bestmemories.album,
+  album: state.bestmemories.album
 });
 
 export default connect(mapStateToProps)(DeleteAlbum);

@@ -11,7 +11,7 @@ export const renderDropzoneInput = field => {
   return (
     <div>
       <Dropzone
-        name={field.name}
+        name={field.name} accept="image/jpeg, image/png"
         onDrop={(filesToUpload, e) => field.input.onChange(filesToUpload)}
         className="dropzone"
       >

@@ -1,12 +1,13 @@
 import React from "react";
 import { reduxForm, Field, focus } from "redux-form";
 import { withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import moment from "moment";
 
 import Input from "../Forms/input";
 import { renderDropzoneInput } from "../common/dropzone";
 
-import { addNewAlbum } from "../../actions/albums";
+import { addNewAlbum, awsS3GetSignedRequest } from "../../actions/albums";
 import { required, nonEmpty } from "../../validators";
 
 import "./new-album.css";
@@ -15,21 +16,23 @@ const FILE_FIELD_NAME = "files";
 
 export class NewAlbum extends React.Component {
   onSubmit(values) {
-    //console.log(values);
+    console.log(values);
     // Get the desired data from each media file and create a new array of objects to send to db
     let files = [];
-    const dateNow = moment(new Date()).format("YYYY-MM-DD");
+    const dateNow = moment(new Date()).utc().format("YYYY-MM-DD");
     if (values.files) {
-      values.files.map((file, i) =>
+      values.files.map((file, i) => {
+        this.props.dispatch(awsS3GetSignedRequest(file));
         files.push({
           fileName: file.name,
           dateAdded: dateNow,
           comment: values.comment,
-          storageLocation: "",
+          storageLocation: `https://s3-us-west-1.amazonaws.com/albums-test/${file.name}`,
           positionTop: "0px",
           positionLeft: "0px"
-        })
-      );
+        });
+        return file;
+      });
     }
 
     return this.props
@@ -47,6 +50,7 @@ export class NewAlbum extends React.Component {
       <form
         className="new-album centered-container"
         onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}
+        encType="multipart/form-data"
       >
         {errorMessage}
         <div>
@@ -73,6 +77,11 @@ export class NewAlbum extends React.Component {
         <button type="submit" className="btn">
           New Album Submit
         </button>
+        <Link to="/dashboard">
+          <button type="button" className="btn">
+            Cancel
+          </button>
+        </Link>
         <div>
           <label htmlFor={FILE_FIELD_NAME} />
           <Field name={FILE_FIELD_NAME} component={renderDropzoneInput} />
@@ -84,12 +93,12 @@ export class NewAlbum extends React.Component {
 
 export default withRouter(
   reduxForm({
-    form: "newAlbum",
+    form: "NewAlbum",
     onSubmitSuccess: (results, dispatch) => {
       //window.location = "/dashboard";
     },
     onSubmitFail: (errors, dispatch) => {
-      dispatch(focus("newAlbum", "albumName"));
+      dispatch(focus("NewAlbum", "albumName"));
       if (!errors) {
         alert("Error: couldn't add a new album!");
       }

@@ -1,7 +1,7 @@
 import * as actions from "../actions/albums";
 
 const initialState = {
-  albums: [],
+  albums: []
 };
 
 export const albumsReducer = (state = initialState, action) => {
@@ -23,7 +23,7 @@ export const albumsReducer = (state = initialState, action) => {
       });
     case actions.FETCH_SINGLE_ALBUM_SUCCESS:
       return Object.assign({}, state, {
-        album: action.album
+        album: action.album,
       });
     case actions.UPDATE_SINGLE_ALBUM_SUCCESS:
       return Object.assign({}, state, {
@@ -33,6 +33,27 @@ export const albumsReducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         album: action.album
       });
+    case actions.FETCH_SINGLE_FILE_SUCCESS:
+      return Object.assign({}, state, {
+        file: action.file
+      });
+    /*case actions.DELETE_SINGLE_FILE_SUCCESS:
+      let files = state.album.files.map(file => {
+        if (file.id !== action.fileId) {
+          return file;
+        }
+        return Object.assign({}, file, {
+          album: [...file]
+        });
+      });
+      return Object.assign({}, state, {
+        album: [
+          state.album,
+          {
+            files
+          }
+        ]
+      });*/
     default:
       return state;
   }
