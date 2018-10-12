@@ -1,7 +1,6 @@
 import React from "react";
 
 import Tooltip from "../common/tooltip";
-
 import { Link } from "react-router-dom";
 import { MdModeEdit, MdDeleteForever } from "react-icons/md";
 

@@ -7,8 +7,15 @@ export const fetchAlbumsSuccess = albums => ({
   albums
 });
 
-export const fetchAlbums = () => dispatch => {
-  return fetch(`${API_BASE_URL}/albums`)
+export const fetchAlbums = () => (dispatch, getState) => {
+  const authToken = getState().auth.authToken;
+  return fetch(`${API_BASE_URL}/albums`, {
+    method: "GET",
+    headers: {
+      // Provide user's auth token as credentials
+      Authorization: `Bearer ${authToken}`
+    }
+  })
     .then(res => {
       if (!res.ok) {
         return Promise.reject(res.statusText);
@@ -26,8 +33,21 @@ export const fetchSingleAlbumSuccess = album => ({
   album
 });
 
-export const fetchSingleAlbum = id => dispatch => {
-  return fetch(`${API_BASE_URL}/albums/${id}`)
+export const FETCH_SINGLE_ALBUM_ERROR = "FETCH_SINGLE_ALBUM_ERROR";
+export const fetchSingleAlbumError = error => ({
+  type: FETCH_SINGLE_ALBUM_ERROR,
+  error
+});
+
+export const fetchSingleAlbum = id => (dispatch, getState) => {
+  const authToken = getState().auth.authToken;
+  return fetch(`${API_BASE_URL}/albums/${id}`, {
+    method: "GET",
+    headers: {
+      // Provide our auth token as credentials
+      Authorization: `Bearer ${authToken}`
+    }
+  })
     .then(res => {
       if (!res.ok) {
         return Promise.reject(res.statusText);
@@ -38,20 +58,7 @@ export const fetchSingleAlbum = id => dispatch => {
       dispatch(fetchSingleAlbumSuccess(album));
     })
     .catch(err => {
-      const { reason, message, location } = err;
-      if (reason === "ValidationError") {
-        // Convert ValidationErrors into SubmissionErrors for Redux Form
-        return Promise.reject(
-          new SubmissionError({
-            [location]: message
-          })
-        );
-      }
-      return Promise.reject(
-        new SubmissionError({
-          _error: "Error: couldn't delete album"
-        })
-      );
+      dispatch(fetchSingleAlbumError(err));
     });
 };
 
@@ -61,15 +68,15 @@ export const addAlbum = albumName => ({
   albumName
 });
 
-export const addNewAlbum = (
-  albumName,
-  dateCreated,
-  comment,
-  files
-) => dispatch => {
+export const addNewAlbum = (albumName, dateCreated, comment, files) => (
+  dispatch,
+  getState
+) => {
+  const authToken = getState().auth.authToken;
   return fetch(`${API_BASE_URL}/albums`, {
     method: "POST",
     headers: {
+      Authorization: `Bearer ${authToken}`,
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
@@ -108,16 +115,16 @@ export const updateSingleAlbumSuccess = album => ({
   album
 });
 
-export const updateSingleAlbum = (
-  id,
-  albumName,
-  comment,
-  files
-) => dispatch => {
+export const updateSingleAlbum = (id, albumName, comment, files) => (
+  dispatch,
+  getState
+) => {
+  const authToken = getState().auth.authToken;
   return fetch(`${API_BASE_URL}/albums/${id}`, {
     method: "PUT",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${authToken}`
     },
     body: JSON.stringify({
       id,
@@ -155,11 +162,13 @@ export const deleteSingleAlbumSuccess = album => ({
   album
 });
 
-export const deleteSingleAlbum = id => dispatch => {
+export const deleteSingleAlbum = id => (dispatch, getState) => {
+  const authToken = getState().auth.authToken;
   return fetch(`${API_BASE_URL}/albums/${id}`, {
     method: "DELETE",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${authToken}`
     },
     body: JSON.stringify({
       id
@@ -194,11 +203,13 @@ export const addNewFilesSuccess = files => ({
   files
 });
 
-export const addNewFiles = (id, files) => dispatch => {
+export const addNewFiles = (id, files) => (dispatch, getState) => {
+  const authToken = getState().auth.authToken;
   return fetch(`${API_BASE_URL}/albums/${id}`, {
     method: "PATCH",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${authToken}`
     },
     body: JSON.stringify({
       id,
@@ -236,8 +247,14 @@ export const fetchSingleFileSuccess = (file, albumId, fileId) => ({
   fileId
 });
 
-export const fetchSingleFile = (albumId, fileId) => dispatch => {
-  return fetch(`${API_BASE_URL}/albums/${albumId}/${fileId}`)
+export const fetchSingleFile = (albumId, fileId) => (dispatch, getState) => {
+  const authToken = getState().auth.authToken;
+  return fetch(`${API_BASE_URL}/albums/${albumId}/${fileId}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${authToken}`
+    }
+  })
     .then(res => {
       if (!res.ok) {
         return Promise.reject(res.statusText);
@@ -265,16 +282,16 @@ export const fetchSingleFile = (albumId, fileId) => dispatch => {
     });
 };
 
-export const updateSingleFile = (
-  albumId,
-  fileId,
-  fileName,
-  comment
-) => dispatch => {
+export const updateSingleFile = (albumId, fileId, fileName, comment) => (
+  dispatch,
+  getState
+) => {
+  const authToken = getState().auth.authToken;
   return fetch(`${API_BASE_URL}/albums/${albumId}/${fileId}`, {
     method: "PATCH",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${authToken}`
     },
     body: JSON.stringify({
       albumId,
@@ -313,11 +330,13 @@ export const deleteSingleFileSuccess = (albumId, fileId) => ({
   fileId
 });
 
-export const deleteSingleFile = (albumId, fileId) => dispatch => {
+export const deleteSingleFile = (albumId, fileId) => (dispatch, getState) => {
+  const authToken = getState().auth.authToken;
   return fetch(`${API_BASE_URL}/albums/${albumId}/${fileId}`, {
     method: "DELETE",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${authToken}`
     },
     body: JSON.stringify({
       albumId,
@@ -389,11 +408,11 @@ export const awsS3UploadFile = (file, signedRequest, url) => {
 // TODO: Delete always returns status=200 even if object is not there.
 // Therefore we need to check the object's head to confirm that the
 // object is not there anymore
-export const awsS3DeleteFile = fileName => dispach => {
+export const awsS3DeleteFile = fileName => (dispach) => {
   return fetch(`${API_BASE_URL}/albums/delete-object-s3`, {
     method: "DELETE",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       fileName

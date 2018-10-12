@@ -4,7 +4,8 @@ import { withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 import moment from "moment";
 
-import Input from "../Forms/input";
+import requiresLogin from "../authorization/requires-login";
+import Input from "../forms/input";
 import { renderDropzoneInput } from "../common/dropzone";
 
 import { addNewAlbum, awsS3GetSignedRequest } from "../../actions/albums";
@@ -91,7 +92,7 @@ export class NewAlbum extends React.Component {
   }
 }
 
-export default withRouter(
+export default requiresLogin()(withRouter(
   reduxForm({
     form: "NewAlbum",
     onSubmitSuccess: (results, dispatch) => {
@@ -104,4 +105,4 @@ export default withRouter(
       }
     }
   })(NewAlbum)
-);
+));

@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import moment from "moment";
 
+import requiresLogin from "../authorization/requires-login";
 import { renderDropzoneInput } from "../common/dropzone";
 import {
   fetchSingleAlbum,
@@ -58,18 +59,6 @@ export class NewFiles extends React.Component {
     }
     //let files;
     console.log(this.props.album);
-    /*if (this.props.initialValues) {
-      if (this.props.initialValues.dateCreated) {
-        this.props.initialValues.dateCreated = moment(
-          this.props.initialValues.dateCreated
-        ).format("YYYY-MM-DD");
-      }
-      files = this.props.initialValues.files.map((file, index) => (
-        <li key={index} className="col-3">
-          <MediaFile index={index} {...file} />
-        </li>
-      ));
-    }*/
     return (
       <form
         className="new-files centered-container"
@@ -108,4 +97,4 @@ NewFiles = connect(state => ({
   initialValues: state.bestmemories.album // pull initial values from account reducer
 }))(NewFiles);
 
-export default withRouter(NewFiles);
+export default requiresLogin()(withRouter(NewFiles));

@@ -4,9 +4,10 @@ import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
 import moment from "moment";
 
+import requiresLogin from "../authorization/requires-login";
 import { fetchSingleFile, updateSingleFile } from "../../actions/albums";
 import { required, nonEmpty } from "../../validators";
-import Input from "../Forms/input";
+import Input from "../forms/input";
 
 import "./edit-media.css";
 
@@ -113,4 +114,4 @@ EditMedia = connect(state => ({
   initialValues: state.bestmemories.file // pull initial values from account reducer
 }))(EditMedia);
 
-export default withRouter(EditMedia);
+export default requiresLogin()(withRouter(EditMedia));

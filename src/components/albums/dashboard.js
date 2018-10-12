@@ -2,12 +2,12 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
+import requiresLogin from "../authorization/requires-login";
 import AlbumTile from "./album-tile";
 import { fetchAlbums } from "../../actions/albums";
+import { FaSearch } from "react-icons/fa";
 
 import "./dashboard.css";
-
-import { FaSearch } from "react-icons/fa";
 
 export class Dashboard extends React.Component {
   componentDidMount() {
@@ -24,6 +24,9 @@ export class Dashboard extends React.Component {
     return (
       <div className="dashboard centered-container">
         <p>My Albums</p>
+        <div className="dashboard-username">
+          Username: {this.props.username}
+        </div>
         <div>
           <Link to="/new-album">Add a New Album</Link>
         </div>
@@ -39,8 +42,13 @@ export class Dashboard extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  albums: state.bestmemories.albums
-});
+const mapStateToProps = state => {
+  const { currentUser } = state.auth;
+  return {
+    username: state.auth.currentUser.username,
+    name: `${currentUser.firstName} ${currentUser.lastName}`,
+    albums: state.bestmemories.albums
+  };
+};
 
-export default connect(mapStateToProps)(Dashboard);
+export default requiresLogin()(connect(mapStateToProps)(Dashboard));

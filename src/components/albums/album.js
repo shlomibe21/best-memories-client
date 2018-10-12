@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
+import requiresLogin from "../authorization/requires-login";
 import MediaFile from "./media-file";
 import { fetchSingleAlbum } from "../../actions/albums";
 
@@ -48,4 +49,4 @@ const mapStateToProps = state => ({
   album: state.bestmemories.album
 });
 
-export default connect(mapStateToProps)(Album);
+export default requiresLogin()(connect(mapStateToProps)(Album));

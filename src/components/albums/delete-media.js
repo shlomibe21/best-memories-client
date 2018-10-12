@@ -6,6 +6,7 @@ import {
   deleteSingleFile,
   awsS3DeleteFile
 } from "../../actions/albums";
+import requiresLogin from "../authorization/requires-login";
 
 export class DeleteMedia extends React.Component {
   componentDidMount() {
@@ -57,4 +58,4 @@ const mapStateToProps = state => ({
   file: state.bestmemories.file
 });
 
-export default connect(mapStateToProps)(DeleteMedia);
+export default requiresLogin()(connect(mapStateToProps)(DeleteMedia));

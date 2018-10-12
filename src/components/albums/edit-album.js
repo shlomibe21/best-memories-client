@@ -4,11 +4,12 @@ import { connect } from "react-redux";
 import { withRouter, Link } from "react-router-dom";
 import moment from "moment";
 
+import requiresLogin from "../authorization/requires-login";
 import { fetchSingleAlbum } from "../../actions/albums";
 import { updateSingleAlbum } from "../../actions/albums";
 import { required, nonEmpty } from "../../validators";
 import MediaFile from "./media-file";
-import Input from "../Forms/input";
+import Input from "../forms/input";
 
 import "./edit-album.css";
 
@@ -129,4 +130,4 @@ EditAlbum = connect(state => ({
   initialValues: state.bestmemories.album // pull initial values from account reducer
 }))(EditAlbum);
 
-export default withRouter(EditAlbum);
+export default requiresLogin()(withRouter(EditAlbum));

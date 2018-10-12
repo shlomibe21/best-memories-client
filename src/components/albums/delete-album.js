@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import requiresLogin from "../authorization/requires-login";
 import { fetchSingleAlbum, deleteSingleAlbum, awsS3DeleteFile } from "../../actions/albums";
 
 export class DeleteAlbum extends React.Component {
@@ -48,4 +49,4 @@ const mapStateToProps = state => ({
   album: state.bestmemories.album
 });
 
-export default connect(mapStateToProps)(DeleteAlbum);
+export default requiresLogin()(connect(mapStateToProps)(DeleteAlbum));
