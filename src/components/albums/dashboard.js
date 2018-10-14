@@ -10,8 +10,27 @@ import { FaSearch } from "react-icons/fa";
 import "./dashboard.css";
 
 export class Dashboard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchValue: ""
+    };
+  }
+
   componentDidMount() {
-    this.props.dispatch(fetchAlbums());
+    this.props.dispatch(fetchAlbums(this.state.searchValue));
+  }
+
+  search(query) {
+    console.log("search");
+    this.props.dispatch(fetchAlbums(this.state.searchValue));
+  }
+
+  updateInputValue(evt) {
+    this.setState({
+        searchValue: evt.target.value
+    });
+    this.props.dispatch(fetchAlbums(evt.target.value));
   }
 
   render() {
@@ -31,8 +50,14 @@ export class Dashboard extends React.Component {
           <Link to="/new-album">Add a New Album</Link>
         </div>
         <div className="search-wrapper">
-          <input type="text" className="" placeholder="Search" />
-          <button type="submit">
+          <input
+            type="text"
+            className=""
+            placeholder="Search by title name"
+            value={this.state.searchValue}
+            onChange={evt => this.updateInputValue(evt)}
+          />
+          <button type="submit" onClick={() => this.search()}>
             <FaSearch />
           </button>
         </div>

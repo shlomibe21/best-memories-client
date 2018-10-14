@@ -7,9 +7,9 @@ export const fetchAlbumsSuccess = albums => ({
   albums
 });
 
-export const fetchAlbums = () => (dispatch, getState) => {
+export const fetchAlbums = (searchText) => (dispatch, getState) => {
   const authToken = getState().auth.authToken;
-  return fetch(`${API_BASE_URL}/albums`, {
+  return fetch(`${API_BASE_URL}/albums?text=${searchText}`, {
     method: "GET",
     headers: {
       // Provide user's auth token as credentials
@@ -408,11 +408,11 @@ export const awsS3UploadFile = (file, signedRequest, url) => {
 // TODO: Delete always returns status=200 even if object is not there.
 // Therefore we need to check the object's head to confirm that the
 // object is not there anymore
-export const awsS3DeleteFile = fileName => (dispach) => {
+export const awsS3DeleteFile = fileName => dispach => {
   return fetch(`${API_BASE_URL}/albums/delete-object-s3`, {
     method: "DELETE",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "application/json"
     },
     body: JSON.stringify({
       fileName

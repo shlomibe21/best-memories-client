@@ -11,6 +11,13 @@ import "./album.css";
 import { FaSearch } from "react-icons/fa";
 
 export class Album extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchValue: ""
+    };
+  }
+
   componentDidMount() {
     this.props.dispatch(fetchSingleAlbum(this.props.match.params.index));
   }
@@ -18,7 +25,11 @@ export class Album extends React.Component {
   render() {
     const files = this.props.album.files.map((file, index) => (
       <li key={index} className="col-3">
-        <MediaFile index={index} albumIndex = {this.props.match.params.index} {...file} />
+        <MediaFile
+          index={index}
+          albumIndex={this.props.match.params.index}
+          {...file}
+        />
       </li>
     ));
 
@@ -30,7 +41,13 @@ export class Album extends React.Component {
           <Link to={`/new-files/${this.props.album.id}`}>Add Files</Link>
         </div>
         <div className="search-wrapper">
-          <input type="text" className="" placeholder="Search" />
+          <input
+            type="text"
+            className=""
+            placeholder="Search by media name"
+            value={this.state.searchValue}
+            onChange={evt => this.updateInputValue(evt)}
+          />
           <button type="submit">
             <FaSearch />
           </button>
