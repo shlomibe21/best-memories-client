@@ -11,7 +11,7 @@ export const renderDropzoneInput = field => {
   return (
     <div>
       <Dropzone
-        name={field.name} accept="image/jpeg, image/png"
+        name={field.name}
         onDrop={(filesToUpload, e) => field.input.onChange(filesToUpload)}
         className="dropzone"
       >
@@ -24,7 +24,6 @@ export const renderDropzoneInput = field => {
               {files.map((file, i) => (
                 <li className="media-file-wrapper" key={i}>
                   <div>
-                    <img src={file.preview} alt="file preview" />
                   </div>
                   <div>{file.name}</div>
                 </li>

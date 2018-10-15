@@ -1,0 +1,51 @@
+.modal {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  text-align: center;
+  z-index: 1; /* Sit on top */
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.9); /* Create overlay - black w/ opacity */
+}
+
+/* Centered child element */
+.centered-content {
+  position: fixed;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-bottom: 100px;
+}
+
+/* The modal's close button */
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 25px;
+  width: 40px;
+  height: 40px;
+  line-height: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  background: #2196f3;
+  color: white;
+  font-size: 25px;
+}
+
+.modal-close:hover {
+  background-color: red;
+}
+
+/* Make Youtube IFRAME responsive */
+.media-wrapper img {
+  width: auto;
+  height: auto;
+  max-width: 80%;
+  max-height: 80%;
+}

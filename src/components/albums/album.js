@@ -9,12 +9,15 @@ import { fetchSingleAlbum } from "../../actions/albums";
 import "./album.css";
 
 import { FaSearch } from "react-icons/fa";
+import MediaLightbox from "./media-lightbox";
 
 export class Album extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchValue: ""
+      searchValue: "",
+      displayLightbox: false,
+      index: 0
     };
   }
 
@@ -22,6 +25,20 @@ export class Album extends React.Component {
     this.props.dispatch(fetchSingleAlbum(this.props.match.params.index));
   }
 
+  displayLightboxHandler(index) {
+    console.log(index);
+    this.setState({
+      displayLightbox: true,
+      index: index
+    });
+  }
+
+  closeLightboxHandler() {
+    console.log("DONT DISPLAY!!!");
+    this.setState({
+      displayLightbox: false
+    });
+  }
   render() {
     const files = this.props.album.files.map((file, index) => (
       <li key={index} className="col-3">
@@ -29,9 +46,21 @@ export class Album extends React.Component {
           index={index}
           albumIndex={this.props.match.params.index}
           {...file}
+          displayLightboxClicked={this.displayLightboxHandler.bind(this, index)}
         />
       </li>
     ));
+
+    let lightBox;
+    if (this.state.displayLightbox) {
+      lightBox = (
+        <MediaLightbox
+          index={this.state.index}
+          {...files}
+          hideLightboxClicked={this.closeLightboxHandler.bind(this)}
+        />
+      );
+    }
 
     return (
       <div className="centered-container">
@@ -52,7 +81,8 @@ export class Album extends React.Component {
             <FaSearch />
           </button>
         </div>
-        <ul className="row album-container">{files}</ul>
+        <ul className="row album-container">{files} </ul>
+        {lightBox}
       </div>
     );
   }

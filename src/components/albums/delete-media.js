@@ -17,6 +17,7 @@ export class DeleteMedia extends React.Component {
       )
     );
   }
+  
   // TODO: change name to deleteMedia
   deleteFile() {
     return this.props
