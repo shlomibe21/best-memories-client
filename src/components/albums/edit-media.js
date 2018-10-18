@@ -23,12 +23,13 @@ class EditMedia extends React.Component {
 
   onSubmit(values) {
     console.log("edit-media Values:", values);
+    let frontEndFileName = values.files[0].fileName;
     return this.props
       .dispatch(
         updateSingleFile(
           `${this.props.match.params.albumId}`,
           `${this.props.match.params.fileId}`,
-          values.files[0].fileName,
+          frontEndFileName,
           values.files[0].comment
         )
       )

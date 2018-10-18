@@ -41,7 +41,7 @@ export class Dashboard extends React.Component {
     ));
 
     return (
-      <div className="dashboard centered-container">
+      <div className="dashboard centered-container centered-text">
         <p>My Albums</p>
         <div className="dashboard-username">
           Username: {this.props.username}
@@ -53,7 +53,7 @@ export class Dashboard extends React.Component {
           <input
             type="text"
             className=""
-            placeholder="Search by title name"
+            placeholder="Search by album name"
             value={this.state.searchValue}
             onChange={evt => this.updateInputValue(evt)}
           />

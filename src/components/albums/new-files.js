@@ -1,11 +1,10 @@
 import React from "react";
-import { reduxForm, Field } from "redux-form";
+import { reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import moment from "moment";
-
+import Dropzone from "react-dropzone";
 import requiresLogin from "../authorization/requires-login";
-import { renderDropzoneInput } from "../common/dropzone";
 import {
   fetchSingleAlbum,
   addNewFiles,
@@ -13,36 +12,50 @@ import {
 } from "../../actions/albums";
 
 import "./new-files.css";
-
-const FILE_FIELD_NAME = "files";
+import "../common/dropzone.css";
 
 export class NewFiles extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      accepted: [],
+      rejected: [],
+      uploading: false
+    };
+  }
+
   componentDidMount() {
     this.props.dispatch(fetchSingleAlbum(this.props.match.params.index));
   }
 
   onSubmit(values) {
+    this.setState({
+      uploading: true
+    });
     //console.log(values);
     // Get the desired data from each media file and create a new array of objects to send to db
     let files = [];
     let promises = [];
-    const dateNow = moment(new Date()).format("YYYY-MM-DD");
     if (values.files) {
-      promises = values.files.map((file, i) => {
+      const dateNow = moment(new Date())
+        .utc()
+        .format("YYYY-MM-DD");
+      promises = this.state.accepted.map((file, i) => {
+        const timeNow = Date.now();
+        const fileName = timeNow + "-" + file.name;
         files.push({
-          fileName: file.name,
+          fileName: fileName,
+          frontEndFileName: file.name,
           dateAdded: dateNow,
           comment: "",
-          storageLocation: `https://s3-us-west-1.amazonaws.com/albums-test/${
-            file.name
-          }`,
+          storageLocation: `https://s3-us-west-1.amazonaws.com/albums-test/${fileName}`,
           positionTop: "0px",
           positionLeft: "0px"
         });
-        return this.props.dispatch(awsS3GetSignedRequest(file));
+        return this.props.dispatch(awsS3GetSignedRequest(file, fileName));
       });
     }
-    Promise.all(promises).then(() => {
+    return Promise.all(promises).then(() => {
       return this.props
         .dispatch(addNewFiles(this.props.match.params.index, files))
         .then(() =>
@@ -57,11 +70,16 @@ export class NewFiles extends React.Component {
         <div className="message message-error">{this.props.error}</div>
       );
     }
-    //let files;
-    console.log(this.props.album);
+    if (this.state.uploading) {
+      return (
+        <div className="spinnerModal">
+        <p>Please waite...</p>
+        </div>
+      );
+    }
     return (
       <form
-        className="new-files centered-container"
+        className="new-files centered-container centered-text"
         onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}
       >
         <p>Add Files</p>
@@ -70,8 +88,36 @@ export class NewFiles extends React.Component {
           Add Files
         </button>
         <div>
-          <label htmlFor={FILE_FIELD_NAME} />
-          <Field name={FILE_FIELD_NAME} component={renderDropzoneInput} />
+          <section>
+            <div className="">
+              <Dropzone
+                accept="image/*"
+                onDrop={(accepted, rejected) => {
+                  this.setState({ accepted, rejected });
+                }}
+                className="dropzone"
+              >
+                <div>Drop files here, or click to select files to upload.</div>
+                <ul>
+                  {this.state.accepted.map(file => (
+                    <li key={file.name}>
+                      {file.name} - {file.size} bytes
+                    </li>
+                  ))}
+                </ul>
+              </Dropzone>
+            </div>
+            <aside>
+              <h2>Rejected files</h2>
+              <ul>
+                {this.state.rejected.map(file => (
+                  <li key={file.name}>
+                    {file.name} - {file.size} bytes
+                  </li>
+                ))}
+              </ul>
+            </aside>
+          </section>
         </div>
       </form>
     );

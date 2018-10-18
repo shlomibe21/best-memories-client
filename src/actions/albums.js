@@ -7,7 +7,7 @@ export const fetchAlbumsSuccess = albums => ({
   albums
 });
 
-export const fetchAlbums = (searchText) => (dispatch, getState) => {
+export const fetchAlbums = searchText => (dispatch, getState) => {
   const authToken = getState().auth.authToken;
   return fetch(`${API_BASE_URL}/albums?text=${searchText}`, {
     method: "GET",
@@ -39,7 +39,7 @@ export const fetchSingleAlbumError = error => ({
   error
 });
 
-export const fetchSingleAlbum = id => (dispatch, getState) => {
+export const fetchSingleAlbum = (id) => (dispatch, getState) => {
   const authToken = getState().auth.authToken;
   return fetch(`${API_BASE_URL}/albums/${id}`, {
     method: "GET",
@@ -61,6 +61,29 @@ export const fetchSingleAlbum = id => (dispatch, getState) => {
       dispatch(fetchSingleAlbumError(err));
     });
 };
+
+/*export const searchSingleAlbum = (id, searchText) => (dispatch, getState) => {
+    const authToken = getState().auth.authToken;
+    return fetch(`${API_BASE_URL}/albums/search/${id}?text=${searchText}`, {
+      method: "GET",
+      headers: {
+        // Provide our auth token as credentials
+        Authorization: `Bearer ${authToken}`
+      }
+    })
+      .then(res => {
+        if (!res.ok) {
+          return Promise.reject(res.statusText);
+        }
+        return res.json();
+      })
+      .then(albums => {
+        dispatch(fetchSingleAlbumSuccess(albums));
+      })
+      .catch(err => {
+        dispatch(fetchSingleAlbumError(err));
+      });
+  };*/
 
 export const ADD_ALBUM = "ADD_ALBUM";
 export const addAlbum = albumName => ({
@@ -115,7 +138,7 @@ export const updateSingleAlbumSuccess = album => ({
   album
 });
 
-export const updateSingleAlbum = (id, albumName, comment, files) => (
+export const updateSingleAlbum = (id, albumName, frontEndFileName, comment, files) => (
   dispatch,
   getState
 ) => {
@@ -129,6 +152,7 @@ export const updateSingleAlbum = (id, albumName, comment, files) => (
     body: JSON.stringify({
       id,
       albumName,
+      frontEndFileName,
       comment,
       files
     })
@@ -282,10 +306,12 @@ export const fetchSingleFile = (albumId, fileId) => (dispatch, getState) => {
     });
 };
 
-export const updateSingleFile = (albumId, fileId, fileName, comment) => (
-  dispatch,
-  getState
-) => {
+export const updateSingleFile = (
+  albumId,
+  fileId,
+  frontEndFileName,
+  comment
+) => (dispatch, getState) => {
   const authToken = getState().auth.authToken;
   return fetch(`${API_BASE_URL}/albums/${albumId}/${fileId}`, {
     method: "PATCH",
@@ -296,7 +322,7 @@ export const updateSingleFile = (albumId, fileId, fileName, comment) => (
     body: JSON.stringify({
       albumId,
       fileId,
-      fileName,
+      frontEndFileName,
       comment
     })
   })
@@ -369,36 +395,45 @@ export const deleteSingleFile = (albumId, fileId) => (dispatch, getState) => {
     });
 };
 
-export const awsS3GetSignedRequest = file => dispach => {
-  const xhr = new XMLHttpRequest();
-  xhr.open(
-    "GET",
-    `${API_BASE_URL}/albums/sign-s3?file-name=${encodeURIComponent(
-      file.name
-    )}&file-type=${encodeURIComponent(file.type)}`
-  );
-  xhr.setRequestHeader("authorization", "bearer " + localStorage.authToken);
-  xhr.onreadystatechange = () => {
-    if (xhr.readyState === 4) {
-      if (xhr.status === 200) {
-        const response = JSON.parse(xhr.responseText);
-        awsS3UploadFile(file, response.signedRequest, response.url);
-      } else {
-        alert("Could not get signed URL.");
+export const awsS3GetSignedRequest = (file, fileName) => dispach => {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open(
+      "GET",
+      `${API_BASE_URL}/albums/sign-s3?file-name=${encodeURIComponent(
+        fileName
+      )}&file-type=${encodeURIComponent(file.type)}`
+    );
+    xhr.setRequestHeader("authorization", "bearer " + localStorage.authToken);
+    xhr.onreadystatechange = () => {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          const response = JSON.parse(xhr.responseText);
+          awsS3UploadFile(
+            file,
+            response.signedRequest,
+            response.url,
+            resolve,
+            reject
+          );
+        } else {
+          reject("Could not get signed URL.");
+        }
       }
-    }
-  };
-  xhr.send();
+    };
+    xhr.send();
+  });
 };
 
-export const awsS3UploadFile = (file, signedRequest, url) => {
+export const awsS3UploadFile = (file, signedRequest, url, resolve, reject) => {
   const xhr = new XMLHttpRequest();
   xhr.open("PUT", signedRequest);
   xhr.onreadystatechange = () => {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
+        resolve();
       } else {
-        alert("Could not upload file.");
+        reject(xhr.responseText);
       }
     }
   };

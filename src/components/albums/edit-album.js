@@ -16,17 +16,24 @@ import "./edit-album.css";
 class EditAlbum extends React.Component {
   componentDidMount() {
     this.props.dispatch(fetchSingleAlbum(this.props.match.params.index));
+    /*this.props.router.setRouteLeaveHook(this.props.route, () => {
+        if (!this.state.submitted) {
+          return 'You have unsaved changes. Exit the page?';
+        }
+      });*/
   }
 
   onSubmit(values) {
     //console.log("values", values);
     // Get the desired data from each media file and create a new array of objects to send to db
     let files = [];
-    const dateNow = moment(new Date()).format("YYYY-MM-DD");
+    const timeNow = Date.now();
+    const dateNow = moment(timeNow).format("YYYY-MM-DD");
     if (values.files) {
       values.files.map((file, i) =>
         files.push({
-          fileName: file.name,
+          fileName: timeNow + "-" + file.name,
+          frontEndFileName: file.name,
           dateAdded: dateNow,
           comment: "",
           storageLocation: "",
@@ -41,6 +48,7 @@ class EditAlbum extends React.Component {
         updateSingleAlbum(
           values.id,
           values.albumName,
+          values.frontEndFileName,
           values.comment,
           values.files
         )
@@ -59,11 +67,17 @@ class EditAlbum extends React.Component {
     let files;
     if (this.props.initialValues) {
       if (this.props.initialValues.dateCreated) {
-        this.props.initialValues.dateCreated = moment(this.props.initialValues.dateCreated).format("YYYY-MM-DD");
+        this.props.initialValues.dateCreated = moment(
+          this.props.initialValues.dateCreated
+        ).format("YYYY-MM-DD");
       }
       files = this.props.initialValues.files.map((file, index) => (
         <li key={index} className="col-3">
-          <MediaFile index={index} albumIndex = {this.props.match.params.index} {...file} />
+          <MediaFile
+            index={index}
+            albumIndex={this.props.match.params.index}
+            {...file}
+          />
         </li>
       ));
     }
@@ -72,38 +86,40 @@ class EditAlbum extends React.Component {
         <form
           onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}
         >
-          <p>Edit Album</p>
-          {errorMessage}
-          <div>
-            <Field
-              label="Album Name"
-              component={Input}
-              type="text"
-              name="albumName"
-              id="albumname"
-              validate={[required, nonEmpty]}
-            />
-          </div>
-          <p>
-            Date Created:
-            {this.props.initialValues
-              ? this.props.initialValues.dateCreated
-              : ""}
-          </p>
-          <div>
-            <Field
-              label="Comment"
-              component={Input}
-              type="textarea"
-              name="comment"
-              id="comment"
-            />
+          <div className="edit-album-form centered-container">
+            <p>Edit Album</p>
+            {errorMessage}
+            <div>
+              <Field
+                label="Album Name"
+                component={Input}
+                type="text"
+                name="albumName"
+                id="albumname"
+                validate={[required, nonEmpty]}
+              />
+            </div>
+            <p>
+              Date Created:
+              {this.props.initialValues
+                ? this.props.initialValues.dateCreated
+                : ""}
+            </p>
+            <div>
+              <Field
+                label="Comment"
+                component={Input}
+                type="textarea"
+                name="comment"
+                id="comment"
+              />
+            </div>
+            <button type="submit">Submit</button>
+            <Link to="/dashboard">
+              <button type="button">Cancel</button>
+            </Link>
           </div>
           <ul className="row album-container">{files}</ul>
-          <button type="submit">Submit</button>
-          <Link to="/dashboard">
-            <button type="button">Cancel</button>
-          </Link>
         </form>
       </div>
     );

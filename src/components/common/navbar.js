@@ -15,29 +15,51 @@ export class NavBar extends React.Component {
   render() {
     // Render either log-in or log-out on nav-bar according to the state
     let logInOutOption;
+    let userName = "";
+    let logoLink;
+
     if (this.props.loggedIn) {
+      logoLink = "/dashboard";
+      if (this.props.currentUser) {
+        userName = <div>User: {this.props.currentUser.username} | </div>;
+      }
       logInOutOption = (
-        <Link to="/" onClick={() => this.logOut()}>
-          Log out
-        </Link>
+        <div>
+          <Link to="/" onClick={() => this.logOut()}>
+            Log out
+          </Link>
+        </div>
       );
     } else {
-      logInOutOption = <Link to="/login">Login</Link>;
+        logoLink = "/";
+      logInOutOption = (
+        <div>
+          <Link to="/login">Login</Link>
+        </div>
+      );
     }
 
     return (
       <div className="nav-bar">
-        <p className="logo">
-          <a href="/">BestMemories</a>
+        <div>
+          <p className="logo">
+            <Link to={logoLink}>BestMemories</Link>
+          </p>
+        </div>
+        <div className="topnav-menu-right">
+          {userName}
           {logInOutOption}
-        </p>
+        </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  loggedIn: state.auth.currentUser !== null
-});
+const mapStateToProps = state => {
+  return {
+    currentUser: state.auth.currentUser,
+    loggedIn: state.auth.currentUser !== null
+  };
+};
 
 export default connect(mapStateToProps)(NavBar);

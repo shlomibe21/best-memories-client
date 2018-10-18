@@ -5,7 +5,7 @@ import { FaSearch } from "react-icons/fa";
 
 export default function albumsList(props) {
   return (
-    <div className="centered-container">
+    <div className="centered-container centered-text">
       <p>{this.props.album.albumName}</p>
       <div className="selection-area">
         <Link to="/dashboard">Dashboard</Link>

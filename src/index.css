@@ -10,15 +10,29 @@ html {
 }
 
 body {
-  font-family: "Roboto", sans-serif;
+  font-family: "Archivo", sans-serif;
   position: relative;
   margin: 0;
   min-height: 100%;
-  padding-bottom: 60px;
+  padding-bottom: 6rem;
 }
 
 main {
   margin-bottom: 50px;
+}
+
+input,
+select,
+textarea {
+  font-size: 16px;
+}
+
+h1 {
+  font-size: 40px;
+}
+
+h2 {
+  font-size: 25px;
 }
 
 ul {
@@ -26,6 +40,12 @@ ul {
   margin-top: 15px;
   margin-bottom: 15px;
   list-style-type: none;
+}
+
+fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
 }
 
 .flex-container {
@@ -41,8 +61,12 @@ ul {
 }
 
 .centered-container {
+  width: 80%;
   margin-left: auto;
   margin-right: auto;
+}
+
+.centered-text {
   text-align: center;
 }
 
@@ -79,8 +103,19 @@ ul {
   color: #ff0000;
 }
 
+.btn:disabled {
+  background: #0694c7;
+  background-image: -webkit-linear-gradient(top, #0694c7, #8fc0e0);
+  background-image: -moz-linear-gradient(top, #0694c7, #8fc0e0);
+  background-image: -ms-linear-gradient(top, #0694c7, #8fc0e0);
+  background-image: -o-linear-gradient(top, #0694c7, #8fc0e0);
+  background-image: linear-gradient(to bottom, #0694c7, #8fc0e0);
+  text-decoration: none;
+  color: lightgray;
+}
+
 .form-input {
-  width: 40%;
+  width: 100%;
   height: 40px;
   margin: 10px;
   /*border-radius: 4px;*/
@@ -88,6 +123,55 @@ ul {
   outline: 0;
   box-shadow: none;
   padding-left: 8px;
+}
+
+form .form-error {
+  margin-top: 0px;
+  padding-left: 15px;
+  padding-bottom: 0px;
+  /*visibility: hidden;*/
+  color: red;
+  font-size: 18px;
+}
+
+.registration-page,
+.login-page {
+  /*background: url("./images/frame-1668890_1920.png") no-repeat center fixed;
+  background-position: 40px 70px;
+  background-size: 90%;
+  height: 1500px;*/
+}
+
+.registration-form,
+.login-form {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+}
+
+.registration-form label,
+.login-form label {
+  margin-top: 20px;
+  padding-left: 15px;
+  /*visibility: hidden;*/
+  color: blue;
+  font-size: 18px;
+}
+
+.registration-form input,
+.login-form input {
+  height: 30px;
+  margin-bottom: 10px;
+  border-radius: 0px;
+  border: 0;
+  outline: 0;
+  box-shadow: none;
+  background-color: rgba(255, 255, 255, 0);
+  border-bottom: solid 2px blue;
+}
+
+form .btn {
+  width: 100%;
+  margin-top: 40px;
 }
 
 .search-wrapper {
@@ -147,4 +231,27 @@ ul {
   color: #0b7dda;
   background: none;
   cursor: pointer;
+}
+
+.spinnerModal {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    text-align: center;
+    z-index: 1; /* Sit on top */
+    overflow: auto;
+    background: url("./images/ajax-indicator-circle-ball-blue.gif") no-repeat center fixed;
+    background-color: rgba(0, 0, 0, 0.9); /* Create overlay - black w/ opacity */
+  }
+
+@media screen and (min-width: 600px) {
+  .centered-container.narrow {
+    max-width: 450px;
+  }
+
+  .centered-container {
+    max-width: 960px;
+  }
 }

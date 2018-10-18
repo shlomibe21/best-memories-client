@@ -3,21 +3,26 @@ footer {
   right: 0;
   bottom: 0;
   left: 0;
-  height: 70px;
+  height: 90px;
   background: #012c7a;
   background-image: -webkit-linear-gradient(top, #012c7a, #4a81e6);
   background-image: -moz-linear-gradient(top, #012c7a, #4a81e6);
   background-image: -ms-linear-gradient(top, #012c7a, #4a81e6);
   background-image: -o-linear-gradient(top, #012c7a, #4a81e6);
   background-image: linear-gradient(to bottom, #012c7a, #4a81e6);
-  text-align: center;
+  display: flex;
+  align-items: center;
 }
 
 footer p {
-  display: inline-block;
-  vertical-align: middle;
   color: white;
-  font-size: 1.1em;
-  margin-bottom: 0;
-  padding-bottom: 10px;
+  font-size: 1em;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media only screen and (min-width: 640px) {
+  footer p {
+    font-size: 1.5em;
+  }
 }

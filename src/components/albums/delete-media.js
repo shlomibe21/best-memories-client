@@ -37,7 +37,7 @@ export class DeleteMedia extends React.Component {
   render() {
     let fileName;
     if (this.props.file && this.props.file) {
-      fileName = this.props.file.files[0].fileName;
+      fileName = this.props.file.files[0].frontEndFileName;
     }
     return (
       <div>

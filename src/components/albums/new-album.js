@@ -3,42 +3,57 @@ import { reduxForm, Field, focus } from "redux-form";
 import { withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import Dropzone from "react-dropzone";
 
 import requiresLogin from "../authorization/requires-login";
 import Input from "../forms/input";
-import { renderDropzoneInput } from "../common/dropzone";
 
 import { addNewAlbum, awsS3GetSignedRequest } from "../../actions/albums";
 import { required, nonEmpty } from "../../validators";
 
 import "./new-album.css";
-
-const FILE_FIELD_NAME = "files";
+import "../common/dropzone.css";
 
 export class NewAlbum extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      acceptedFiles: [],
+      rejectedFiles: []
+    };
+  }
+
   onSubmit(values) {
-    console.log(values);
+    //console.log(values);
     // Get the desired data from each media file and create a new array of objects to send to db
     let files = [];
-    const dateNow = moment(new Date()).utc().format("YYYY-MM-DD");
-    if (values.files) {
-      values.files.map((file, i) => {
-        this.props.dispatch(awsS3GetSignedRequest(file));
+    let promises = [];
+    const dateNow = moment(new Date())
+      .utc()
+      .format("YYYY-MM-DD");
+    if (this.state.acceptedFiles) {
+      promises = this.state.acceptedFiles.map((file, i) => {
+        const timeNow = Date.now();
+        const fileName = timeNow + "-" + file.name;
         files.push({
-          fileName: file.name,
+          fileName: fileName,
+          frontEndFileName: file.name,
           dateAdded: dateNow,
           comment: values.comment,
-          storageLocation: `https://s3-us-west-1.amazonaws.com/albums-test/${file.name}`,
+          storageLocation: `https://s3-us-west-1.amazonaws.com/albums-test/${fileName}`,
           positionTop: "0px",
           positionLeft: "0px"
         });
-        return file;
+        return this.props.dispatch(awsS3GetSignedRequest(file, fileName));
       });
     }
 
-    return this.props
-      .dispatch(addNewAlbum(values.albumName, dateNow, values.comment, files))
-      .then(() => this.props.history.push("/dashboard"));
+    return Promise.all(promises).then(responses => {
+      console.log(responses);
+      return this.props
+        .dispatch(addNewAlbum(values.albumName, dateNow, values.comment, files))
+        .then(() => this.props.history.push("/dashboard"));
+    });
   }
   render() {
     let errorMessage;
@@ -49,7 +64,7 @@ export class NewAlbum extends React.Component {
     }
     return (
       <form
-        className="new-album centered-container"
+        className="new-album centered-container centered-text"
         onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}
         encType="multipart/form-data"
       >
@@ -84,25 +99,55 @@ export class NewAlbum extends React.Component {
           </button>
         </Link>
         <div>
-          <label htmlFor={FILE_FIELD_NAME} />
-          <Field name={FILE_FIELD_NAME} component={renderDropzoneInput} />
+          <section>
+            <div className="">
+              <Dropzone
+                accept="image/*"
+                onDrop={(acceptedFiles, rejectedFiles) => {
+                  this.setState({ acceptedFiles, rejectedFiles });
+                }}
+                className="dropzone"
+              >
+                <div>Drop files here, or click to select files to upload.</div>
+                <ul>
+                  {this.state.acceptedFiles.map(file => (
+                    <li key={file.name}>
+                      {file.name} - {file.size} bytes
+                    </li>
+                  ))}
+                </ul>
+              </Dropzone>
+            </div>
+            <aside>
+              <h2>Rejected files</h2>
+              <ul>
+                {this.state.rejectedFiles.map(file => (
+                  <li key={file.name}>
+                    {file.name} - {file.size} bytes
+                  </li>
+                ))}
+              </ul>
+            </aside>
+          </section>
         </div>
       </form>
     );
   }
 }
 
-export default requiresLogin()(withRouter(
-  reduxForm({
-    form: "NewAlbum",
-    onSubmitSuccess: (results, dispatch) => {
-      //window.location = "/dashboard";
-    },
-    onSubmitFail: (errors, dispatch) => {
-      dispatch(focus("NewAlbum", "albumName"));
-      if (!errors) {
-        alert("Error: couldn't add a new album!");
+export default requiresLogin()(
+  withRouter(
+    reduxForm({
+      form: "NewAlbum",
+      onSubmitSuccess: (results, dispatch) => {
+        //window.location = "/dashboard";
+      },
+      onSubmitFail: (errors, dispatch) => {
+        dispatch(focus("NewAlbum", "albumName"));
+        if (!errors) {
+          alert("Error: couldn't add a new album!");
+        }
       }
-    }
-  })(NewAlbum)
-));
+    })(NewAlbum)
+  )
+);

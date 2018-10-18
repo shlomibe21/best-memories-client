@@ -19,7 +19,7 @@ export default class MediaFile extends React.Component {
           <img className="" src={this.props.storageLocation} alt="media file" />
         </a>
         <div>
-          <p className="file-name">{this.props.fileName}</p>
+          <p className="file-name">{this.props.frontEndFileName}</p>
           <p className="file-date">{this.props.dateAdded}</p>
           <p className="file-description">{this.props.description}</p>
         </div>

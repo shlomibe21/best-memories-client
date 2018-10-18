@@ -1,65 +1,100 @@
-import React from 'react';
-import {Field, reduxForm, focus} from 'redux-form';
-import {registerUser} from '../../actions/users';
-import {login} from '../../actions/auth';
-import Input from '../forms/input';
-import {required, nonEmpty, matches, length, isTrimmed} from '../../validators';
-const passwordLength = length({min: 10, max: 72});
-const matchesPassword = matches('password');
+import React from "react";
+import { Field, reduxForm, focus } from "redux-form";
+import { registerUser } from "../../actions/users";
+import { login } from "../../actions/auth";
+import Input from "../forms/input";
+import {
+  required,
+  nonEmpty,
+  matches,
+  length,
+  isTrimmed
+} from "../../validators";
+
+import "./registration-form.css";
+
+const passwordLength = length({ min: 10, max: 72 });
+const matchesPassword = matches("password");
 
 export class RegistrationForm extends React.Component {
-    onSubmit(values) {
-        const {username, password, firstName, lastName} = values;
-        const user = {username, password, firstName, lastName};
-        return this.props
-            .dispatch(registerUser(user))
-            .then(() => this.props.dispatch(login(username, password)));
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      editField: false
+    };
+  }
 
-    render() {
-        return (
-            <form
-                className="registration-form"
-                onSubmit={this.props.handleSubmit(values =>
-                    this.onSubmit(values)
-                )}>
-                <label htmlFor="firstName">First name</label>
-                <Field component={Input} type="text" name="firstName" />
-                <label htmlFor="lastName">Last name</label>
-                <Field component={Input} type="text" name="lastName" />
-                <label htmlFor="username">Username</label>
-                <Field
-                    component={Input}
-                    type="text"
-                    name="username"
-                    validate={[required, nonEmpty, isTrimmed]}
-                />
-                <label htmlFor="password">Password</label>
-                <Field
-                    component={Input}
-                    type="password"
-                    name="password"
-                    validate={[required, passwordLength, isTrimmed]}
-                />
-                <label htmlFor="passwordConfirm">Confirm password</label>
-                <Field
-                    component={Input}
-                    type="password"
-                    name="passwordConfirm"
-                    validate={[required, nonEmpty, matchesPassword]}
-                />
-                <button
-                    type="submit"
-                    disabled={this.props.pristine || this.props.submitting}>
-                    Register
-                </button>
-            </form>
-        );
-    }
+  onSubmit(values) {
+    const { username, password, firstName, lastName } = values;
+    const user = { username, password, firstName, lastName };
+    return this.props
+      .dispatch(registerUser(user))
+      .then(() => this.props.dispatch(login(username, password)));
+  }
+
+  render() {
+    return (
+      <form
+        className="registration-form centered-container narrow"
+        onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}
+      >
+        <h2 className="centered-text">Register</h2>
+        <Field
+          label="*First name"
+          component={Input}
+          type="text"
+          name="firstName"
+          placeholder="*First name"
+          validate={[required, nonEmpty]}
+          //onFocus={e => (e.target.placeholder = "")}
+          //onBlur={e => (e.target.placeholder = "*First name")}
+        />
+        <Field
+          label="*Last Name"
+          component={Input}
+          type="text"
+          name="lastName"
+          placeholder="*Last name"
+          validate={[required, nonEmpty]}
+        />
+        <Field
+          label="*Username"
+          component={Input}
+          type="text"
+          name="username"
+          placeholder="*Username"
+          validate={[required, nonEmpty, isTrimmed]}
+        />
+        <Field
+          label="*Password"
+          component={Input}
+          type="password"
+          name="password"
+          placeholder="Min. 10 characters"
+          validate={[required, passwordLength, isTrimmed]}
+        />
+        <Field
+          label="*Confirm password"
+          component={Input}
+          type="password"
+          name="passwordConfirm"
+          placeholder="*Confirm Password"
+          validate={[required, nonEmpty, matchesPassword]}
+        />
+        <button
+          type="submit"
+          className="btn"
+          disabled={this.props.pristine || this.props.submitting}
+        >
+          Register
+        </button>
+      </form>
+    );
+  }
 }
 
 export default reduxForm({
-    form: 'registration',
-    onSubmitFail: (errors, dispatch) =>
-        dispatch(focus('registration', Object.keys(errors)[0]))
+  form: "registration",
+  onSubmitFail: (errors, dispatch) =>
+    dispatch(focus("registration", Object.keys(errors)[0]))
 })(RegistrationForm);

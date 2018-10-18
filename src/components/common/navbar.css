@@ -8,13 +8,13 @@
   background-image: -o-linear-gradient(top, #012c7a, #4a81e6);
   background-image: linear-gradient(to bottom, #012c7a, #4a81e6);
   color: red;
+  display: flex;
+  align-items: center;
 }
 
 .nav-bar .logo {
-  display: inline-block;
-  vertical-align: middle;
   color: white;
-  padding-left: 20px;
+  padding-left: 5px;
   font-size: 1.2em;
 }
 
@@ -23,8 +23,31 @@
   text-decoration: none;
 }
 
-.top-nav {
+.topnav-menu-right {
   position: absolute;
-  right: 20px;
-  top: 18px;
+  display: inline-flex;
+  right: 0px;
+  color: white;
+  font-size: 1em;
+  text-decoration: none;
+  margin-right: 5px;
+  margin-left: 10px;
+}
+
+.topnav-menu-right a {
+  color: white;
+  text-decoration: none;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+@media only screen and (min-width: 640px) {
+  .nav-bar .logo {
+    font-size: 2.2em;
+    padding-left: 20px;
+  }
+
+  .topnav-menu-right {
+    font-size: 1.3em;
+  }
 }

@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 
 export function HomePage(props) {
   let loginLink;
-  if (!props.loggedIn) {
-    loginLink = <Link to="/login">Login</Link>;
-  }
+  //if (!props.loggedIn) {
+    //loginLink = <Link to="/login">Login</Link>;
+  //}
   return (
-    <div className="home centered-container">
-      <h2>Welcome to Best Memories</h2>
-      <Link to="/dashboard">Dashboard</Link>
+    <div className="home centered-container centered-text">
+      <h1>Welcome to Best Memories</h1>
+      <Link className="btn" to="/dashboard">Let's Start!</Link>
       {loginLink}
     </div>
   );
