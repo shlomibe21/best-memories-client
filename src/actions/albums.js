@@ -1,6 +1,8 @@
 import { API_BASE_URL } from "../config";
 import { SubmissionError } from "redux-form";
 
+import { normalizeResponseErrors } from "./utils";
+
 export const FETCH_ALBUMS_SUCCESS = "FETCH_ALBUMS_SUCCESS";
 export const fetchAlbumsSuccess = albums => ({
   type: FETCH_ALBUMS_SUCCESS,
@@ -39,7 +41,7 @@ export const fetchSingleAlbumError = error => ({
   error
 });
 
-export const fetchSingleAlbum = (id) => (dispatch, getState) => {
+export const fetchSingleAlbum = id => (dispatch, getState) => {
   const authToken = getState().auth.authToken;
   return fetch(`${API_BASE_URL}/albums/${id}`, {
     method: "GET",
@@ -109,18 +111,15 @@ export const addNewAlbum = (albumName, dateCreated, comment, files) => (
       files
     })
   })
-    .then(res => {
-      if (!res.ok) {
-        return Promise.reject(res.statusText);
-      }
-    })
+    .then(res => normalizeResponseErrors(res))
+    .then(res => res.json())
     .catch(err => {
-      const { reason, message, location } = err;
+      const { reason, message } = err;
       if (reason === "ValidationError") {
         // Convert ValidationErrors into SubmissionErrors for Redux Form
         return Promise.reject(
           new SubmissionError({
-            [location]: message
+            _error: message
           })
         );
       }
@@ -138,10 +137,13 @@ export const updateSingleAlbumSuccess = album => ({
   album
 });
 
-export const updateSingleAlbum = (id, albumName, frontEndFileName, comment, files) => (
-  dispatch,
-  getState
-) => {
+export const updateSingleAlbum = (
+  id,
+  albumName,
+  frontEndFileName,
+  comment,
+  files
+) => (dispatch, getState) => {
   const authToken = getState().auth.authToken;
   return fetch(`${API_BASE_URL}/albums/${id}`, {
     method: "PUT",
@@ -157,18 +159,15 @@ export const updateSingleAlbum = (id, albumName, frontEndFileName, comment, file
       files
     })
   })
-    .then(res => {
-      if (!res.ok) {
-        return Promise.reject(res.statusText);
-      }
-    })
+    .then(res => normalizeResponseErrors(res))
+    .then(res => res.json())
     .catch(err => {
-      const { reason, message, location } = err;
+      const { reason, message } = err;
       if (reason === "ValidationError") {
         // Convert ValidationErrors into SubmissionErrors for Redux Form
         return Promise.reject(
           new SubmissionError({
-            [location]: message
+            _error: message
           })
         );
       }

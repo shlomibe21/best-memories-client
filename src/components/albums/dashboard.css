@@ -3,3 +3,9 @@
   margin-top: 20px;
   /*border: solid 1px black;*/
 }
+
+.emapty-page-msg {
+    font-size: 25px;
+    font-weight: 700;
+    margin-top: 50px;
+}

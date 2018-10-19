@@ -1,12 +1,35 @@
-.media-file-wrapper img {
-  width: 120px;
+.dropzone {
+  width: 100%;
+  min-height: 300px;
+  padding: 20px;
+  border: solid 1px #c9c7c7;
 }
 
-.dropzone {
-  width: 60%;
-  min-height: 300px;
-  margin: 20px auto 20px auto;
-  padding: 20px;
-  text-align: center;
-  border: solid 1px black;
+.dropzone hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  margin: 15px -20px;
+  padding: 0;
+  border-top: 1px solid #c9c7c7;
+}
+
+.dropzone div {
+  font-weight: 700;
+}
+
+.dropzone .fileName {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.dropzone img {
+  width: 100%;
+}
+
+@media screen and (min-width: 600px) {
+  .dropzone {
+    margin: 20px auto 20px auto;
+  }
 }

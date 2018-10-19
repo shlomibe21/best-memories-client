@@ -71,11 +71,7 @@ export class NewFiles extends React.Component {
       );
     }
     if (this.state.uploading) {
-      return (
-        <div className="spinnerModal">
-        <p>Please waite...</p>
-        </div>
-      );
+      return <div className="spinnerModal" />;
     }
     return (
       <form

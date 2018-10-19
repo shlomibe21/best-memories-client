@@ -13,42 +13,49 @@ export class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchValue: ""
+      searchValue: "",
+      uploading: true
     };
   }
 
   componentDidMount() {
-    this.props.dispatch(fetchAlbums(this.state.searchValue));
+    return fetch(this.props.dispatch(fetchAlbums(this.state.searchValue))).then(
+      () => {
+        this.setState({
+          uploading: false
+        });
+      }
+    );
   }
 
   search(query) {
-    console.log("search");
+    //console.log("search");
     this.props.dispatch(fetchAlbums(this.state.searchValue));
   }
 
   updateInputValue(evt) {
     this.setState({
-        searchValue: evt.target.value
+      searchValue: evt.target.value
     });
     this.props.dispatch(fetchAlbums(evt.target.value));
   }
 
   render() {
+    let addNewAlbumLink;
+    let searchComponent;
+    let emptyPageMsg;
     const albums = this.props.albums.map((album, index) => (
       <li key={index} className="col-3">
         <AlbumTile index={index} {...album} />
       </li>
     ));
-
-    return (
-      <div className="dashboard centered-container centered-text">
-        <p>My Albums</p>
-        <div className="dashboard-username">
-          Username: {this.props.username}
-        </div>
+    if (albums.length > 0 || this.state.searchValue.length > 0) {
+      addNewAlbumLink = (
         <div>
           <Link to="/new-album">Add a New Album</Link>
         </div>
+      );
+      searchComponent = (
         <div className="search-wrapper">
           <input
             type="text"
@@ -61,6 +68,33 @@ export class Dashboard extends React.Component {
             <FaSearch />
           </button>
         </div>
+      );
+    } else {
+      emptyPageMsg = (
+        <div className="emapty-page-msg">
+          <p>Hey, It is empty in here! </p>
+          <p> click on the image below to start building your best memories.</p>
+          <Link to="/new-album">
+            <img
+              src={require("../../images/pic_the_scream.png")}
+              alt="Empty page"
+            />
+          </Link>
+        </div>
+      );
+    }
+
+    if (this.state.uploading) {
+      return <div className="spinnerModal" />;
+    }
+    return (
+      <div className="dashboard centered-container centered-text">
+        <header role="banner">
+          <h1>My Albums</h1>
+        </header>
+        {addNewAlbumLink}
+        {searchComponent}
+        {emptyPageMsg}
         <ul className="row albums-container">{albums}</ul>
       </div>
     );

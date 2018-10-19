@@ -1,8 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+
 import { clearAuth } from "../../actions/auth";
 import { clearAuthToken } from "../../local-storage";
-import { Link } from "react-router-dom";
+import Tooltip from "../common/tooltip";
 
 import "./navbar.css";
 
@@ -21,17 +23,23 @@ export class NavBar extends React.Component {
     if (this.props.loggedIn) {
       logoLink = "/dashboard";
       if (this.props.currentUser) {
-        userName = <div>User: {this.props.currentUser.username} | </div>;
+        userName = (
+          <Tooltip message={"Username: " + this.props.currentUser.username} position={"bottom"}>
+            <div className="current-username">
+              Hello: {this.props.currentUser.username}
+            </div>
+          </Tooltip>
+        );
       }
       logInOutOption = (
         <div>
           <Link to="/" onClick={() => this.logOut()}>
-            Log out
+            Log out |
           </Link>
         </div>
       );
     } else {
-        logoLink = "/";
+      logoLink = "/";
       logInOutOption = (
         <div>
           <Link to="/login">Login</Link>
@@ -47,8 +55,8 @@ export class NavBar extends React.Component {
           </p>
         </div>
         <div className="topnav-menu-right">
-          {userName}
           {logInOutOption}
+          {userName}
         </div>
       </div>
     );

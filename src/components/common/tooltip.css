@@ -15,13 +15,14 @@
   
   .tooltip-trigger {
     display: inline-block;
-    text-decoration: underline;
+    text-decoration: none;
   }
   
   .tooltip-bubble {
     min-width: 120px;
-    max-width: 210px;
+    max-width: 300px;
     position: absolute;
+    overflow-wrap: break-word;
     z-index: 10;
   }
 

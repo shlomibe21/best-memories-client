@@ -86,10 +86,10 @@ fieldset {
   color: #ffffff;
   font-size: 16px;
   padding: 10px 20px 10px 20px;
-  margin: 10px;
   text-decoration: none;
   cursor: pointer;
   outline: none;
+  margin: 10px;
 }
 
 .btn:hover {
@@ -114,10 +114,14 @@ fieldset {
   color: lightgray;
 }
 
+.centered-btn-wrapper {
+  text-align: center;
+}
+
 .form-input {
   width: 100%;
   height: 40px;
-  margin: 10px;
+  margin: 5px 0px 5px 0px;
   /*border-radius: 4px;*/
   border: solid 1px lightgrey;
   outline: 0;
@@ -151,7 +155,7 @@ form .form-error {
 .registration-form label,
 .login-form label {
   margin-top: 20px;
-  padding-left: 15px;
+  padding-left: 5px;
   /*visibility: hidden;*/
   color: blue;
   font-size: 18px;
@@ -170,8 +174,13 @@ form .form-error {
 }
 
 form .btn {
+  margin-top: 5px;
+}
+
+.registration-form .btn,
+.login-form .btn {
+  margin: 15px 0px;
   width: 100%;
-  margin-top: 40px;
 }
 
 .search-wrapper {
@@ -181,10 +190,10 @@ form .btn {
 
 .search-wrapper input[type="text"] {
   font-size: 17px;
-  border: 1px solid grey;
+  border: 1px solid lightgray;
   margin: 0px;
   padding: 10px;
-  width: 40%;
+  width: 70%;
   height: 40px;
   /*background: #f1f1f1;*/
 }
@@ -234,17 +243,26 @@ form .btn {
 }
 
 .spinnerModal {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    text-align: center;
-    z-index: 1; /* Sit on top */
-    overflow: auto;
-    background: url("./images/ajax-indicator-circle-ball-blue.gif") no-repeat center fixed;
-    background-color: rgba(0, 0, 0, 0.9); /* Create overlay - black w/ opacity */
-  }
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  text-align: center;
+  z-index: 1; /* Sit on top */
+  overflow: auto;
+  background: url("./images/ajax-indicator-circle-ball-blue.gif") no-repeat
+    center fixed;
+  background-color: rgba(255, 255, 255, 0.3); /* Create overlay - black w/ opacity */
+}
+
+.spinnerModal p {
+margin-top: 300px;
+}
+
+.message-error {
+  color: red;
+}
 
 @media screen and (min-width: 600px) {
   .centered-container.narrow {
@@ -253,5 +271,17 @@ form .btn {
 
   .centered-container {
     max-width: 960px;
+  }
+
+  .search-wrapper input[type="text"] {
+    width: 70%;
+  }
+
+  .form-input {
+    margin: 10px 0px 10px 0px;
+  }
+
+  form .btn {
+    margin-top: 20px;
   }
 }

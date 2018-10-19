@@ -7,7 +7,7 @@ import Dropzone from "react-dropzone";
 
 import requiresLogin from "../authorization/requires-login";
 import Input from "../forms/input";
-
+import Tooltip from "../common/tooltip";
 import { addNewAlbum, awsS3GetSignedRequest } from "../../actions/albums";
 import { required, nonEmpty } from "../../validators";
 
@@ -19,11 +19,29 @@ export class NewAlbum extends React.Component {
     super();
     this.state = {
       acceptedFiles: [],
-      rejectedFiles: []
+      rejectedFiles: [],
+      uploading: false
     };
   }
 
+  componentWillUnmount() {
+    // Note: From the react-dropzone maintainer:
+    // react-dropzone doesn't manage dropped files. You need to destroy
+    // the object URL yourself whenever you don't need the preview by calling
+    // window.URL.revokeObjectURL(file.preview); to avoid memory leaks.
+    this.state.acceptedFiles.map(file =>
+      window.URL.revokeObjectURL(file.preview)
+    );
+  }
+
+  handleDropFiles = (acceptedFiles, rejectedFiles) => {
+    return this.setState({ acceptedFiles, rejectedFiles });
+  };
+
   onSubmit(values) {
+    this.setState({
+      uploading: true
+    });
     //console.log(values);
     // Get the desired data from each media file and create a new array of objects to send to db
     let files = [];
@@ -48,89 +66,102 @@ export class NewAlbum extends React.Component {
       });
     }
 
-    return Promise.all(promises).then(responses => {
-      console.log(responses);
+    return Promise.all(promises).then(() => {
       return this.props
         .dispatch(addNewAlbum(values.albumName, dateNow, values.comment, files))
         .then(() => this.props.history.push("/dashboard"));
     });
   }
   render() {
-    let errorMessage;
+    let error;
     if (this.props.error) {
-      errorMessage = (
-        <div className="message message-error">{this.props.error}</div>
-      );
+      error = <div className="message message-error">{this.props.error}</div>;
+    }
+    if (this.state.uploading) {
+      return <div className="spinnerModal" />;
     }
     return (
-      <form
-        className="new-album centered-container centered-text"
-        onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}
-        encType="multipart/form-data"
-      >
-        {errorMessage}
-        <div>
-          <label htmlFor="name">Album Name</label>
-          <Field
-            component={Input}
-            type="text"
-            name="albumName"
-            label="Album Name"
-            id="albumname"
-            validate={[required, nonEmpty]}
-          />
-        </div>
-        <div>
-          <label htmlFor="comment">Comment</label>
-          <Field
-            name="comment"
-            id="comment"
-            type="textarea"
-            component={Input}
-            label="Comment"
-          />
-        </div>
-        <button type="submit" className="btn">
-          New Album Submit
-        </button>
-        <Link to="/dashboard">
-          <button type="button" className="btn">
-            Cancel
-          </button>
-        </Link>
-        <div>
-          <section>
-            <div className="">
-              <Dropzone
-                accept="image/*"
-                onDrop={(acceptedFiles, rejectedFiles) => {
-                  this.setState({ acceptedFiles, rejectedFiles });
-                }}
-                className="dropzone"
-              >
-                <div>Drop files here, or click to select files to upload.</div>
+      <div className="new-album centered-container centered-text">
+        <header role="banner">
+          <h1>My Albums</h1>
+        </header>
+        <form
+          className="new-album-form"
+          onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}
+          encType="multipart/form-data"
+        >
+          {error}
+          <div>
+            <Field
+              component={Input}
+              type="text"
+              name="albumName"
+              label="Album Name"
+              id="albumname"
+              validate={[required, nonEmpty]}
+            />
+          </div>
+          <div>
+            <Field
+              name="comment"
+              id="comment"
+              type="textarea"
+              component={Input}
+              label="Comment"
+            />
+          </div>
+          <div className="centered-btn-wrapper">
+            <button type="submit" className="btn">
+              Submit
+            </button>
+            <Link to="/dashboard">
+              <button type="button" className="btn">
+                Cancel
+              </button>
+            </Link>
+          </div>
+          <div>
+            <section>
+              <div className="">
+                <Dropzone
+                  accept="image/*"
+                  onDrop={this.handleDropFiles}
+                  className="dropzone"
+                >
+                  <div>
+                    Drop files here, or click to select files to upload.
+                  </div>
+                  <hr />
+                  <ul className="row">
+                    {this.state.acceptedFiles.map((file, i) => (
+                      <li className="media-file-wrapper col-3" key={i}>
+                        <Tooltip message={file.name} position={"top"}>
+                          <div>
+                            <img
+                              src={file.preview}
+                              alt={file.name}
+                              key={file.preview}
+                            />
+                          </div>
+                        </Tooltip>
+                        <div className="fileName">{file.name}</div>
+                      </li>
+                    ))}
+                  </ul>
+                </Dropzone>
+              </div>
+              <aside>
+                <h2>Rejected files</h2>
                 <ul>
-                  {this.state.acceptedFiles.map(file => (
-                    <li key={file.name}>
-                      {file.name} - {file.size} bytes
-                    </li>
+                  {this.state.rejectedFiles.map((file, i) => (
+                    <li key={i}>{file.name} bytes</li>
                   ))}
                 </ul>
-              </Dropzone>
-            </div>
-            <aside>
-              <h2>Rejected files</h2>
-              <ul>
-                {this.state.rejectedFiles.map(file => (
-                  <li key={file.name}>
-                    {file.name} - {file.size} bytes
-                  </li>
-                ))}
-              </ul>
-            </aside>
-          </section>
-        </div>
-      </form>
+              </aside>
+            </section>
+          </div>
+        </form>
+      </div>
     );
   }
 }
