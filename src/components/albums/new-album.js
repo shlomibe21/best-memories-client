@@ -3,11 +3,11 @@ import { reduxForm, Field, focus } from "redux-form";
 import { withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 import moment from "moment";
-import Dropzone from "react-dropzone";
+
+import DropzoneArea from "../common/dropzoneArea";
 
 import requiresLogin from "../authorization/requires-login";
 import Input from "../forms/input";
-import Tooltip from "../common/tooltip";
 import { addNewAlbum, awsS3GetSignedRequest } from "../../actions/albums";
 import { required, nonEmpty } from "../../validators";
 
@@ -35,7 +35,10 @@ export class NewAlbum extends React.Component {
   }
 
   handleDropFiles = (acceptedFiles, rejectedFiles) => {
-    return this.setState({ acceptedFiles, rejectedFiles });
+    return this.setState({
+      acceptedFiles: acceptedFiles,
+      rejectedFiles: rejectedFiles
+    });
   };
 
   onSubmit(values) {
@@ -120,46 +123,10 @@ export class NewAlbum extends React.Component {
               </button>
             </Link>
           </div>
-          <div>
-            <section>
-              <div className="">
-                <Dropzone
-                  accept="image/*"
-                  onDrop={this.handleDropFiles}
-                  className="dropzone"
-                >
-                  <div>
-                    Drop files here, or click to select files to upload.
-                  </div>
-                  <hr />
-                  <ul className="row">
-                    {this.state.acceptedFiles.map((file, i) => (
-                      <li className="media-file-wrapper col-3" key={i}>
-                        <Tooltip message={file.name} position={"top"}>
-                          <div>
-                            <img
-                              src={file.preview}
-                              alt={file.name}
-                              key={file.preview}
-                            />
-                          </div>
-                        </Tooltip>
-                        <div className="fileName">{file.name}</div>
-                      </li>
-                    ))}
-                  </ul>
-                </Dropzone>
-              </div>
-              <aside>
-                <h2>Rejected files</h2>
-                <ul>
-                  {this.state.rejectedFiles.map((file, i) => (
-                    <li key={i}>{file.name} bytes</li>
-                  ))}
-                </ul>
-              </aside>
-            </section>
-          </div>
+          <section className="deopzone-area">
+            <legend>Dropzone</legend>
+            <DropzoneArea dropzoneAcceptedFiles={this.handleDropFiles} />
+          </section>
         </form>
       </div>
     );

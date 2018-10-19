@@ -3,7 +3,8 @@ import { reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import moment from "moment";
-import Dropzone from "react-dropzone";
+
+import DropzoneArea from "../common/dropzoneArea";
 import requiresLogin from "../authorization/requires-login";
 import {
   fetchSingleAlbum,
@@ -18,8 +19,8 @@ export class NewFiles extends React.Component {
   constructor() {
     super();
     this.state = {
-      accepted: [],
-      rejected: [],
+      acceptedFiles: [],
+      rejectedFiles: [],
       uploading: false
     };
   }
@@ -40,7 +41,7 @@ export class NewFiles extends React.Component {
       const dateNow = moment(new Date())
         .utc()
         .format("YYYY-MM-DD");
-      promises = this.state.accepted.map((file, i) => {
+      promises = this.state.acceptedFiles.map((file, i) => {
         const timeNow = Date.now();
         const fileName = timeNow + "-" + file.name;
         files.push({
@@ -63,6 +64,14 @@ export class NewFiles extends React.Component {
         );
     });
   }
+
+  handleDropFiles = (acceptedFiles, rejectedFiles) => {
+    return this.setState({
+      acceptedFiles: acceptedFiles,
+      rejectedFiles: rejectedFiles
+    });
+  };
+
   render() {
     let errorMessage;
     if (this.props.error) {
@@ -83,38 +92,10 @@ export class NewFiles extends React.Component {
         <button type="submit" className="btn">
           Add Files
         </button>
-        <div>
-          <section>
-            <div className="">
-              <Dropzone
-                accept="image/*"
-                onDrop={(accepted, rejected) => {
-                  this.setState({ accepted, rejected });
-                }}
-                className="dropzone"
-              >
-                <div>Drop files here, or click to select files to upload.</div>
-                <ul>
-                  {this.state.accepted.map(file => (
-                    <li key={file.name}>
-                      {file.name} - {file.size} bytes
-                    </li>
-                  ))}
-                </ul>
-              </Dropzone>
-            </div>
-            <aside>
-              <h2>Rejected files</h2>
-              <ul>
-                {this.state.rejected.map(file => (
-                  <li key={file.name}>
-                    {file.name} - {file.size} bytes
-                  </li>
-                ))}
-              </ul>
-            </aside>
-          </section>
-        </div>
+        <section className="deopzone-area">
+          <legend>Dropzone</legend>
+          <DropzoneArea dropzoneAcceptedFiles={this.handleDropFiles} />
+        </section>
       </form>
     );
   }

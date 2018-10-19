@@ -50,7 +50,6 @@ export class Album extends React.Component {
   }
 
   closeLightboxHandler() {
-    console.log("DONT DISPLAY!!!");
     this.setState({
       displayLightbox: false
     });
