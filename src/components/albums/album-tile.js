@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import LinesEllipsis from "react-lines-ellipsis";
 
 import "./album-tile.css";
 import Tooltip from "../common/tooltip";
@@ -20,18 +21,33 @@ export default function AlbumTile(props) {
   return (
     <div className="album-tile">
       <div id={`album-${props.index}`} className="album-tile-container">
-        <div className="album-name">
-          <textarea readOnly value={props.albumName} />
-        </div>
-        <div className="thumbnail-container">
-          <a className="thumbnail">
-            <img src={storageLocation ? storageLocation : ""} alt="Thumbnail" />
-          </a>
-        </div>
-        <p className="album-date-created">{dateCreated}</p>
-        <div className="album-comment">
-          <textarea readOnly value={props.comment} />
-        </div>
+        <Link className="album-tile-link" to={`/album/${props.id}`}>
+          <div className="album-name">{props.albumName}</div>
+          <div className="thumbnail-container">
+            <div className="thumbnail">
+              <Tooltip message={"Display Album: " + props.albumName} position={"top"}>
+                <img
+                  src={storageLocation ? storageLocation : ""}
+                  alt="Thumbnail"
+                />
+              </Tooltip>
+            </div>
+          </div>
+          <div className="album-info">
+            <p className="album-date-created">{dateCreated}</p>
+            <div className="album-comment">
+              <Tooltip message={props.comment} position={"top"}>
+                <LinesEllipsis
+                  text={props.comment}
+                  maxLine="5"
+                  ellipsis="..."
+                  trimRight
+                  basedOn="letters"
+                />
+              </Tooltip>
+            </div>
+          </div>
+        </Link>
       </div>
       <div className="ctrl-icons-wrapper">
         <div>
