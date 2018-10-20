@@ -82,12 +82,14 @@ class EditAlbum extends React.Component {
       ));
     }
     return (
-      <div>
+      <div className="centered-container">
+        <header role="banner" className="centered-text">
+          <h1>Edit Album</h1>
+        </header>
         <form
           onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}
         >
-          <div className="edit-album-form centered-container">
-            <p>Edit Album</p>
+          <div className="edit-album-form">
             {errorMessage}
             <div>
               <Field

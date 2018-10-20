@@ -131,6 +131,11 @@ fieldset {
   padding-left: 8px;
 }
 
+form label {
+    color: #0b7dda;
+    margin-left: 5px;
+  }
+
 form .form-error {
   margin-top: 0px;
   padding-left: 15px;
@@ -255,11 +260,16 @@ form .btn {
   overflow: auto;
   background: url("./images/ajax-indicator-circle-ball-blue.gif") no-repeat
     center fixed;
-  background-color: rgba(255, 255, 255, 0.3); /* Create overlay - black w/ opacity */
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.3
+  ); /* Create overlay - black w/ opacity */
 }
 
 .spinnerModal p {
-margin-top: 300px;
+  margin-top: 300px;
 }
 
 .message-error {

@@ -1,5 +1,6 @@
 import React from "react";
 import { reduxForm, Field, focus } from "redux-form";
+import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 import moment from "moment";
@@ -8,7 +9,11 @@ import DropzoneArea from "../common/dropzoneArea";
 
 import requiresLogin from "../authorization/requires-login";
 import Input from "../forms/input";
-import { addNewAlbum, awsS3GetSignedRequest } from "../../actions/albums";
+import {
+  addNewAlbum,
+  awsS3GetSignedRequest,
+  setLoading
+} from "../../actions/albums";
 import { required, nonEmpty } from "../../validators";
 
 import "./new-album.css";
@@ -19,13 +24,16 @@ export class NewAlbum extends React.Component {
     super();
     this.state = {
       acceptedFiles: [],
-      rejectedFiles: [],
-      uploading: false
+      rejectedFiles: []
     };
   }
 
+  componentWillMount() {
+    this.props.dispatch(setLoading(false));
+  }
+
   componentWillUnmount() {
-    // Note: From the react-dropzone maintainer:
+    // Note from the react-dropzone maintainer:
     // react-dropzone doesn't manage dropped files. You need to destroy
     // the object URL yourself whenever you don't need the preview by calling
     // window.URL.revokeObjectURL(file.preview); to avoid memory leaks.
@@ -42,9 +50,8 @@ export class NewAlbum extends React.Component {
   };
 
   onSubmit(values) {
-    this.setState({
-      uploading: true
-    });
+    // Start the spinner
+    this.props.dispatch(setLoading(true));
     //console.log(values);
     // Get the desired data from each media file and create a new array of objects to send to db
     let files = [];
@@ -75,18 +82,19 @@ export class NewAlbum extends React.Component {
         .then(() => this.props.history.push("/dashboard"));
     });
   }
+
   render() {
     let error;
     if (this.props.error) {
       error = <div className="message message-error">{this.props.error}</div>;
     }
-    if (this.state.uploading) {
+    if (this.props.loading) {
       return <div className="spinnerModal" />;
     }
     return (
       <div className="new-album centered-container centered-text">
         <header role="banner">
-          <h1>My Albums</h1>
+          <h1>New Album</h1>
         </header>
         <form
           className="new-album-form"
@@ -133,19 +141,20 @@ export class NewAlbum extends React.Component {
   }
 }
 
-export default requiresLogin()(
-  withRouter(
-    reduxForm({
-      form: "NewAlbum",
-      onSubmitSuccess: (results, dispatch) => {
-        //window.location = "/dashboard";
-      },
-      onSubmitFail: (errors, dispatch) => {
-        dispatch(focus("NewAlbum", "albumName"));
-        if (!errors) {
-          alert("Error: couldn't add a new album!");
-        }
-      }
-    })(NewAlbum)
-  )
-);
+NewAlbum = reduxForm({
+  form: "NewAlbum",
+  onSubmitFail: (errors, dispatch) => {
+    //console.log(errors);
+    dispatch(focus("NewAlbum", "albumName"));
+    if (!errors) {
+      alert("Error: couldn't add a new album!");
+    }
+  }
+})(NewAlbum);
+
+// Connect() to reducers
+NewAlbum = connect(state => ({
+  loading: state.bestmemories.loading
+}))(NewAlbum);
+
+export default requiresLogin()(withRouter(NewAlbum));

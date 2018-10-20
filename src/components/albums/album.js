@@ -22,9 +22,7 @@ export class Album extends React.Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(
-      fetchSingleAlbum(this.props.match.params.index)
-    );
+    this.props.dispatch(fetchSingleAlbum(this.props.match.params.index));
   }
 
   search(query) {
@@ -36,9 +34,7 @@ export class Album extends React.Component {
     this.setState({
       searchValue: evt.target.value
     });
-    this.props.dispatch(
-      fetchSingleAlbum(this.props.match.params.index)
-    );
+    this.props.dispatch(fetchSingleAlbum(this.props.match.params.index));
   }
 
   displayLightboxHandler(index) {
@@ -79,7 +75,9 @@ export class Album extends React.Component {
 
     return (
       <div className="centered-container centered-text">
-        <p>{this.props.album.albumName}</p>
+        <header role="banner">
+          <h1>{this.props.album.albumName}</h1>
+        </header>
         <div className="selection-area">
           <Link to="/dashboard">Dashboard</Link>
           <Link to={`/new-files/${this.props.album.id}`}>Add Files</Link>

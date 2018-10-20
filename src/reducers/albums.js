@@ -1,12 +1,13 @@
 import * as actions from "../actions/albums";
 
 const initialState = {
-  albums: []
+  albums: [],
+  loading: false
 };
 
 export const albumsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actions.ADD_ALBUM:
+    case actions.ADD_ALBUM_SUCCESS:
       return state;
     /*return Object.assign({}, state, {
         albums: [
@@ -58,6 +59,10 @@ export const albumsReducer = (state = initialState, action) => {
           }
         ]
       });*/
+    case actions.SET_LOADING:
+      return Object.assign({}, state, {
+        loading: action.loading
+      });
     default:
       return state;
   }

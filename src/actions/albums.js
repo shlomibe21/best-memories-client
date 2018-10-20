@@ -9,6 +9,12 @@ export const fetchAlbumsSuccess = albums => ({
   albums
 });
 
+export const SET_LOADING = "SET_LOADING";
+export const setLoading = loading => ({
+  type: SET_LOADING,
+  loading
+});
+
 export const fetchAlbums = searchText => (dispatch, getState) => {
   const authToken = getState().auth.authToken;
   return fetch(`${API_BASE_URL}/albums?text=${searchText}`, {
@@ -20,6 +26,7 @@ export const fetchAlbums = searchText => (dispatch, getState) => {
   })
     .then(res => {
       if (!res.ok) {
+        dispatch(setLoading(false));
         return Promise.reject(res.statusText);
       }
       return res.json();
@@ -57,9 +64,11 @@ export const fetchSingleAlbum = id => (dispatch, getState) => {
       return res.json();
     })
     .then(album => {
+      dispatch(setLoading(false));
       dispatch(fetchSingleAlbumSuccess(album));
     })
     .catch(err => {
+      dispatch(setLoading(false));
       dispatch(fetchSingleAlbumError(err));
     });
 };
@@ -87,9 +96,9 @@ export const fetchSingleAlbum = id => (dispatch, getState) => {
       });
   };*/
 
-export const ADD_ALBUM = "ADD_ALBUM";
-export const addAlbum = albumName => ({
-  type: ADD_ALBUM,
+export const ADD_ALBUM_SUCCESS = "ADD_ALBUM_SUCCESS";
+export const addAlbumSuccess = albumName => ({
+  type: ADD_ALBUM_SUCCESS,
   albumName
 });
 
@@ -112,9 +121,13 @@ export const addNewAlbum = (albumName, dateCreated, comment, files) => (
     })
   })
     .then(res => normalizeResponseErrors(res))
-    .then(res => res.json())
+    .then(res => {
+      res.json();
+      dispatch(setLoading(false));
+    })
     .catch(err => {
       const { reason, message } = err;
+      dispatch(setLoading(false));
       if (reason === "ValidationError") {
         // Convert ValidationErrors into SubmissionErrors for Redux Form
         return Promise.reject(
@@ -228,6 +241,14 @@ export const addNewFilesSuccess = files => ({
 
 export const addNewFiles = (id, files) => (dispatch, getState) => {
   const authToken = getState().auth.authToken;
+  if (files.length === 0) {
+    dispatch(setLoading(false));
+    return Promise.reject(
+      new SubmissionError({
+        _error: "Please add files below!"
+      })
+    );
+  }
   return fetch(`${API_BASE_URL}/albums/${id}`, {
     method: "PATCH",
     headers: {
@@ -241,16 +262,17 @@ export const addNewFiles = (id, files) => (dispatch, getState) => {
   })
     .then(res => {
       if (!res.ok) {
+        dispatch(setLoading(false));
         return Promise.reject(res.statusText);
       }
     })
     .catch(err => {
-      const { reason, message, location } = err;
+      const { reason, message } = err;
       if (reason === "ValidationError") {
         // Convert ValidationErrors into SubmissionErrors for Redux Form
         return Promise.reject(
           new SubmissionError({
-            [location]: message
+            _error: message
           })
         );
       }
@@ -394,7 +416,7 @@ export const deleteSingleFile = (albumId, fileId) => (dispatch, getState) => {
     });
 };
 
-export const awsS3GetSignedRequest = (file, fileName) => dispach => {
+export const awsS3GetSignedRequest = (file, fileName) => dispatch => {
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     xhr.open(
@@ -416,6 +438,7 @@ export const awsS3GetSignedRequest = (file, fileName) => dispach => {
             reject
           );
         } else {
+          dispatch(setLoading(false));
           reject("Could not get signed URL.");
         }
       }
@@ -442,7 +465,7 @@ export const awsS3UploadFile = (file, signedRequest, url, resolve, reject) => {
 // TODO: Delete always returns status=200 even if object is not there.
 // Therefore we need to check the object's head to confirm that the
 // object is not there anymore
-export const awsS3DeleteFile = fileName => dispach => {
+export const awsS3DeleteFile = fileName => dispatch => {
   return fetch(`${API_BASE_URL}/albums/delete-object-s3`, {
     method: "DELETE",
     headers: {

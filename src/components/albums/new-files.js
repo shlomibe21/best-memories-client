@@ -1,7 +1,7 @@
 import React from "react";
 import { reduxForm } from "redux-form";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import moment from "moment";
 
 import DropzoneArea from "../common/dropzoneArea";
@@ -9,7 +9,8 @@ import requiresLogin from "../authorization/requires-login";
 import {
   fetchSingleAlbum,
   addNewFiles,
-  awsS3GetSignedRequest
+  awsS3GetSignedRequest,
+  setLoading
 } from "../../actions/albums";
 
 import "./new-files.css";
@@ -20,9 +21,12 @@ export class NewFiles extends React.Component {
     super();
     this.state = {
       acceptedFiles: [],
-      rejectedFiles: [],
-      uploading: false
+      rejectedFiles: []
     };
+  }
+
+  componentWillMount() {
+    this.props.dispatch(setLoading(false));
   }
 
   componentDidMount() {
@@ -30,9 +34,8 @@ export class NewFiles extends React.Component {
   }
 
   onSubmit(values) {
-    this.setState({
-      uploading: true
-    });
+    // Start the spinner
+    this.props.dispatch(setLoading(true));
     //console.log(values);
     // Get the desired data from each media file and create a new array of objects to send to db
     let files = [];
@@ -79,24 +82,33 @@ export class NewFiles extends React.Component {
         <div className="message message-error">{this.props.error}</div>
       );
     }
-    if (this.state.uploading) {
+    if (this.props.loading) {
       return <div className="spinnerModal" />;
     }
     return (
-      <form
-        className="new-files centered-container centered-text"
-        onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}
-      >
-        <p>Add Files</p>
-        {errorMessage}
-        <button type="submit" className="btn">
-          Add Files
-        </button>
-        <section className="deopzone-area">
-          <legend>Dropzone</legend>
-          <DropzoneArea dropzoneAcceptedFiles={this.handleDropFiles} />
-        </section>
-      </form>
+      <div className="new-files centered-container centered-text">
+        <header role="banner">
+          <h1>Add Files</h1>
+        </header>
+        <form
+          className="new-files"
+          onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}
+        >
+          <button type="submit" className="btn">
+            Add Files
+          </button>
+          <Link to={`/album/${this.props.match.params.index}`}>
+            <button type="button" className="btn">
+              Cancel
+            </button>
+          </Link>
+          <section className="deopzone-area">
+            <legend>Dropzone</legend>
+            {errorMessage}
+            <DropzoneArea dropzoneAcceptedFiles={this.handleDropFiles} />
+          </section>
+        </form>
+      </div>
     );
   }
 }
@@ -117,7 +129,8 @@ NewFiles = reduxForm({
 
 // You have to connect() to any reducers that you wish to connect to yourself
 NewFiles = connect(state => ({
-  initialValues: state.bestmemories.album // pull initial values from account reducer
+  initialValues: state.bestmemories.album, // pull initial values from account reducer
+  loading: state.bestmemories.loading
 }))(NewFiles);
 
 export default requiresLogin()(withRouter(NewFiles));

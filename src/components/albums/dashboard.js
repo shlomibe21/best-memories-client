@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import requiresLogin from "../authorization/requires-login";
 import AlbumTile from "./album-tile";
-import { fetchAlbums } from "../../actions/albums";
+import { fetchAlbums, setLoading } from "../../actions/albums";
 import { FaSearch } from "react-icons/fa";
 
 import "./dashboard.css";
@@ -14,16 +14,17 @@ export class Dashboard extends React.Component {
     super(props);
     this.state = {
       searchValue: "",
-      uploading: true
     };
+  }
+
+  componentWillMount() {
+    this.props.dispatch(setLoading(true));
   }
 
   componentDidMount() {
     return fetch(this.props.dispatch(fetchAlbums(this.state.searchValue))).then(
       () => {
-        this.setState({
-          uploading: false
-        });
+        this.props.dispatch(setLoading(false));
       }
     );
   }
@@ -84,7 +85,7 @@ export class Dashboard extends React.Component {
       );
     }
 
-    if (this.state.uploading) {
+    if (this.props.loading) {
       return <div className="spinnerModal" />;
     }
     return (
@@ -106,6 +107,7 @@ const mapStateToProps = state => {
   return {
     username: state.auth.currentUser.username,
     name: `${currentUser.firstName} ${currentUser.lastName}`,
+    loading: state.bestmemories.loading,
     albums: state.bestmemories.albums
   };
 };
