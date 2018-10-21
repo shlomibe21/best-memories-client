@@ -15,9 +15,9 @@ export const setLoading = loading => ({
   loading
 });
 
-export const fetchAlbums = searchText => (dispatch, getState) => {
+export const fetchAlbums = searchQuery => (dispatch, getState) => {
   const authToken = getState().auth.authToken;
-  return fetch(`${API_BASE_URL}/albums?text=${searchText}`, {
+  return fetch(`${API_BASE_URL}/albums?text=${searchQuery}`, {
     method: "GET",
     headers: {
       // Provide user's auth token as credentials
@@ -73,28 +73,42 @@ export const fetchSingleAlbum = id => (dispatch, getState) => {
     });
 };
 
-/*export const searchSingleAlbum = (id, searchText) => (dispatch, getState) => {
-    const authToken = getState().auth.authToken;
-    return fetch(`${API_BASE_URL}/albums/search/${id}?text=${searchText}`, {
-      method: "GET",
-      headers: {
-        // Provide our auth token as credentials
-        Authorization: `Bearer ${authToken}`
+export const SEARCH_SINGLE_ALBUM_SUCCESS = "SEARCH_SINGLE_ALBUM_SUCCESS";
+export const searchSingleAlbumSuccess = album => ({
+  type: SEARCH_SINGLE_ALBUM_SUCCESS,
+  album
+});
+
+export const SEARCH_SINGLE_ALBUM_ERROR = "SEARCH_SINGLE_ALBUM_ERROR";
+export const searchSingleAlbumError = error => ({
+  type: SEARCH_SINGLE_ALBUM_ERROR,
+  error
+});
+
+export const searchSingleAlbum = (id, searchQuery) => (dispatch, getState) => {
+  const authToken = getState().auth.authToken;
+  return fetch(`${API_BASE_URL}/albums/search/${id}?text=${searchQuery}`, {
+    method: "GET",
+    headers: {
+      // Provide our auth token as credentials
+      Authorization: `Bearer ${authToken}`
+    }
+  })
+    .then(res => {
+      if (!res.ok) {
+        return Promise.reject(res.statusText);
       }
+      return res.json();
     })
-      .then(res => {
-        if (!res.ok) {
-          return Promise.reject(res.statusText);
-        }
-        return res.json();
-      })
-      .then(albums => {
-        dispatch(fetchSingleAlbumSuccess(albums));
-      })
-      .catch(err => {
-        dispatch(fetchSingleAlbumError(err));
-      });
-  };*/
+    .then(album => {
+      dispatch(setLoading(false));
+      dispatch(searchSingleAlbumSuccess(album));
+    })
+    .catch(err => {
+      dispatch(setLoading(false));
+      dispatch(searchSingleAlbumError(err));
+    });
+};
 
 export const ADD_ALBUM_SUCCESS = "ADD_ALBUM_SUCCESS";
 export const addAlbumSuccess = albumName => ({

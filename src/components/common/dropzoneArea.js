@@ -18,9 +18,23 @@ export default class dropzoneArea extends React.Component {
   };
 
   render() {
+    let rejectedFileList = [];
+    if ((this.state.rejectedFiles) && (this.state.rejectedFiles.length > 0)) {
+      rejectedFileList = (
+        <aside>
+          <h2>Rejected files</h2>
+          <ul>
+            {this.state.rejectedFiles.map((file, i) => (
+              <li key={i}>{file.name} bytes</li>
+            ))}
+          </ul>
+        </aside>
+      );
+    }
     return (
-      <section>
-        <div className="">
+      <section className="deopzone-area">
+        <legend>Dropzone</legend>
+        <div className="centered-text">
           <Dropzone
             accept="image/*"
             onDrop={this.handleDropFiles}
@@ -45,15 +59,8 @@ export default class dropzoneArea extends React.Component {
               ))}
             </ul>
           </Dropzone>
+          {rejectedFileList}
         </div>
-        <aside>
-          <h2>Rejected files</h2>
-          <ul>
-            {this.state.rejectedFiles.map((file, i) => (
-              <li key={i}>{file.name} bytes</li>
-            ))}
-          </ul>
-        </aside>
       </section>
     );
   }

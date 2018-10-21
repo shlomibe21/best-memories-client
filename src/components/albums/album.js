@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import requiresLogin from "../authorization/requires-login";
 import MediaFile from "./media-file";
-import { fetchSingleAlbum } from "../../actions/albums";
+import { searchSingleAlbum, setLoading } from "../../actions/albums";
 
 import "./album.css";
 
@@ -15,26 +15,43 @@ export class Album extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchValue: "",
+      searchQuery: "",
       displayLightbox: false,
       index: 0
     };
   }
 
+  componentWillMount() {
+    this.props.dispatch(setLoading(true));
+  }
+
   componentDidMount() {
-    this.props.dispatch(fetchSingleAlbum(this.props.match.params.index));
+    return fetch(
+      this.props
+        .dispatch(
+            searchSingleAlbum(
+            this.props.match.params.index,
+            this.state.searchQuery
+          )
+        )
+        .then(() => {
+          this.props.dispatch(setLoading(false));
+        })
+    );
   }
 
   search(query) {
     console.log("search");
-    fetchSingleAlbum(this.props.match.params.index);
+    this.props.dispatch(searchSingleAlbum(this.props.match.params.index, this.state.searchQuery));
   }
 
   updateInputValue(evt) {
     this.setState({
-      searchValue: evt.target.value
+      searchQuery: evt.target.value
     });
-    this.props.dispatch(fetchSingleAlbum(this.props.match.params.index));
+    this.props.dispatch(
+        searchSingleAlbum(this.props.match.params.index, evt.target.value)
+    );
   }
 
   displayLightboxHandler(index) {
@@ -51,16 +68,22 @@ export class Album extends React.Component {
     });
   }
   render() {
-    const files = this.props.album.files.map((file, index) => (
-      <li key={index} className="col-3">
-        <MediaFile
-          index={index}
-          albumIndex={this.props.match.params.index}
-          {...file}
-          displayLightboxClicked={this.displayLightboxHandler.bind(this, index)}
-        />
-      </li>
-    ));
+    let files;
+    if (this.props.album.files) {
+      files = this.props.album.files.map((file, index) => (
+        <li key={index} className="col-3">
+          <MediaFile
+            index={index}
+            albumIndex={this.props.match.params.index}
+            {...file}
+            displayLightboxClicked={this.displayLightboxHandler.bind(
+              this,
+              index
+            )}
+          />
+        </li>
+      ));
+    }
 
     let lightBox;
     if (this.state.displayLightbox) {
@@ -73,6 +96,9 @@ export class Album extends React.Component {
       );
     }
 
+    if (this.props.loading) {
+      return <div className="spinnerModal" />;
+    }
     return (
       <div className="centered-container centered-text">
         <header role="banner">
@@ -87,10 +113,10 @@ export class Album extends React.Component {
             type="text"
             className=""
             placeholder="Search by media name"
-            value={this.state.searchValue}
+            value={this.state.searchQuery}
             onChange={evt => this.updateInputValue(evt)}
           />
-          <button type="submit">
+          <button type="submit" onClick={() => this.search()}>
             <FaSearch />
           </button>
         </div>
@@ -106,6 +132,7 @@ Album.defaultProps = {
 };
 
 const mapStateToProps = state => ({
+  loading: state.bestmemories.loading,
   album: state.bestmemories.album
 });
 

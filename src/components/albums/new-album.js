@@ -37,9 +37,11 @@ export class NewAlbum extends React.Component {
     // react-dropzone doesn't manage dropped files. You need to destroy
     // the object URL yourself whenever you don't need the preview by calling
     // window.URL.revokeObjectURL(file.preview); to avoid memory leaks.
-    this.state.acceptedFiles.map(file =>
-      window.URL.revokeObjectURL(file.preview)
-    );
+    if (this.state.acceptedFiles) {
+      this.state.acceptedFiles.map(file =>
+        window.URL.revokeObjectURL(file.preview)
+      );
+    }
   }
 
   handleDropFiles = (acceptedFiles, rejectedFiles) => {
@@ -92,7 +94,7 @@ export class NewAlbum extends React.Component {
       return <div className="spinnerModal" />;
     }
     return (
-      <div className="new-album centered-container centered-text">
+      <div className="new-album centered-container">
         <header role="banner">
           <h1>New Album</h1>
         </header>
@@ -121,6 +123,9 @@ export class NewAlbum extends React.Component {
               label="Comment"
             />
           </div>
+          <div>
+            <DropzoneArea dropzoneAcceptedFiles={this.handleDropFiles} />
+          </div>
           <div className="centered-btn-wrapper">
             <button type="submit" className="btn">
               Submit
@@ -131,10 +136,6 @@ export class NewAlbum extends React.Component {
               </button>
             </Link>
           </div>
-          <section className="deopzone-area">
-            <legend>Dropzone</legend>
-            <DropzoneArea dropzoneAcceptedFiles={this.handleDropFiles} />
-          </section>
         </form>
       </div>
     );

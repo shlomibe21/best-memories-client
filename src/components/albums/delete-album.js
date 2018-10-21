@@ -12,7 +12,7 @@ export class DeleteAlbum extends React.Component {
     let promises = [];
     // If there are files in this album delete them first and only then delete the 
     // album's data from the DB
-    if (this.props.album.files.length > 0) {
+    if (this.props.album.files) {
       promises = this.props.album.files.map((file, i) => {
         return this.props.dispatch(awsS3DeleteFile(file.fileName));
       });

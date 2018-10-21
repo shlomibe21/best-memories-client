@@ -30,6 +30,10 @@ export const albumsReducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         error: action.error
       });
+    case actions.SEARCH_SINGLE_ALBUM_SUCCESS:
+      return Object.assign({}, state, {
+        album: action.album
+      });
     case actions.UPDATE_SINGLE_ALBUM_SUCCESS:
       return Object.assign({}, state, {
         album: action.album

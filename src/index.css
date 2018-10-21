@@ -27,14 +27,22 @@ textarea {
   font-size: 16px;
 }
 
+h1,
+h2,
+legend {
+  color: #0b7dda;
+}
+
 h1 {
   font-size: 40px;
-  color: #0b7dda;
 }
 
 h2 {
   font-size: 25px;
-  color: #0b7dda;
+}
+
+header {
+  text-align: center;
 }
 
 ul {
@@ -131,10 +139,10 @@ fieldset {
   padding-left: 8px;
 }
 
-form label {
-    color: #0b7dda;
-    margin-left: 5px;
-  }
+form label, form legend {
+  color: #0b7dda;
+  margin-left: 5px;
+}
 
 form .form-error {
   margin-top: 0px;

@@ -13,7 +13,7 @@ export class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchValue: "",
+        searchQuery: "",
     };
   }
 
@@ -22,7 +22,7 @@ export class Dashboard extends React.Component {
   }
 
   componentDidMount() {
-    return fetch(this.props.dispatch(fetchAlbums(this.state.searchValue))).then(
+    return fetch(this.props.dispatch(fetchAlbums(this.state.searchQuery))).then(
       () => {
         this.props.dispatch(setLoading(false));
       }
@@ -31,12 +31,12 @@ export class Dashboard extends React.Component {
 
   search(query) {
     //console.log("search");
-    this.props.dispatch(fetchAlbums(this.state.searchValue));
+    this.props.dispatch(fetchAlbums(this.state.searchQuery));
   }
 
   updateInputValue(evt) {
     this.setState({
-      searchValue: evt.target.value
+        searchQuery: evt.target.value
     });
     this.props.dispatch(fetchAlbums(evt.target.value));
   }
@@ -50,7 +50,7 @@ export class Dashboard extends React.Component {
         <AlbumTile index={index} {...album} />
       </li>
     ));
-    if (albums.length > 0 || this.state.searchValue.length > 0) {
+    if (albums.length > 0 || this.state.searchQuery.length > 0) {
       addNewAlbumLink = (
         <div>
           <Link to="/new-album">Add a New Album</Link>
@@ -62,7 +62,7 @@ export class Dashboard extends React.Component {
             type="text"
             className=""
             placeholder="Search by album name"
-            value={this.state.searchValue}
+            value={this.state.searchQuery}
             onChange={evt => this.updateInputValue(evt)}
           />
           <button type="submit" onClick={() => this.search()}>

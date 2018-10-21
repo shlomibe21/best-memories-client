@@ -102,11 +102,10 @@ export class NewFiles extends React.Component {
               Cancel
             </button>
           </Link>
-          <section className="deopzone-area">
-            <legend>Dropzone</legend>
+          <div>
             {errorMessage}
             <DropzoneArea dropzoneAcceptedFiles={this.handleDropFiles} />
-          </section>
+          </div>
         </form>
       </div>
     );
