@@ -1,4 +1,6 @@
 import React from "react";
+import ExifOrientationImg from 'react-exif-orientation-img'
+
 import requiresLogin from "../authorization/requires-login";
 
 import "./media-lightbox.css";
@@ -9,7 +11,7 @@ export class mediaLightBox extends React.Component {
       <div className="modal">
         <div className="centered-content">
           <div className="media-wrapper">
-            <img
+            <ExifOrientationImg
               src={
                 this.props[this.props.index].props.children.props
                   .storageLocation

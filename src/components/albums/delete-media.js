@@ -8,6 +8,8 @@ import {
 } from "../../actions/albums";
 import requiresLogin from "../authorization/requires-login";
 
+import "./delete-media.css";
+
 export class DeleteMedia extends React.Component {
   componentDidMount() {
     this.props.dispatch(
@@ -17,7 +19,7 @@ export class DeleteMedia extends React.Component {
       )
     );
   }
-  
+
   // TODO: change name to deleteMedia
   deleteFile() {
     return this.props
@@ -40,15 +42,21 @@ export class DeleteMedia extends React.Component {
       fileName = this.props.file.files[0].frontEndFileName;
     }
     return (
-      <div>
-        <p>Delete File</p>
-        <p>Do you really want to delete this file?</p>
-        <p>File Name: {fileName}</p>
-        <button type="submit" onClick={() => this.deleteFile()}>
+      <div className="centered-container centered-text">
+        <header role="banner">
+          <h1>Delete File</h1>
+        </header>
+        <h2>Do you really want to delete this file?</h2>
+        <div className="delete-file-info">
+          <p>{fileName}</p>
+        </div>
+        <button type="submit" className="btn" onClick={() => this.deleteFile()}>
           Submit
         </button>
         <Link to={`/album/${this.props.match.params.albumId}`}>
-          <button type="button">Cancel</button>
+          <button type="button" className="btn">
+            Cancel
+          </button>
         </Link>
       </div>
     );

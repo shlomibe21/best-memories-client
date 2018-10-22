@@ -1,4 +1,5 @@
 import React from "react";
+import ExifOrientationImg from 'react-exif-orientation-img'
 
 import Tooltip from "../common/tooltip";
 import { Link } from "react-router-dom";
@@ -16,7 +17,7 @@ export default class MediaFile extends React.Component {
         style={{ /*position: "absolute",*/ top: this.props.top, left: this.props.left }}
       >
         <a className="image-wrapper">
-          <img className="" src={this.props.storageLocation} alt="media file" />
+          <ExifOrientationImg src={this.props.storageLocation} alt="media file" />
         </a>
         <div>
           <p className="file-name">{this.props.frontEndFileName}</p>

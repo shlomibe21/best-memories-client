@@ -8,7 +8,6 @@ import requiresLogin from "../authorization/requires-login";
 import { fetchSingleAlbum } from "../../actions/albums";
 import { updateSingleAlbum } from "../../actions/albums";
 import { required, nonEmpty } from "../../validators";
-import MediaFile from "./media-file";
 import Input from "../forms/input";
 
 import "./edit-album.css";
@@ -64,26 +63,10 @@ class EditAlbum extends React.Component {
         <div className="message message-error">{this.props.error}</div>
       );
     }
-    let files;
-    if (this.props.initialValues) {
-      if (this.props.initialValues.dateCreated) {
-        this.props.initialValues.dateCreated = moment(
-          this.props.initialValues.dateCreated
-        ).format("YYYY-MM-DD");
-      }
-      files = this.props.initialValues.files.map((file, index) => (
-        <li key={index} className="col-3">
-          <MediaFile
-            index={index}
-            albumIndex={this.props.match.params.index}
-            {...file}
-          />
-        </li>
-      ));
-    }
+    
     return (
       <div className="centered-container">
-        <header role="banner" className="centered-text">
+        <header role="banner">
           <h1>Edit Album</h1>
         </header>
         <form
@@ -101,27 +84,27 @@ class EditAlbum extends React.Component {
                 validate={[required, nonEmpty]}
               />
             </div>
-            <p>
-              Date Created:
-              {this.props.initialValues
-                ? this.props.initialValues.dateCreated
-                : ""}
-            </p>
             <div>
               <Field
                 label="Comment"
                 component={Input}
                 type="textarea"
+                className= "textarea"
                 name="comment"
                 id="comment"
               />
             </div>
-            <button type="submit">Submit</button>
-            <Link to="/dashboard">
-              <button type="button">Cancel</button>
-            </Link>
+            <div className="centered-text">
+              <button type="submit" className="btn">
+                Submit
+              </button>
+              <Link to="/dashboard">
+                <button type="button" className="btn">
+                  Cancel
+                </button>
+              </Link>
+            </div>
           </div>
-          <ul className="row album-container">{files}</ul>
         </form>
       </div>
     );

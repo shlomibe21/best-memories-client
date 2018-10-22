@@ -23,7 +23,7 @@ class EditMedia extends React.Component {
 
   onSubmit(values) {
     console.log("edit-media Values:", values);
-    let frontEndFileName = values.files[0].fileName;
+    let frontEndFileName = values.files[0].frontEndFileName;
     return this.props
       .dispatch(
         updateSingleFile(
@@ -54,28 +54,24 @@ class EditMedia extends React.Component {
       }
     }
     return (
-      <div>
+      <div className="centered-container">
+        <header role="banner">
+          <h1>Edit File Information</h1>
+        </header>
         <form
           onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}
         >
-          <p>Edit File</p>
           {errorMessage}
           <div>
             <Field
               label="File Name"
               component={Input}
               type="text"
-              name="files[0].fileName"
-              id="albumname"
+              name="files[0].frontEndFileName"
+              id="file-name"
               validate={[required, nonEmpty]}
             />
           </div>
-          <p>
-            Date Added:
-            {this.props.initialValues
-              ? this.props.initialValues.files[0].dateAdded
-              : ""}
-          </p>
           <div>
             <Field
               label="Comment"
@@ -85,10 +81,12 @@ class EditMedia extends React.Component {
               id="comment"
             />
           </div>
-          <button type="submit">Submit</button>
-          <Link to={`/album/${this.props.match.params.albumId}`}>
-            <button type="button">Cancel</button>
-          </Link>
+          <div className="centered-text">
+            <button type="submit" className="btn">Submit</button>
+            <Link to={`/album/${this.props.match.params.albumId}`}>
+              <button type="button" className="btn">Cancel</button>
+            </Link>
+          </div>
         </form>
       </div>
     );
@@ -103,7 +101,7 @@ EditMedia = reduxForm({
     //window.location = "/dashboard";
   },
   onSubmitFail: (errors, dispatch) => {
-    dispatch(focus("EditMedia", "fileName"));
+    dispatch(focus("EditMedia", "files[0].frontEndFileName"));
     if (!errors) {
       alert("Error: couldn't edit the file!");
     }

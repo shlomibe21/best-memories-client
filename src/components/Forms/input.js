@@ -25,7 +25,7 @@ export default class Input extends React.Component {
           {...this.props}
           id={this.props.input.name}
           type={this.props.type}
-          className="form-input"
+          className="form-input-textarea"
           ref={input => (this.input = input)}
         />
       );

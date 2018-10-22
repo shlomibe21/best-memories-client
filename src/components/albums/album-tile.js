@@ -9,45 +9,52 @@ import Tooltip from "../common/tooltip";
 import { MdPhotoAlbum, MdModeEdit, MdDeleteForever } from "react-icons/md";
 
 export default function AlbumTile(props) {
+  let filesToDisplay;
   // Check if this album has at least one media file
-  // and if yes display thumbnail of it on the album tile
-  let storageLocation;
-  if (props.files[0] && props.files[0].storageLocation) {
-    storageLocation = props.files[0].storageLocation;
-  }
+  // and if yes display up to 4 thumbnails on the album tile
+  filesToDisplay = props.files.slice(0, 4);
+  const thumbnailsDisplay = filesToDisplay.map((file, index) => (
+    <img src={file.storageLocation} alt="Thumbnail" key={index} className="img4" />
+  ));
+  // Another option: to display only the first media file
+  /*filesToDisplay = props.files.slice(0, 1);
+  const thumbnailsDisplay = filesToDisplay.map((file, index) => (
+    <img src={file.storageLocation} alt="Thumbnail" key={index} className="img1" />
+  ));*/
+
   let dateCreated = props.dateCreated
     ? moment(props.dateCreated).format("MM-DD-YYYY")
     : "";
   return (
     <div className="album-tile">
       <div id={`album-${props.index}`} className="album-tile-container">
-        <Link className="album-tile-link" to={`/album/${props.id}`}>
-          <div className="album-name">{props.albumName}</div>
-          <div className="thumbnail-container">
-            <div className="thumbnail">
-              <Tooltip message={"Display Album: " + props.albumName} position={"top"}>
-                <img
-                  src={storageLocation ? storageLocation : ""}
-                  alt="Thumbnail"
-                />
+        <div className="album-name">{props.albumName}</div>
+        <div className="thumbnail-container">
+          <div className="thumbnail">
+            <Link className="album-tile-link" to={`/album/${props.id}`}>
+              <Tooltip
+                message={"Click to display album: " + props.albumName}
+                position={"top"}
+              >
+                {thumbnailsDisplay}
               </Tooltip>
-            </div>
+            </Link>
           </div>
-          <div className="album-info">
-            <p className="album-date-created">{dateCreated}</p>
-            <div className="album-comment">
-              <Tooltip message={props.comment} position={"top"}>
-                <LinesEllipsis
-                  text={props.comment}
-                  maxLine="5"
-                  ellipsis="..."
-                  trimRight
-                  basedOn="letters"
-                />
-              </Tooltip>
-            </div>
+        </div>
+        <div className="album-info">
+          <p className="album-date-created">{dateCreated}</p>
+          <div className="album-comment">
+            <Tooltip message={props.comment} position={"top"}>
+              <LinesEllipsis
+                text={props.comment}
+                maxLine="4"
+                ellipsis="..."
+                trimRight
+                basedOn="letters"
+              />
+            </Tooltip>
           </div>
-        </Link>
+        </div>
       </div>
       <div className="ctrl-icons-wrapper">
         <div>

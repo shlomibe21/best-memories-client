@@ -1,8 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+
 import requiresLogin from "../authorization/requires-login";
-import { fetchSingleAlbum, deleteSingleAlbum, awsS3DeleteFile } from "../../actions/albums";
+import {
+  fetchSingleAlbum,
+  deleteSingleAlbum,
+  awsS3DeleteFile
+} from "../../actions/albums";
+
+import "./delete-album.css";
 
 export class DeleteAlbum extends React.Component {
   componentDidMount() {
@@ -10,7 +17,7 @@ export class DeleteAlbum extends React.Component {
   }
   deleteAlbum() {
     let promises = [];
-    // If there are files in this album delete them first and only then delete the 
+    // If there are files in this album delete them first and only then delete the
     // album's data from the DB
     if (this.props.album.files) {
       promises = this.props.album.files.map((file, i) => {
@@ -26,15 +33,25 @@ export class DeleteAlbum extends React.Component {
 
   render() {
     return (
-      <div>
-        <p>Delete Album</p>
-        <p>Do you really want to delete this album?</p>
-        <p>{this.props.album.albumName}</p>
-        <button type="submit" onClick={() => this.deleteAlbum()}>
+      <div className="centered-container centered-text">
+        <header role="banner">
+          <h1>Delete Album</h1>
+        </header>
+        <h2>Do you really want to delete this album?</h2>
+        <div className="delete-album-info">
+          <p>{this.props.album.albumName}</p>
+        </div>
+        <button
+          type="submit"
+          className="btn"
+          onClick={() => this.deleteAlbum()}
+        >
           Submit
         </button>
         <Link to="/dashboard">
-          <button type="button">Cancel</button>
+          <button type="button" className="btn">
+            Cancel
+          </button>
         </Link>
       </div>
     );

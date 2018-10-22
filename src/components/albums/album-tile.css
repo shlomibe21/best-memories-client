@@ -4,10 +4,11 @@
   padding: 0px 10px;
   margin-top: 20px;
   background-color: white;
+  color: #0b7dda;
 }
 
 .album-tile-container p {
-  margin-top: 10px;
+  margin-top: 2px;
   margin-bottom: 10px;
 }
 
@@ -21,6 +22,7 @@
 
 .album-name {
   font-weight: 600;
+  font-size: 15px;
   text-align: center;
   margin: 10px 0px 10px 0px;
   white-space: nowrap;
@@ -29,25 +31,35 @@
 }
 
 .thumbnail-container {
-  height: 120px;
+  width: 90%;
+  height: 140px;
   /*border: solid 1px black;*/
 }
 
-.thumbnail img {
-  max-width: 100%;
-  max-height: 120px;
+.thumbnail .img4 {
+  width: 75px;
+  height: 65px;
+  margin: 0px 3px 1px 3px;
+}
+
+.thumbnail .img1 {
+  /*width: 75px;
+    height: 65px;*/
+  width: 100%;
+  max-height: 118px;
+  /*margin: 0px 3px 1px 3px;*/
 }
 
 .album-date-created {
   font-size: 12px;
-  margin-top: 15px;
+  margin-top: 20px;
   text-align: left;
   text-decoration: underline;
 }
 
 .album-info {
   padding: 5px;
-  font-size: 14px;
+  font-size: 12px;
   /*background-color: rgb(243, 243, 200);*/
 }
 
@@ -61,4 +73,25 @@
 
 .album-tile .ctrl-icons-wrapper {
   border-top: none;
+}
+
+@media screen and (min-width: 600px) {
+  .thumbnail .img4 {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media screen and (min-width: 890px) {
+  .thumbnail .img4 {
+    width: 52px;
+    height: 50px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .thumbnail .img4 {
+    width: 60px;
+    height: 55px;
+  }
 }
