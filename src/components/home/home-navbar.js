@@ -22,7 +22,9 @@ export default class HomePageNavbar extends React.Component {
     return (
       <div className="navbar" id="navbar">
         <div className="logo">
-          <h2>Best Memories</h2>
+          <Link to="/">
+            <h2>Best Memories</h2>
+          </Link>
         </div>
         <Link className="btn" to="/dashboard">
           Let's Start!

@@ -9,7 +9,7 @@ export function HomePage(props) {
   return (
     <div className="home-page">
       <div className="top-image">
-        <h2 className="top-image-header">Welcome to Best Memories</h2>
+        <h1 className="top-image-header">Welcome to Best Memories</h1>
       </div>
       <HomePageNavbar />
       <main role="main" className="home-page centered-container centered-text content">

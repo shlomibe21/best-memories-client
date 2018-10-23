@@ -14,11 +14,11 @@ body {
   position: relative;
   margin: 0;
   min-height: 100%;
-  padding-bottom: 6rem;
+  padding-bottom: 0;
 }
 
 main {
-  margin-bottom: 50px;
+  padding-bottom: 100px;
 }
 
 h1,
@@ -184,7 +184,7 @@ form .form-error {
 .registration-form,
 .login-form {
   background-color: rgba(255, 255, 255, 0.9);
-  padding: 20px;
+  padding: 5px 20px;
 }
 
 .registration-form label,
@@ -305,6 +305,14 @@ form .btn {
 }
 
 @media screen and (min-width: 600px) {
+  h1 {
+    font-size: 50px;
+  }
+
+  h2 {
+    font-size: 45px;
+  }
+
   .centered-container.narrow {
     max-width: 450px;
   }

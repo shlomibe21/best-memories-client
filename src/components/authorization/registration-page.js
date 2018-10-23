@@ -14,13 +14,14 @@ export function RegistrationPage(props) {
   }
   return (
     <div className="registration">
-      <div className="registration-page centered-text">
-      <h1>Welcome to Best Memories</h1>
+    <div className="top-image">
+        <h1 className="top-image-header">Welcome to Best Memories</h1>
       </div>
       <RegistrationForm />
       <div className="centered-text">
-        <p>Already registered?
-          <Link to="/login">  Sign In</Link>
+        <p>
+          Already registered?
+          <Link to="/login"> Sign In</Link>
         </p>
       </div>
     </div>

@@ -3,17 +3,14 @@
   background-size: cover;
   background: url("../../images/retro-1483781_1920.jpg");
   /*background: url("../../images/images-381937_1280.jpg");*/
+  padding-left: 5px;
 }
 
 .top-image-header {
-  position: relative;
   display: inline-block;
   font-weight: bold;
   font-size: 50px;
-  text-align: left;
-  margin-left: 5%;
-  top: 40px;
-  color: white;
+  color: red;
 }
 
 main {
@@ -34,7 +31,7 @@ main {
 }
 
 .buttons-bar .btn {
-  width: 250px;
+  width: 200px;
   height: 60px;
   font-size: 30px;
   border: none;
@@ -50,7 +47,7 @@ main {
 
   .top-image-header {
     font-size: 80px;
-    margin-left: 15%;
+    margin-left: 20%;
     top: 20px;
   }
 }

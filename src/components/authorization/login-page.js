@@ -4,6 +4,8 @@ import { Link, Redirect } from "react-router-dom";
 
 import LoginForm from "./login-form";
 
+import "./login-page.css";
+
 export function LoginPage(props) {
   // If user is logged in redirect straight to the dashboard
   if (props.loggedIn) {
@@ -12,13 +14,15 @@ export function LoginPage(props) {
 
   return (
     <div className="login">
-      <div className="login-page centered-text">
-      <h1>Welcome to Best Memories</h1>
+      <div className="top-image">
+        <h1 className="top-image-header">Welcome to Best Memories</h1>
       </div>
       <LoginForm />
       <div className="centered-text">
-      <p>Not registered?
-        <Link to="/register"> Create an account</Link></p>
+        <p>
+          Not registered?
+          <Link to="/register"> Create an account</Link>
+        </p>
       </div>
     </div>
   );
