@@ -57,8 +57,8 @@ export class App extends React.Component {
         </header>
         <main role="main">
           <Switch>
-            <Route exact path="/login/" component={LoginPage} />
             <Route exact path="/" component={Home} />
+            <Route exact path="/login/" component={LoginPage} />
             <Route exact path="/dashboard/" component={Dashboard} />
             <Route exact path="/album/:index" component={Album} />
             <Route exact path="/new-album/" component={NewAlbum} />

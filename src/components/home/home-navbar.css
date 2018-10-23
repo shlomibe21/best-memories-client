@@ -1,0 +1,63 @@
+/* Sticky navbar */
+.navbar {
+  height: 100px;
+  margin: 0;
+  background: #012c7a;
+  background-image: -webkit-linear-gradient(top, #012c7a, #4a81e6);
+  background-image: -moz-linear-gradient(top, #012c7a, #4a81e6);
+  background-image: -ms-linear-gradient(top, #012c7a, #4a81e6);
+  background-image: -o-linear-gradient(top, #012c7a, #4a81e6);
+  background-image: linear-gradient(to bottom, #012c7a, #4a81e6);
+  color: red;
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  z-index: 1;
+}
+
+.navbar .logo {
+  font-weight: bold;
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.navbar .logo h2 {
+  color: white;
+  font-size: 25px;
+  text-decoration: none;
+}
+
+.navbar .btn {
+  border: none;
+  font-size: 15px;
+  text-decoration: none;
+  cursor: pointer;
+  outline: none;
+  color: red;
+  background: black;
+  position: absolute;
+  right: 10px;
+  margin: 0px;
+  text-align: center;
+  min-width: 80px;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+.sticky + .content {
+  padding-top: 102px;
+}
+
+@media only screen and (min-width: 640px) {
+  .navbar .logo h2 {
+    font-size: 40px;
+  }
+
+  .navbar .btn {
+    font-size: 25px;
+    right: 20px;
+  }
+}
