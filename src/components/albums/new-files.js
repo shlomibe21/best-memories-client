@@ -94,6 +94,10 @@ export class NewFiles extends React.Component {
           className="new-files"
           onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}
         >
+          <div>
+            {errorMessage}
+            <DropzoneArea dropzoneAcceptedFiles={this.handleDropFiles} />
+          </div>
           <button type="submit" className="btn">
             Add Files
           </button>
@@ -102,10 +106,6 @@ export class NewFiles extends React.Component {
               Cancel
             </button>
           </Link>
-          <div>
-            {errorMessage}
-            <DropzoneArea dropzoneAcceptedFiles={this.handleDropFiles} />
-          </div>
         </form>
       </div>
     );

@@ -298,6 +298,14 @@ export const addNewFiles = (id, files) => (dispatch, getState) => {
     });
 };
 
+export const FETCH_SINGLE_FILE_LOCAL = "FETCH_SINGLE_FILE_LOCAL";
+export const fetchSingleFileLocal = (file, albumId, fileId) => ({
+  type: FETCH_SINGLE_FILE_LOCAL,
+  file,
+  albumId,
+  fileId
+});
+
 export const FETCH_SINGLE_FILE_SUCCESS = "FETCH_SINGLE_FILE_SUCCESS";
 export const fetchSingleFileSuccess = (file, albumId, fileId) => ({
   type: FETCH_SINGLE_FILE_SUCCESS,
@@ -341,6 +349,18 @@ export const fetchSingleFile = (albumId, fileId) => (dispatch, getState) => {
     });
 };
 
+export const UPDATE_SINGLE_FILE_REQUEST = "UPDATE_SINGLE_FILE_REQUEST";
+export const updateSingleFileRequest = updatingFile => ({
+  type: UPDATE_SINGLE_FILE_REQUEST,
+  updatingFile
+});
+
+export const UPDATE_SINGLE_FILE_SUCCESS = "UPDATE_SINGLE_FILE_SUCCESS";
+export const updateSingleFileSuccess = updatingFile => ({
+  type: UPDATE_SINGLE_FILE_SUCCESS,
+  updatingFile
+});
+
 export const updateSingleFile = (
   albumId,
   fileId,
@@ -365,7 +385,11 @@ export const updateSingleFile = (
       if (!res.ok) {
         return Promise.reject(res.statusText);
       }
+      dispatch(fetchSingleAlbum(albumId));
     })
+    .then(() => {
+        dispatch(updateSingleFileSuccess(albumId, fileId));
+      })
     .catch(err => {
       const { reason, message, location } = err;
       if (reason === "ValidationError") {
@@ -383,6 +407,12 @@ export const updateSingleFile = (
       );
     });
 };
+
+export const DELETE_SINGLE_FILE_REQUEST = "DELETE_SINGLE_FILE_REQUEST";
+export const deleteSingleFileRequest = deletingFile => ({
+  type: DELETE_SINGLE_FILE_REQUEST,
+  deletingFile
+});
 
 export const DELETE_SINGLE_FILE_SUCCESS = "DELETE_SINGLE_FILE_SUCCESS";
 export const deleteSingleFileSuccess = (albumId, fileId) => ({
@@ -408,6 +438,7 @@ export const deleteSingleFile = (albumId, fileId) => (dispatch, getState) => {
       if (!res.ok) {
         return Promise.reject(res.statusText);
       }
+      dispatch(fetchSingleAlbum(albumId));
     })
     .then(() => {
       dispatch(deleteSingleFileSuccess(albumId, fileId));

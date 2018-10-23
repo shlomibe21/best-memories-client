@@ -4,7 +4,14 @@ import { Link } from "react-router-dom";
 
 import requiresLogin from "../authorization/requires-login";
 import MediaFile from "./media-file";
-import { searchSingleAlbum, setLoading } from "../../actions/albums";
+import EditeMedia from "./edit-media";
+import DeleteMedia from "./delete-media";
+import {
+  searchSingleAlbum,
+  setLoading,
+  updateSingleFileRequest,
+  deleteSingleFileRequest
+} from "../../actions/albums";
 
 import "./album.css";
 
@@ -17,19 +24,21 @@ export class Album extends React.Component {
     this.state = {
       searchQuery: "",
       displayLightbox: false,
-      index: 0
+      index: 0,
     };
   }
 
   componentWillMount() {
     this.props.dispatch(setLoading(true));
+    this.props.dispatch(deleteSingleFileRequest(false));
+    this.props.dispatch(updateSingleFileRequest(false));
   }
 
   componentDidMount() {
     return fetch(
       this.props
         .dispatch(
-            searchSingleAlbum(
+          searchSingleAlbum(
             this.props.match.params.index,
             this.state.searchQuery
           )
@@ -42,7 +51,9 @@ export class Album extends React.Component {
 
   search(query) {
     console.log("search");
-    this.props.dispatch(searchSingleAlbum(this.props.match.params.index, this.state.searchQuery));
+    this.props.dispatch(
+      searchSingleAlbum(this.props.match.params.index, this.state.searchQuery)
+    );
   }
 
   updateInputValue(evt) {
@@ -50,7 +61,7 @@ export class Album extends React.Component {
       searchQuery: evt.target.value
     });
     this.props.dispatch(
-        searchSingleAlbum(this.props.match.params.index, evt.target.value)
+      searchSingleAlbum(this.props.match.params.index, evt.target.value)
     );
   }
 
@@ -67,6 +78,21 @@ export class Album extends React.Component {
       displayLightbox: false
     });
   }
+
+  handleUpdateFile(index) {
+    this.setState({
+      index: index
+    });
+    this.props.dispatch(updateSingleFileRequest(true));
+  }
+
+  handleDeleteFile(index) {
+    this.setState({
+      index: index
+    });
+    this.props.dispatch(deleteSingleFileRequest(true));
+  }
+
   render() {
     let files;
     if (this.props.album.files) {
@@ -76,10 +102,13 @@ export class Album extends React.Component {
             index={index}
             albumIndex={this.props.match.params.index}
             {...file}
-            displayLightboxClicked={this.displayLightboxHandler.bind(
-              this,
-              index
-            )}
+            displayLightboxClicked={() => this.displayLightboxHandler(index)}
+            updateFileButtonClicked={() =>
+              this.handleUpdateFile(index, ...file)
+            }
+            deleteFileButtonClicked={() =>
+              this.handleDeleteFile(index, ...file)
+            }
           />
         </li>
       ));
@@ -91,13 +120,29 @@ export class Album extends React.Component {
         <MediaLightbox
           index={this.state.index}
           {...files}
-          hideLightboxClicked={this.closeLightboxHandler.bind(this)}
+          hideLightboxClicked={() => this.closeLightboxHandler()}
         />
       );
     }
 
     if (this.props.loading) {
       return <div className="spinnerModal" />;
+    } else if (this.props.updatingFile) {
+      return (
+        <EditeMedia
+          albumId={this.props.match.params.index}
+          index={this.state.index}
+          {...files}
+        />
+      );
+    } else if (this.props.deletingFile) {
+      return (
+        <DeleteMedia
+          albumId={this.props.match.params.index}
+          index={this.state.index}
+          {...files}
+        />
+      );
     }
     return (
       <div className="centered-container centered-text">
@@ -133,6 +178,8 @@ Album.defaultProps = {
 
 const mapStateToProps = state => ({
   loading: state.bestmemories.loading,
+  updatingFile: state.bestmemories.updatingFile,
+  deletingFile: state.bestmemories.deletingFile,
   album: state.bestmemories.album
 });
 

@@ -1,8 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import {
-  fetchSingleFile,
+  deleteSingleFileRequest,
   deleteSingleFile,
   awsS3DeleteFile
 } from "../../actions/albums";
@@ -10,37 +9,23 @@ import requiresLogin from "../authorization/requires-login";
 
 import "./delete-media.css";
 
+let file;
 export class DeleteMedia extends React.Component {
-  componentDidMount() {
-    this.props.dispatch(
-      fetchSingleFile(
-        `${this.props.match.params.albumId}`,
-        `${this.props.match.params.fileId}`
-      )
-    );
+  deleteFile() {
+    return this.props.dispatch(awsS3DeleteFile(file.fileName)).then(res => {
+      return this.props.dispatch(
+        deleteSingleFile(`${this.props.albumId}`, `${file._id}`)
+      );
+    });
   }
 
-  // TODO: change name to deleteMedia
-  deleteFile() {
-    return this.props
-      .dispatch(awsS3DeleteFile(this.props.file.files[0].fileName))
-      .then(res => {
-        return this.props.dispatch(
-          deleteSingleFile(
-            `${this.props.match.params.albumId}`,
-            `${this.props.match.params.fileId}`
-          )
-        );
-      })
-      .then(() =>
-        this.props.history.push(`/album/${this.props.match.params.albumId}`)
-      );
+  cancelDeleteFileReq() {
+    this.props.dispatch(deleteSingleFileRequest(false));
   }
+
   render() {
-    let fileName;
-    if (this.props.file && this.props.file) {
-      fileName = this.props.file.files[0].frontEndFileName;
-    }
+    file = this.props[this.props.index].props.children.props;
+    let fileName = this.props[this.props.index].props.children.props.fileName;
     return (
       <div className="centered-container centered-text">
         <header role="banner">
@@ -53,11 +38,13 @@ export class DeleteMedia extends React.Component {
         <button type="submit" className="btn" onClick={() => this.deleteFile()}>
           Submit
         </button>
-        <Link to={`/album/${this.props.match.params.albumId}`}>
-          <button type="button" className="btn">
-            Cancel
-          </button>
-        </Link>
+        <button
+          type="button"
+          className="btn"
+          onClick={() => this.cancelDeleteFileReq()}
+        >
+          Cancel
+        </button>
       </div>
     );
   }

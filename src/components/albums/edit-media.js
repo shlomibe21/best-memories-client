@@ -1,44 +1,49 @@
 import React from "react";
 import { reduxForm, Field, focus } from "redux-form";
 import { connect } from "react-redux";
-import { withRouter, Link } from "react-router-dom";
-import moment from "moment";
+import { withRouter } from "react-router-dom";
 
 import requiresLogin from "../authorization/requires-login";
-import { fetchSingleFile, updateSingleFile } from "../../actions/albums";
+import {
+  fetchSingleFileLocal,
+  updateSingleFile,
+  updateSingleFileRequest
+} from "../../actions/albums";
 import { required, nonEmpty } from "../../validators";
 import Input from "../forms/input";
 
 import "./edit-media.css";
 
+let file;
 class EditMedia extends React.Component {
   componentDidMount() {
     this.props.dispatch(
-      fetchSingleFile(
-        `${this.props.match.params.albumId}`,
-        `${this.props.match.params.fileId}`
-      )
+      fetchSingleFileLocal(file, `${file.albumIndex}`, `${file._id}`)
     );
   }
 
   onSubmit(values) {
-    console.log("edit-media Values:", values);
-    let frontEndFileName = values.files[0].frontEndFileName;
+    //console.log("edit-media Values:", values);
+    let frontEndFileName = values.frontEndFileName;
     return this.props
       .dispatch(
         updateSingleFile(
-          `${this.props.match.params.albumId}`,
-          `${this.props.match.params.fileId}`,
+          values.albumIndex,
+          values._id,
           frontEndFileName,
-          values.files[0].comment
+          values.comment
         )
       )
-      .then(() =>
-        this.props.history.push(`/album/${this.props.match.params.albumId}`)
-      );
+  }
+
+  cancelUpdateFileReq() {
+    this.props.dispatch(updateSingleFileRequest(false));
   }
 
   render() {
+    if (this.props[this.props.index]) {
+      file = this.props[this.props.index].props.children.props;
+    }
     //console.log("edit-media: initial values", this.props.initialValues);
     let errorMessage;
     if (this.props.error) {
@@ -46,13 +51,7 @@ class EditMedia extends React.Component {
         <div className="message message-error">{this.props.error}</div>
       );
     }
-    if (this.props.initialValues) {
-      if (this.props.initialValues.files[0].dateAdded) {
-        this.props.initialValues.files[0].dateAdded = moment(
-          this.props.initialValues.files[0].dateAdded
-        ).format("YYYY-MM-DD");
-      }
-    }
+   
     return (
       <div className="centered-container">
         <header role="banner">
@@ -67,7 +66,7 @@ class EditMedia extends React.Component {
               label="File Name"
               component={Input}
               type="text"
-              name="files[0].frontEndFileName"
+              name="frontEndFileName"
               id="file-name"
               validate={[required, nonEmpty]}
             />
@@ -77,15 +76,21 @@ class EditMedia extends React.Component {
               label="Comment"
               component={Input}
               type="textarea"
-              name="files[0].comment"
+              name="comment"
               id="comment"
             />
           </div>
           <div className="centered-text">
-            <button type="submit" className="btn">Submit</button>
-            <Link to={`/album/${this.props.match.params.albumId}`}>
-              <button type="button" className="btn">Cancel</button>
-            </Link>
+            <button type="submit" className="btn">
+              Submit
+            </button>
+            <button
+              type="button"
+              className="btn"
+              onClick={() => this.cancelUpdateFileReq()}
+            >
+              Cancel
+            </button>
           </div>
         </form>
       </div>

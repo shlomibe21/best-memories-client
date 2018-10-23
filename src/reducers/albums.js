@@ -9,15 +9,6 @@ export const albumsReducer = (state = initialState, action) => {
   switch (action.type) {
     case actions.ADD_ALBUM_SUCCESS:
       return state;
-    /*return Object.assign({}, state, {
-        albums: [
-          ...state.albums,
-          {
-            albumName: action.albumName,
-            files: []
-          }
-        ]
-      });*/
     case actions.FETCH_ALBUMS_SUCCESS:
       return Object.assign({}, state, {
         albums: action.albums
@@ -34,6 +25,10 @@ export const albumsReducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         album: action.album
       });
+    case actions.UPDATE_SINGLE_FILE_REQUEST:
+      return Object.assign({}, state, {
+        updatingFile: action.updatingFile
+      });
     case actions.UPDATE_SINGLE_ALBUM_SUCCESS:
       return Object.assign({}, state, {
         album: action.album
@@ -42,27 +37,26 @@ export const albumsReducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         album: action.album
       });
+    case actions.FETCH_SINGLE_FILE_LOCAL:
+      return Object.assign({}, state, {
+        file: action.file
+      });
     case actions.FETCH_SINGLE_FILE_SUCCESS:
       return Object.assign({}, state, {
         file: action.file
       });
-    /*case actions.DELETE_SINGLE_FILE_SUCCESS:
-      let files = state.album.files.map(file => {
-        if (file.id !== action.fileId) {
-          return file;
-        }
-        return Object.assign({}, file, {
-          album: [...file]
-        });
-      });
+    case actions.UPDATE_SINGLE_FILE_SUCCESS:
       return Object.assign({}, state, {
-        album: [
-          state.album,
-          {
-            files
-          }
-        ]
-      });*/
+        updatingFile: false
+      });
+    case actions.DELETE_SINGLE_FILE_REQUEST:
+      return Object.assign({}, state, {
+        deletingFile: action.deletingFile
+      });
+    case actions.DELETE_SINGLE_FILE_SUCCESS:
+      return Object.assign({}, state, {
+        deletingFile: false
+      });
     case actions.SET_LOADING:
       return Object.assign({}, state, {
         loading: action.loading
