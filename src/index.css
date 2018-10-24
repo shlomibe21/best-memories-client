@@ -24,7 +24,7 @@ main {
 h1,
 h2,
 legend {
-  color: #0b7dda;
+  color: blue;
 }
 
 h1 {
@@ -160,7 +160,7 @@ textarea {
 
 form label,
 form legend {
-  color: #0b7dda;
+  color: blue;
   margin-left: 5px;
 }
 
@@ -251,7 +251,7 @@ form .btn {
 }
 
 .link-icon {
-  color: #0b7dda;
+  color: blue;
 }
 
 .link-icon:active {
@@ -272,7 +272,7 @@ form .btn {
   padding: 5px;
   font-size: 23px;
   border: none;
-  color: #0b7dda;
+  color: blue;
   background: none;
   cursor: pointer;
 }

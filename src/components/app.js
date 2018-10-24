@@ -52,10 +52,10 @@ export class App extends React.Component {
   render() {
     return (
       <div className="app">
-        <header role="banner">
+        <header>
           <Navbar />
         </header>
-        <main role="main">
+        <main>
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/login/" component={LoginPage} />

@@ -4,7 +4,7 @@
   padding: 0px 10px;
   margin-top: 20px;
   background-color: white;
-  color: #0b7dda;
+  color: blue;
 }
 
 .album-tile-container p {
@@ -17,7 +17,7 @@
 }
 
 .album-tile-link {
-  color: #0b7dda;
+  color: blue;
 }
 
 .album-name {
@@ -39,7 +39,7 @@
 .thumbnail .img4 {
   width: 75px;
   height: 65px;
-  margin: 0px 3px 1px 3px;
+  margin: 0px 0px 5px 10px;
 }
 
 .thumbnail .img1 {
@@ -79,6 +79,7 @@
   .thumbnail .img4 {
     width: 40px;
     height: 40px;
+    margin: 0px 0px 5px 9px;
   }
 }
 
@@ -93,5 +94,6 @@
   .thumbnail .img4 {
     width: 60px;
     height: 55px;
+    margin: 0px 0px 5px 10px;
   }
 }

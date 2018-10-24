@@ -87,7 +87,7 @@ export class NewFiles extends React.Component {
     }
     return (
       <div className="new-files centered-container centered-text">
-        <header role="banner">
+        <header>
           <h1>Add Files</h1>
         </header>
         <form

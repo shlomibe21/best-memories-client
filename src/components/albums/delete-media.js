@@ -28,7 +28,7 @@ export class DeleteMedia extends React.Component {
     let fileName = this.props[this.props.index].props.children.props.fileName;
     return (
       <div className="centered-container centered-text">
-        <header role="banner">
+        <header>
           <h1>Delete File</h1>
         </header>
         <h2>Do you really want to delete this file?</h2>

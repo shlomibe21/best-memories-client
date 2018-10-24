@@ -12,7 +12,7 @@ export function HomePage(props) {
         <h1 className="top-image-header">Welcome to Best Memories</h1>
       </div>
       <HomePageNavbar />
-      <main role="main" className="home-page centered-container centered-text content">
+      <div className="home-page centered-container centered-text content">
         <div className="buttons-bar">
           <Link className="btn" to="/login">
             Login
@@ -66,7 +66,7 @@ export function HomePage(props) {
             />
           </div>
         </div>
-      </main>
+      </div>
     </div>
   );
 }

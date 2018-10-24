@@ -31,7 +31,7 @@ export default function AlbumTile(props) {
         <div className="album-name">{props.albumName}</div>
         <div className="thumbnail-container">
           <div className="thumbnail">
-            <Link className="album-tile-link" to={`/album/${props.id}`}>
+            <Link className="album-tile-link" to={`/album/${props.id}`} aria-label="album tile link">
               <Tooltip
                 message={"Click to display album: " + props.albumName}
                 position={"top"}
@@ -58,23 +58,23 @@ export default function AlbumTile(props) {
       </div>
       <div className="ctrl-icons-wrapper">
         <div>
-          <button>
+          <button aria-label="Display Album">
             <Tooltip message={"Display Album"} position={"top"}>
-              <Link className="link-icon" to={`/album/${props.id}`}>
+              <Link className="link-icon" to={`/album/${props.id}`} aria-label="Display Album">
                 <MdPhotoAlbum />
               </Link>
             </Tooltip>
           </button>
-          <button>
+          <button aria-label="Edit Album">
             <Tooltip message={"Edit Album"} position={"top"}>
-              <Link className="link-icon" to={`/edit-album/${props.id}`}>
+              <Link className="link-icon" to={`/edit-album/${props.id}`} aria-label="Edit Album">
                 <MdModeEdit />
               </Link>
             </Tooltip>
           </button>
-          <button>
+          <button aria-label="Delete Album">
             <Tooltip message={"Delete Album"} position={"top"}>
-              <Link className="link-icon" to={`/delete-album/${props.id}`}>
+              <Link className="link-icon" to={`/delete-album/${props.id}`} aria-label="Delete Album">
                 <MdDeleteForever />
               </Link>
             </Tooltip>

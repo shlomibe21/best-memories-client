@@ -66,7 +66,6 @@ export class Album extends React.Component {
   }
 
   displayLightboxHandler(index) {
-    console.log(index);
     this.setState({
       displayLightbox: true,
       index: index
@@ -146,7 +145,7 @@ export class Album extends React.Component {
     }
     return (
       <div className="centered-container centered-text">
-        <header role="banner">
+        <header>
           <h1>{this.props.album.albumName}</h1>
         </header>
         <div className="selection-area">

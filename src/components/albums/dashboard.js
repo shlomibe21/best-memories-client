@@ -61,11 +61,12 @@ export class Dashboard extends React.Component {
           <input
             type="text"
             className=""
+            aria-label="Search by album name"
             placeholder="Search by album name"
             value={this.state.searchQuery}
             onChange={evt => this.updateInputValue(evt)}
           />
-          <button type="submit" onClick={() => this.search()}>
+          <button type="submit" aria-label="Search Albums" onClick={() => this.search()}>
             <FaSearch />
           </button>
         </div>
@@ -90,7 +91,7 @@ export class Dashboard extends React.Component {
     }
     return (
       <div className="dashboard centered-container centered-text">
-        <header role="banner">
+        <header>
           <h1>My Albums</h1>
         </header>
         {addNewAlbumLink}

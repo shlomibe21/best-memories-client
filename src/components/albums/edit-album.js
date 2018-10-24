@@ -66,7 +66,7 @@ class EditAlbum extends React.Component {
     
     return (
       <div className="centered-container">
-        <header role="banner">
+        <header>
           <h1>Edit Album</h1>
         </header>
         <form

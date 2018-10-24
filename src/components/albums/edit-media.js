@@ -54,7 +54,7 @@ class EditMedia extends React.Component {
    
     return (
       <div className="centered-container">
-        <header role="banner">
+        <header>
           <h1>Edit File Information</h1>
         </header>
         <form

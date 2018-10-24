@@ -95,7 +95,7 @@ export class NewAlbum extends React.Component {
     }
     return (
       <div className="new-album centered-container">
-        <header role="banner">
+        <header>
           <h1>New Album</h1>
         </header>
         <form

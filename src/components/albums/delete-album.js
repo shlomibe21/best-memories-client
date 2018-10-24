@@ -34,7 +34,7 @@ export class DeleteAlbum extends React.Component {
   render() {
     return (
       <div className="centered-container centered-text">
-        <header role="banner">
+        <header>
           <h1>Delete Album</h1>
         </header>
         <h2>Do you really want to delete this album?</h2>
