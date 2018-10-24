@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { FaSearch } from "react-icons/fa";
 
 import requiresLogin from "../authorization/requires-login";
 import MediaFile from "./media-file";
@@ -13,10 +14,10 @@ import {
   deleteSingleFileRequest
 } from "../../actions/albums";
 
-import "./album.css";
-
-import { FaSearch } from "react-icons/fa";
 import MediaLightbox from "./media-lightbox";
+import DropArea from "./drop-area";
+
+import "./album.css";
 
 export class Album extends React.Component {
   constructor(props) {
@@ -96,7 +97,7 @@ export class Album extends React.Component {
     let files;
     if (this.props.album.files) {
       files = this.props.album.files.map((file, index) => (
-        <li key={index} className="col-3">
+        <li key={index} className="">
           <MediaFile
             index={index}
             albumIndex={this.props.match.params.index}
@@ -148,6 +149,7 @@ export class Album extends React.Component {
         <header>
           <h1>{this.props.album.albumName}</h1>
         </header>
+        <DropArea album={this.props.album}/>
         <div className="selection-area">
           <Link to="/dashboard">Dashboard</Link>
           <Link to={`/new-files/${this.props.album.id}`}>Add Files</Link>
@@ -164,7 +166,7 @@ export class Album extends React.Component {
             <FaSearch />
           </button>
         </div>
-        <ul className="row album-container">{files} </ul>
+        <ul className="header-img album-container">{files} </ul>
         {lightBox}
       </div>
     );

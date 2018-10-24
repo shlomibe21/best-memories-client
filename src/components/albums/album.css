@@ -1,12 +1,42 @@
 .album-container {
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    position: relative;
-  }
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  position: relative;
+}
 
-  .selection-area a {
-      margin: 0 10px 0 10px;
+.selection-area a {
+  margin: 0 10px 0 10px;
+}
+
+.header-img {
+  padding: 0.5vw;
+  font-size: 0;
+  display: -ms-flexbox;
+  -ms-flex-wrap: wrap;
+  -ms-flex-direction: column;
+  -webkit-flex-flow: row wrap;
+  flex-flow: row wrap;
+  display: -webkit-box;
+  display: flex;
+}
+.header-img div {
+  -webkit-box-flex: auto;
+  -ms-flex: auto;
+  flex: auto;
+  width: 200px;
+  margin: 0.5vw;
+}
+.header-img div img {
+  width: 100%;
+  height: auto;
+}
+@media screen and (max-width: 400px) {
+  .header-img div {
+    margin: 0;
   }
-  
+  .header-img {
+    padding: 0;
+  }
+}
