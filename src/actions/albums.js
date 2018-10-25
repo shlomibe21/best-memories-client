@@ -188,6 +188,11 @@ export const updateSingleAlbum = (
   })
     .then(res => normalizeResponseErrors(res))
     .then(res => res.json())
+    .then(res => {
+      if (res.ok) {
+        dispatch(fetchSingleAlbum(id));
+      }
+    })
     .catch(err => {
       const { reason, message } = err;
       if (reason === "ValidationError") {
@@ -388,8 +393,8 @@ export const updateSingleFile = (
       dispatch(fetchSingleAlbum(albumId));
     })
     .then(() => {
-        dispatch(updateSingleFileSuccess(albumId, fileId));
-      })
+      dispatch(updateSingleFileSuccess(albumId, fileId));
+    })
     .catch(err => {
       const { reason, message, location } = err;
       if (reason === "ValidationError") {

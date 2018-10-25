@@ -50,13 +50,12 @@ export class Album extends React.Component {
   }
 
   search(query) {
-    console.log("search");
     this.props.dispatch(
       searchSingleAlbum(this.props.match.params.index, this.state.searchQuery)
     );
   }
 
-  updateInputValue(evt) {
+  updateQueryValue(evt) {
     this.setState({
       searchQuery: evt.target.value
     });
@@ -158,7 +157,7 @@ export class Album extends React.Component {
             className=""
             placeholder="Search by media name"
             value={this.state.searchQuery}
-            onChange={evt => this.updateInputValue(evt)}
+            onChange={evt => this.updateQueryValue(evt)}
           />
           <button type="submit" onClick={() => this.search()}>
             <FaSearch />

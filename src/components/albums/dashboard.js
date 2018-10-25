@@ -34,7 +34,7 @@ export class Dashboard extends React.Component {
     this.props.dispatch(fetchAlbums(this.state.searchQuery));
   }
 
-  updateInputValue(evt) {
+  updateQueryValue(evt) {
     this.setState({
         searchQuery: evt.target.value
     });
@@ -64,7 +64,7 @@ export class Dashboard extends React.Component {
             aria-label="Search by album name"
             placeholder="Search by album name"
             value={this.state.searchQuery}
-            onChange={evt => this.updateInputValue(evt)}
+            onChange={evt => this.updateQueryValue(evt)}
           />
           <button type="submit" aria-label="Search Albums" onClick={() => this.search()}>
             <FaSearch />

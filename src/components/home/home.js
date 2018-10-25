@@ -14,8 +14,8 @@ export function HomePage(props) {
       <HomePageNavbar />
       <div className="home-page centered-container centered-text content">
         <div className="buttons-bar">
-          <Link className="btn" to="/login">
-            Login
+          <Link className="btn" to="/register">
+            Register
           </Link>
           <Link className="btn" to="/#">
             Demo

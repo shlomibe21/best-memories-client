@@ -1,7 +1,7 @@
 .media-file {
   width: 100%;
-  padding: 15px;
-  margin: 15px;
+  padding: 0px;
+  margin: 5px;
   border: solid 1px lightgrey;
   background: #eee;
 }
@@ -13,4 +13,15 @@
 
 .media-file .ctrl-icons-wrapper {
   border: none;
+}
+
+.file-name,
+.file-date,
+.file-description {
+  font-size: 10px;
+  text-align: left;
+  padding: 0px 5px 0px 5px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }

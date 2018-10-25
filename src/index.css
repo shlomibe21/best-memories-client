@@ -18,7 +18,7 @@ body {
 }
 
 main {
-  padding-bottom: 100px;
+  padding-bottom: 150px;
 }
 
 h1,
@@ -250,11 +250,13 @@ form .btn {
   background: #0b7dda;
 }
 
-.link-icon {
+.action-icon {
   color: blue;
+  width: 20px;
+  height: 20px;
 }
 
-.link-icon:active {
+.action-icon:active {
   color: red;
 }
 

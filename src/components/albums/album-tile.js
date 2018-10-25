@@ -60,21 +60,21 @@ export default function AlbumTile(props) {
         <div>
           <button aria-label="Display Album">
             <Tooltip message={"Display Album"} position={"top"}>
-              <Link className="link-icon" to={`/album/${props.id}`} aria-label="Display Album">
+              <Link className="action-icon" to={`/album/${props.id}`} aria-label="Display Album">
                 <MdPhotoAlbum />
               </Link>
             </Tooltip>
           </button>
           <button aria-label="Edit Album">
             <Tooltip message={"Edit Album"} position={"top"}>
-              <Link className="link-icon" to={`/edit-album/${props.id}`} aria-label="Edit Album">
+              <Link className="action-icon" to={`/edit-album/${props.id}`} aria-label="Edit Album">
                 <MdModeEdit />
               </Link>
             </Tooltip>
           </button>
           <button aria-label="Delete Album">
             <Tooltip message={"Delete Album"} position={"top"}>
-              <Link className="link-icon" to={`/delete-album/${props.id}`} aria-label="Delete Album">
+              <Link className="action-icon" to={`/delete-album/${props.id}`} aria-label="Delete Album">
                 <MdDeleteForever />
               </Link>
             </Tooltip>
