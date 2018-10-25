@@ -17,8 +17,8 @@ export default class DropArea extends React.Component {
           id: 1,
           isDragging: false,
           isResizing: false,
-          top: -50,
-          left: -80,
+          top: 50,
+          left: 80,
           width: 100,
           height: 150
         },
