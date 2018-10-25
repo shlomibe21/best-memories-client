@@ -2,7 +2,7 @@ import React from "react";
 import { Field, reduxForm, focus } from "redux-form";
 import { registerUser } from "../../actions/users";
 import { login } from "../../actions/auth";
-import Input from "../forms/input";
+import Input from "../common/input";
 import {
   required,
   nonEmpty,

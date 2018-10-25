@@ -10,7 +10,7 @@ import {
   updateSingleFileRequest
 } from "../../actions/albums";
 import { required, nonEmpty } from "../../validators";
-import Input from "../forms/input";
+import Input from "../common/input";
 
 import "./edit-media.css";
 

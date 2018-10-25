@@ -8,7 +8,7 @@ import moment from "moment";
 import DropzoneArea from "../common/dropzoneArea";
 
 import requiresLogin from "../authorization/requires-login";
-import Input from "../forms/input";
+import Input from "../common/input";
 import {
   addNewAlbum,
   awsS3GetSignedRequest,
