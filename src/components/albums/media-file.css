@@ -9,6 +9,7 @@
 .media-file img {
   width: 100%;
   cursor: -webkit-grab;
+  cursor: pointer;
 }
 
 .media-file .ctrl-icons-wrapper {

@@ -107,7 +107,7 @@ export default class MediaFile extends React.Component {
       >
         <a className="image-wrapper">
           {/*<ExifOrientationImg*/}
-          <img src={this.props.storageLocation} alt="media file" />
+          <img src={this.props.storageLocation} alt="media file" onClick={this.props.displayLightboxClicked}/>
         </a>
         <p className="file-name">{this.props.frontEndFileName}</p>
         <div>{extendedInfo}</div>
