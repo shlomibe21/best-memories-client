@@ -467,37 +467,76 @@ export const deleteSingleFile = (albumId, fileId) => (dispatch, getState) => {
 };
 
 export const awsS3GetSignedRequest = (file, fileName) => dispatch => {
-  return new Promise((resolve, reject) => {
-    const xhr = new XMLHttpRequest();
-    xhr.open(
-      "GET",
-      `${API_BASE_URL}/albums/sign-s3?file-name=${encodeURIComponent(
-        fileName
-      )}&file-type=${encodeURIComponent(file.type)}`
-    );
-    xhr.setRequestHeader("authorization", "bearer " + localStorage.authToken);
-    xhr.onreadystatechange = () => {
-      if (xhr.readyState === 4) {
-        if (xhr.status === 200) {
-          const response = JSON.parse(xhr.responseText);
-          awsS3UploadFile(
-            file,
-            response.signedRequest,
-            response.url,
-            resolve,
-            reject
-          );
-        } else {
-          dispatch(setLoading(false));
-          reject("Could not get signed URL.");
-        }
-      }
-    };
-    xhr.send();
+  return getSignedRequest(file, fileName)
+    .then(json => awsS3UploadFile(file, json.signedRequest, json.url))
+    .then(url => {
+      return url;
+    })
+    .catch(err => {
+      //console.error(err);
+      dispatch(setLoading(false));
+      return null;
+    });
+};
+
+function getSignedRequest(file, fileName) {
+  return fetch(
+    `${API_BASE_URL}/albums/sign-s3?file-name=${encodeURIComponent(
+      fileName
+    )}&file-type=${encodeURIComponent(file.type)}`
+  ).then(response => {
+    if (!response.ok) {
+      throw new Error(`${response.status}: ${response.statusText}`);
+    }
+    return response.json();
+  });
+}
+
+export const awsS3UploadFile = (file, signedRequest, url, resolve, reject) => {
+  const options = {
+    method: "PUT",
+    body: file
+  };
+  return fetch(signedRequest, options).then(response => {
+    if (!response.ok) {
+      throw new Error(`${response.status}: ${response.statusText}`);
+    }
+    return url;
   });
 };
 
-export const awsS3UploadFile = (file, signedRequest, url, resolve, reject) => {
+/*export const awsS3GetSignedRequest = (file, fileName) => dispatch => {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open(
+        "GET",
+        `${API_BASE_URL}/albums/sign-s3?file-name=${encodeURIComponent(
+          fileName
+        )}&file-type=${encodeURIComponent(file.type)}`
+      );
+      xhr.setRequestHeader("authorization", "bearer " + localStorage.authToken);
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            const response = JSON.parse(xhr.responseText);
+            awsS3UploadFile(
+              file,
+              response.signedRequest,
+              response.url,
+              resolve,
+              reject
+            );
+          } else {
+            dispatch(setLoading(false));
+            reject("Could not get signed URL.");
+          }
+        }
+      };
+      xhr.send();
+    });
+  };*/
+
+/*export const awsS3UploadFile = (file, signedRequest, url, resolve, reject) => {
   const xhr = new XMLHttpRequest();
   xhr.open("PUT", signedRequest);
   xhr.onreadystatechange = () => {
@@ -510,7 +549,7 @@ export const awsS3UploadFile = (file, signedRequest, url, resolve, reject) => {
     }
   };
   xhr.send(file);
-};
+};*/
 
 // TODO: Delete always returns status=200 even if object is not there.
 // Therefore we need to check the object's head to confirm that the

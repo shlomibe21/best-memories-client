@@ -70,7 +70,7 @@ export class NewAlbum extends React.Component {
           frontEndFileName: file.name,
           dateAdded: dateNow,
           comment: values.comment,
-          storageLocation: `https://s3-us-west-1.amazonaws.com/albums-test/${fileName}`,
+          storageLocation: `https://s3.amazonaws.com/best-memories/${fileName}`,
           positionTop: "0px",
           positionLeft: "0px"
         });
