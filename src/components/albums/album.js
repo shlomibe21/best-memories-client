@@ -143,7 +143,7 @@ export class Album extends React.Component {
       );
     }
     return (
-      <div className="centered-container centered-text">
+      <div className="centered-container centered-text" aria-live="polite">
         <header>
           <h1>{this.props.album.albumName}</h1>
         </header>
@@ -156,10 +156,11 @@ export class Album extends React.Component {
             type="text"
             className=""
             placeholder="Search by media name"
+            aria-label="Search by media name"
             value={this.state.searchQuery}
             onChange={evt => this.updateQueryValue(evt)}
           />
-          <button type="submit" onClick={() => this.search()}>
+          <button type="submit" aria-label="submit" onClick={() => this.search()}>
             <FaSearch />
           </button>
         </div>

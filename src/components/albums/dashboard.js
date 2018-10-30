@@ -90,7 +90,7 @@ export class Dashboard extends React.Component {
       return <div className="spinnerModal" />;
     }
     return (
-      <div className="dashboard centered-container centered-text">
+      <div className="dashboard centered-container centered-text" aria-live="polite">
         <header>
           <h1>My Albums</h1>
         </header>

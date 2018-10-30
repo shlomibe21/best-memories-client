@@ -60,19 +60,22 @@ class EditAlbum extends React.Component {
     let errorMessage;
     if (this.props.error) {
       errorMessage = (
-        <div className="message message-error">{this.props.error}</div>
+        <div className="message message-error" aria-live="polite">
+          {this.props.error}
+        </div>
       );
     }
-    
+
     return (
       <div className="centered-container">
         <header>
           <h1>Edit Album</h1>
         </header>
         <form
+          className="edit-album-form"
           onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}
         >
-          <div className="edit-album-form">
+          <fieldset>
             {errorMessage}
             <div>
               <Field
@@ -89,21 +92,21 @@ class EditAlbum extends React.Component {
                 label="Comment"
                 component={Input}
                 type="textarea"
-                className= "textarea"
+                className="textarea"
                 name="comment"
                 id="comment"
               />
             </div>
-            <div className="centered-text">
-              <button type="submit" className="btn">
-                Submit
+          </fieldset>
+          <div className="centered-text">
+            <button type="submit" className="btn">
+              Submit
+            </button>
+            <Link to="/dashboard">
+              <button type="button" className="btn">
+                Cancel
               </button>
-              <Link to="/dashboard">
-                <button type="button" className="btn">
-                  Cancel
-                </button>
-              </Link>
-            </div>
+            </Link>
           </div>
         </form>
       </div>

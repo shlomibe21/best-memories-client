@@ -39,48 +39,48 @@ export class RegistrationForm extends React.Component {
         onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}
       >
         <h2 className="centered-text">Register</h2>
-        <Field
-          label="*First name"
-          component={Input}
-          type="text"
-          name="firstName"
-          placeholder="*First name"
-          validate={[required, nonEmpty]}
-          //onFocus={e => (e.target.placeholder = "")}
-          //onBlur={e => (e.target.placeholder = "*First name")}
-        />
-        <Field
-          label="*Last Name"
-          component={Input}
-          type="text"
-          name="lastName"
-          placeholder="*Last name"
-          validate={[required, nonEmpty]}
-        />
-        <Field
-          label="*Username"
-          component={Input}
-          type="text"
-          name="username"
-          placeholder="*Username"
-          validate={[required, nonEmpty, isTrimmed]}
-        />
-        <Field
-          label="*Password"
-          component={Input}
-          type="password"
-          name="password"
-          placeholder="Min. 10 characters"
-          validate={[required, passwordLength, isTrimmed]}
-        />
-        <Field
-          label="*Confirm password"
-          component={Input}
-          type="password"
-          name="passwordConfirm"
-          placeholder="*Confirm Password"
-          validate={[required, nonEmpty, matchesPassword]}
-        />
+        <fieldset>
+          <Field
+            label="*First name"
+            component={Input}
+            type="text"
+            name="firstName"
+            placeholder="*First name"
+            validate={[required, nonEmpty]}
+          />
+          <Field
+            label="*Last Name"
+            component={Input}
+            type="text"
+            name="lastName"
+            placeholder="*Last name"
+            validate={[required, nonEmpty]}
+          />
+          <Field
+            label="*Username"
+            component={Input}
+            type="text"
+            name="username"
+            placeholder="*Username"
+            validate={[required, nonEmpty, isTrimmed]}
+          />
+          <Field
+            label="*Password"
+            component={Input}
+            type="password"
+            name="password"
+            placeholder="Min. 10 characters"
+            validate={[required, passwordLength, isTrimmed]}
+          />
+          <Field
+            label="*Confirm password"
+            component={Input}
+            type="password"
+            name="passwordConfirm"
+            placeholder="*Confirm Password"
+            validate={[required, nonEmpty, matchesPassword]}
+          />
+        </fieldset>
         <button
           type="submit"
           className="btn"

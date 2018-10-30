@@ -79,7 +79,7 @@ export class NewFiles extends React.Component {
     let errorMessage;
     if (this.props.error) {
       errorMessage = (
-        <div className="message message-error">{this.props.error}</div>
+        <div className="message message-error" aria-live="polite">{this.props.error}</div>
       );
     }
     if (this.props.loading) {
@@ -94,18 +94,20 @@ export class NewFiles extends React.Component {
           className="new-files"
           onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}
         >
-          <div>
-            {errorMessage}
-            <DropzoneArea dropzoneAcceptedFiles={this.handleDropFiles} />
-          </div>
-          <button type="submit" className="btn">
-            Add Files
-          </button>
-          <Link to={`/album/${this.props.match.params.index}`}>
-            <button type="button" className="btn">
-              Cancel
+          <fieldset>
+            <div>
+              {errorMessage}
+              <DropzoneArea dropzoneAcceptedFiles={this.handleDropFiles} />
+            </div>
+            <button type="submit" className="btn">
+              Add Files
             </button>
-          </Link>
+            <Link to={`/album/${this.props.match.params.index}`}>
+              <button type="button" className="btn">
+                Cancel
+              </button>
+            </Link>
+          </fieldset>
         </form>
       </div>
     );

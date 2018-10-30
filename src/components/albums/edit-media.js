@@ -25,15 +25,14 @@ class EditMedia extends React.Component {
   onSubmit(values) {
     //console.log("edit-media Values:", values);
     let frontEndFileName = values.frontEndFileName;
-    return this.props
-      .dispatch(
-        updateSingleFile(
-          values.albumIndex,
-          values._id,
-          frontEndFileName,
-          values.comment
-        )
+    return this.props.dispatch(
+      updateSingleFile(
+        values.albumIndex,
+        values._id,
+        frontEndFileName,
+        values.comment
       )
+    );
   }
 
   cancelUpdateFileReq() {
@@ -48,10 +47,12 @@ class EditMedia extends React.Component {
     let errorMessage;
     if (this.props.error) {
       errorMessage = (
-        <div className="message message-error">{this.props.error}</div>
+        <div className="message message-error" aria-live="polite">
+          {this.props.error}
+        </div>
       );
     }
-   
+
     return (
       <div className="centered-container">
         <header>
@@ -60,26 +61,28 @@ class EditMedia extends React.Component {
         <form
           onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}
         >
-          {errorMessage}
-          <div>
-            <Field
-              label="File Name"
-              component={Input}
-              type="text"
-              name="frontEndFileName"
-              id="file-name"
-              validate={[required, nonEmpty]}
-            />
-          </div>
-          <div>
-            <Field
-              label="Comment"
-              component={Input}
-              type="textarea"
-              name="comment"
-              id="comment"
-            />
-          </div>
+          <fieldset>
+            {errorMessage}
+            <div>
+              <Field
+                label="File Name"
+                component={Input}
+                type="text"
+                name="frontEndFileName"
+                id="file-name"
+                validate={[required, nonEmpty]}
+              />
+            </div>
+            <div>
+              <Field
+                label="Comment"
+                component={Input}
+                type="textarea"
+                name="comment"
+                id="comment"
+              />
+            </div>
+          </fieldset>
           <div className="centered-text">
             <button type="submit" className="btn">
               Submit

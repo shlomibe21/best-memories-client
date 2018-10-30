@@ -88,7 +88,11 @@ export class NewAlbum extends React.Component {
   render() {
     let error;
     if (this.props.error) {
-      error = <div className="message message-error">{this.props.error}</div>;
+      error = (
+        <div className="message message-error" aria-live="polite">
+          {this.props.error}
+        </div>
+      );
     }
     if (this.props.loading) {
       return <div className="spinnerModal" />;
@@ -103,29 +107,31 @@ export class NewAlbum extends React.Component {
           onSubmit={this.props.handleSubmit(values => this.onSubmit(values))}
           encType="multipart/form-data"
         >
-          {error}
-          <div>
-            <Field
-              component={Input}
-              type="text"
-              name="albumName"
-              label="Album Name"
-              id="albumname"
-              validate={[required, nonEmpty]}
-            />
-          </div>
-          <div>
-            <Field
-              name="comment"
-              id="comment"
-              type="textarea"
-              component={Input}
-              label="Comment"
-            />
-          </div>
-          <div>
-            <DropzoneArea dropzoneAcceptedFiles={this.handleDropFiles} />
-          </div>
+          <fieldset>
+            {error}
+            <div>
+              <Field
+                component={Input}
+                type="text"
+                name="albumName"
+                label="Album Name"
+                id="albumname"
+                validate={[required, nonEmpty]}
+              />
+            </div>
+            <div>
+              <Field
+                name="comment"
+                id="comment"
+                type="textarea"
+                component={Input}
+                label="Comment"
+              />
+            </div>
+            <div>
+              <DropzoneArea dropzoneAcceptedFiles={this.handleDropFiles} />
+            </div>
+          </fieldset>
           <div className="centered-btn-wrapper">
             <button type="submit" className="btn">
               Submit

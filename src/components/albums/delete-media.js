@@ -25,7 +25,6 @@ export class DeleteMedia extends React.Component {
 
   render() {
     file = this.props[this.props.index].props.children.props;
-    let fileName = this.props[this.props.index].props.children.props.fileName;
     return (
       <div className="centered-container centered-text">
         <header>
@@ -33,7 +32,7 @@ export class DeleteMedia extends React.Component {
         </header>
         <h2>Do you really want to delete this file?</h2>
         <div className="delete-file-info">
-          <p>{fileName}</p>
+          <p>{file.frontEndFileName}</p>
         </div>
         <button type="submit" className="btn" onClick={() => this.deleteFile()}>
           Submit
