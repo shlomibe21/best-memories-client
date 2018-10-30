@@ -95,7 +95,7 @@ export class Album extends React.Component {
     let files;
     if (this.props.album.files) {
       files = this.props.album.files.map((file, index) => (
-        <li key={index} className="col-3">
+        <li key={index}>
           <MediaFile
             index={index}
             albumIndex={this.props.match.params.index}
@@ -164,7 +164,7 @@ export class Album extends React.Component {
             <FaSearch />
           </button>
         </div>
-        <ul className="row album-container">{files} </ul>
+        <ul className="album-container">{files} </ul>
         {lightBox}
       </div>
     );

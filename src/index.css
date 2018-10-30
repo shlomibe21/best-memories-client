@@ -221,6 +221,9 @@ form .btn {
 .search-wrapper {
   margin-top: 20px;
   margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .search-wrapper input[type="text"] {
@@ -240,7 +243,7 @@ form .btn {
   padding: 10px;
   background: #2196f3;
   color: white;
-  font-size: 13px;
+  font-size: 20px;
   border: 1px solid grey;
   border-left: none;
   cursor: pointer;
@@ -297,40 +300,31 @@ form .btn {
     0.3
   ); /* Create overlay - black w/ opacity */
 }
-
 .spinnerModal p {
   margin-top: 300px;
 }
-
 .message-error {
   color: red;
 }
-
 @media screen and (min-width: 600px) {
   h1 {
     font-size: 50px;
   }
-
   h2 {
     font-size: 45px;
   }
-
   .centered-container.narrow {
     max-width: 450px;
   }
-
   .centered-container {
     max-width: 960px;
   }
-
   .search-wrapper input[type="text"] {
     width: 70%;
   }
-
   form .btn {
     margin-top: 20px;
   }
-
   .form-input-textarea {
     height: 100px;
   }
