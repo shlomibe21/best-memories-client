@@ -11,7 +11,7 @@
 
 .modal img {
   align-self: auto;
-  margin-top: 100px;
+  margin-top: 20px;
 }
 
 /* Centered child element */
@@ -30,10 +30,10 @@
 /* The modal's close button */
 .modal-close {
   position: absolute;
-  top: 10px;
-  right: 25px;
-  width: 40px;
-  height: 40px;
+  top: 20px;
+  right: 15px;
+  width: 30px;
+  height: 25px;
   line-height: 1.5rem;
   text-align: center;
   cursor: pointer;
@@ -49,8 +49,28 @@
 
 /* Make Youtube IFRAME responsive */
 .media-wrapper img {
-  width: auto;
-  height: auto;
   max-width: 80%;
-  max-height: 80%;
+  max-height: 200px;
+}
+
+@media screen and (min-width: 560px) {
+  .media-wrapper img {
+    max-width: 65%;
+    max-height: 250px
+  }
+}
+
+@media screen and (min-width: 960px) {
+  .modal-close {
+    top: 20px;
+    right: 25px;
+    width: 40px;
+    height: 40px;
+    font-size: 25px;
+  }
+
+  .media-wrapper img {
+    max-width: 90%;
+    max-height: 700px;
+  }
 }

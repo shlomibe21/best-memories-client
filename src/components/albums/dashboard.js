@@ -75,7 +75,7 @@ export class Dashboard extends React.Component {
       emptyPageMsg = (
         <div className="emapty-page-msg">
           <p>Hey, It is empty in here! </p>
-          <p> click on the image below to start building your best memories.</p>
+          <p> Click on the image below to start building your best memories.</p>
           <Link to="/new-album">
             <img
               src={require("../../images/pic_the_scream.png")}
