@@ -1,5 +1,5 @@
 .top-image {
-  height: 700px;
+  height: 800px;
   background-size: cover;
   background: url("../../images/retro-1483781_1920.jpg");
   /*background: url("../../images/images-381937_1280.jpg");*/
@@ -9,8 +9,13 @@
 .top-image-header {
   display: inline-block;
   font-weight: bold;
-  font-size: 50px;
-  color: red;
+  font-size: 25px;
+  color: white;
+}
+
+.top-image-banner {
+  font-size: 20px;
+  color: white;
 }
 
 main {
@@ -27,7 +32,8 @@ main {
 }
 
 .buttons-bar {
-    margin-top: 40px;
+  margin-top: 40px;
+  text-align: center;
 }
 
 .buttons-bar .btn {
@@ -42,12 +48,15 @@ main {
 
 @media screen and (min-width: 600px) {
   .top-image {
-    height: 700px;
+    height: 800px;
   }
 
   .top-image-header {
-    font-size: 80px;
-    margin-left: 20%;
-    top: 20px;
+    font-size: 50px;
+    margin-top: 100px;
+  }
+
+  .top-image-banner {
+    font-size: 30px;
   }
 }

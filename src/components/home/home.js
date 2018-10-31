@@ -9,10 +9,13 @@ export function HomePage(props) {
   return (
     <div className="home-page">
       <div className="top-image">
-        <h1 className="top-image-header">Welcome to Best Memories</h1>
-      </div>
-      <HomePageNavbar />
-      <div className="home-page centered-container centered-text content">
+        <div className="centered-container centered-text content">
+          <h1 className="top-image-header">Welcome to Best Memories</h1>
+          <h2 className="top-image-banner">
+            You've already captured your great moments, now you can easily keep
+            them as your best memories forever.
+          </h2>
+        </div>
         <div className="buttons-bar">
           <Link className="btn" to="/register">
             Register
@@ -21,6 +24,10 @@ export function HomePage(props) {
             Demo
           </Link>
         </div>
+      </div>
+      <HomePageNavbar />
+      <div className="home-page centered-container centered-text content">
+        <h3>Share your great moments with others!</h3>
         <div className="row">
           <div className="col-6">
             <p>

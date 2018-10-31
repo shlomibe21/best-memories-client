@@ -50,11 +50,15 @@ export class App extends React.Component {
   }
 
   render() {
+    console.log(this.props.location.pathname);
+    let navBar;
+    if (this.props.location.pathname !== "/") {
+      navBar = <Navbar />;
+    }
     return (
       <div className="app">
-        <header>
-          <Navbar />
-        </header>
+        <header />
+        {navBar}
         <main>
           <Switch>
             <Route exact path="/" component={Home} />
