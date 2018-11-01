@@ -47,7 +47,7 @@ export class HomePage extends React.Component {
             </button>
           </div>
           <div className="scroll-down-msg">
-            <p>Scroll Down to Read More!</p>
+            <p>Click to Learn More!</p>
             <MdKeyboardArrowDown
               className="scroll-down-arrow"
               onClick={() => this.handleScrollToElement()}
