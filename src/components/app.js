@@ -50,7 +50,7 @@ export class App extends React.Component {
   }
 
   render() {
-    console.log(this.props.location.pathname);
+    //console.log(this.props.location.pathname);
     let navBar;
     if (this.props.location.pathname !== "/") {
       navBar = <Navbar role="navigation"/>;
