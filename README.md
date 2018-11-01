@@ -18,22 +18,25 @@ To run an existing demo, use the following login credentials:
 ### Home Page:
 ![Welocme Page](https://github.com/shlomibe21/best-memories-client/blob/master/public/screenshots/BestMemoriesHomePage1ScreenShot.png)
 ![Welocme Page](https://github.com/shlomibe21/best-memories-client/blob/master/public/screenshots/BestMemoriesHomePage2ScreenShot.png)
+
 ### Login Page:
-![Login Page](https://github.com/shlomibe21/project-copilot/blob/master/public/screenshots/ProjectCopilot_login.png)
+![Login Page](https://github.com/shlomibe21/best-memories-client/blob/master/public/screenshots/BestMemoriesLoginScreenShot.png)
 
-### Project Details Page:
-![View a single Project](https://github.com/shlomibe21/project-copilot/blob/master/public/screenshots/ProjectCopilot_viewPage.png)
+### Dashboard:
+![Dashboard](https://github.com/shlomibe21/best-memories-client/blob/master/public/screenshots/BestMemoriesDashbordScreenShot.png)
 
-### Project Update Page:
-![Edit Project](https://github.com/shlomibe21/project-copilot/blob/master/public/screenshots/ProjectCopilot_updatePage.png)
+### Album Page:
+![Edit Project](https://github.com/shlomibe21/best-memories-client/blob/master/public/screenshots/BestMemoriesAlbumScreenShot.png)
 
 ### Single Image Display
-https://github.com/shlomibe21/best-memories-client/blob/master/public/screenshots/BestMemoriesSingleFileScreenShot.png
+![Edit Project](https://github.com/shlomibe21/best-memories-client/blob/master/public/screenshots/BestMemoriesSingleFileScreenShot.png)
 
 ## Technologies
 
 - **Front-end**
 
+  - React + Redux
+  - JSX
   - HTML5
   - CSS
   - JavaScript
@@ -62,6 +65,15 @@ https://github.com/shlomibe21/best-memories-client/blob/master/public/screenshot
 - **DaaS**
 
   - mLab
+  
+  - **Dev Environment**
+   - npm
+   - Git
+    
+- **To Be Added in Future Versions:**
+- Option to select and to edit or delete multiple media files at once
+- Allow users to order the media files on the canvas
+- Allow users to resize the media files
 
 ## Author
 Shlomi Benshlomo 
