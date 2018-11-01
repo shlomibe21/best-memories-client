@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
+import { MdKeyboardArrowDown } from "react-icons/md";
 
 import { login, clearAuth } from "../../actions/auth";
 import { clearAuthToken } from "../../local-storage";
@@ -35,6 +36,10 @@ export class HomePage extends React.Component {
             <button className="btn" onClick={() => this.handleDemo()}>
               Demo
             </button>
+          </div>
+          <div className="scroll-down-msg">
+              <p>Scroll Down to Read More!</p>
+              <MdKeyboardArrowDown className="scroll-down-arrow"/>
           </div>
         </div>
       );

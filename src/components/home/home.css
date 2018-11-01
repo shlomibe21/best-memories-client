@@ -32,7 +32,7 @@ main {
 }
 
 .buttons-bar {
-  margin-top: 40px;
+  margin-top: 10px;
   text-align: center;
 }
 
@@ -44,6 +44,19 @@ main {
   cursor: pointer;
   outline: none;
   text-align: center;
+}
+
+.scroll-down-msg {
+  color: white;
+}
+
+.scroll-down-msg p {
+    font-size: 30px;
+    margin-bottom: -35px;
+}
+
+.scroll-down-arrow {
+  font-size: 100px;
 }
 
 @media screen and (min-width: 600px) {
