@@ -155,8 +155,8 @@ export class Album extends React.Component {
           <input
             type="text"
             className=""
-            placeholder="Search by media name"
-            aria-label="Search by media name"
+            placeholder="Search by file name"
+            aria-label="Search by file name"
             value={this.state.searchQuery}
             onChange={evt => this.updateQueryValue(evt)}
           />

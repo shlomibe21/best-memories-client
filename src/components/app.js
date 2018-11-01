@@ -53,7 +53,7 @@ export class App extends React.Component {
     console.log(this.props.location.pathname);
     let navBar;
     if (this.props.location.pathname !== "/") {
-      navBar = <Navbar />;
+      navBar = <Navbar role="navigation"/>;
     }
     return (
       <div className="app">

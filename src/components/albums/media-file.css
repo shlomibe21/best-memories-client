@@ -19,9 +19,9 @@
 .file-name,
 .file-date,
 .file-description {
-  font-size: 10px;
+  font-size: 14px;
   text-align: left;
-  padding: 0px 5px 0px 5px;
+  padding: 5px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;

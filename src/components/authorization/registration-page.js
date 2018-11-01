@@ -14,8 +14,10 @@ export function RegistrationPage(props) {
   }
   return (
     <div className="registration">
-    <div className="top-image">
-        <h1 className="top-image-header">Welcome to Best Memories</h1>
+      <div className="top-image">
+        <div className="centered-container centered-text content">
+          <h1 className="top-image-header">Welcome to Best Memories</h1>
+        </div>
       </div>
       <RegistrationForm />
       <div className="centered-text">

@@ -48,7 +48,7 @@ export class NavBar extends React.Component {
     }
 
     return (
-      <div className="nav-bar">
+      <div role="navigation" className="nav-bar">
         <div>
           <p className="logo">
             <Link to={logoLink}>BestMemories</Link>

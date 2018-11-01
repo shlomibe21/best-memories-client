@@ -15,7 +15,9 @@ export function LoginPage(props) {
   return (
     <div className="login">
       <div className="top-image">
-        <h1 className="top-image-header">Welcome to Best Memories</h1>
+        <div className="centered-container centered-text content">
+          <h1 className="top-image-header">Welcome to Best Memories</h1>
+        </div>
       </div>
       <LoginForm />
       <div className="centered-text">
