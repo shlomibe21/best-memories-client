@@ -17,7 +17,7 @@ To run an existing demo, use the following login credentials:
 
 ### Home Page:
 ![Welocme Page](https://github.com/shlomibe21/best-memories-client/blob/master/public/screenshots/BestMemoriesHomePage1ScreenShot.png)
-
+![Welocme Page](https://github.com/shlomibe21/best-memories-client/blob/master/public/screenshots/BestMemoriesHomePage2ScreenShot.png)
 ### Login Page:
 ![Login Page](https://github.com/shlomibe21/project-copilot/blob/master/public/screenshots/ProjectCopilot_login.png)
 
