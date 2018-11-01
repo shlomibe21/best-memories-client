@@ -9,6 +9,15 @@ import HomePageNavbar from "./home-navbar";
 import "./home.css";
 
 export class HomePage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.scrollRef = React.createRef();
+  }
+
+  handleScrollToElement(event) {
+    window.scrollTo(0, this.scrollRef.current.offsetTop);
+  }
+
   handleDemo() {
     return this.props.dispatch(login("demo", "tryItNow123"));
   }
@@ -38,8 +47,11 @@ export class HomePage extends React.Component {
             </button>
           </div>
           <div className="scroll-down-msg">
-              <p>Scroll Down to Read More!</p>
-              <MdKeyboardArrowDown className="scroll-down-arrow"/>
+            <p>Scroll Down to Read More!</p>
+            <MdKeyboardArrowDown
+              className="scroll-down-arrow"
+              onClick={() => this.handleScrollToElement()}
+            />
           </div>
         </div>
       );
@@ -59,7 +71,7 @@ export class HomePage extends React.Component {
       }
     }
     return (
-      <div className="home-page">
+      <div className="home-view">
         <div className="top-image">
           <div className="centered-container centered-text content">
             <h1 className="top-image-header">Welcome to Best Memories</h1>
@@ -71,7 +83,10 @@ export class HomePage extends React.Component {
           <div className="buttons-bar">{loggedInOutState}</div>
         </div>
         <HomePageNavbar />
-        <div className="home-page centered-container centered-text content">
+        <div
+          className="home-page centered-container centered-text content"
+          ref={this.scrollRef}
+        >
           <h3>Share your great moments with others!</h3>
           <div className="row">
             <div className="col-6">
