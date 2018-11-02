@@ -82,4 +82,4 @@ Shlomi Benshlomo
 Onca, inc.
 
 ## Acknowledgements
-Mario Mol, Mentors
+Mario Mol, Mentor
