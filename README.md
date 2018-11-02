@@ -73,7 +73,7 @@ To run an existing demo, use the following login credentials:
 - **Responsive**
 - The app is responsive and optimized for both desktop and mobile viewing and use.
 
--**Security**
+- **Security**
 - User passwords are encrypted using bcrypt.js.
     
 - **Development Roadmap:**
