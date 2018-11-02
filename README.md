@@ -49,7 +49,10 @@ We all have plenty of digital photos stored somewhere on our hard drive, phone, 
   - Mongoose
   - Passport
   - bcrypt.js
-
+  
+- **Cloud Storage Services**
+  -  AWS (Amazon Web Services) S3 (Simple Storage Service)
+  
 - **Testing**
   - Mocha
   - Chai
