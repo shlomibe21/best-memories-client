@@ -34,7 +34,6 @@ To run an existing demo, use the following login credentials:
 ## Technologies
 
 - **Front-end**
-
   - React + Redux
   - JSX
   - HTML5
@@ -44,7 +43,6 @@ To run an existing demo, use the following login credentials:
   - Ajax
 
 - **Back-end**
-
   - Node.js
   - Express
   - MongoDB
@@ -53,37 +51,30 @@ To run an existing demo, use the following login credentials:
   - bcrypt.js
 
 - **Testing**
-
   - Mocha
   - Chai
 
 - **PaaS**
-
   - Travis CI
   - Heroku
 
 - **DaaS**
-
   - mLab
   
-  - **Dev Environment**
-  
+ - **Dev Environment**
    - npm
    - Git
 
 - **Responsive**
-
-- The app is responsive and optimized for both desktop and mobile viewing and use.
+   - The app is responsive and optimized for both desktop and mobile viewing and use.
 
 - **Security**
-
-- User passwords are encrypted using bcrypt.js.
+   - User passwords are encrypted using bcrypt.js.
     
 - **Development Roadmap:**
-
-- Option to select and to edit or delete multiple media files at once
-- Allow users to order the media files on the canvas
-- Allow users to resize the media files
+   - Option to select and to edit or delete multiple media files at once
+   - Allow users to order the media files on the canvas
+   - Allow users to resize the media files
 
 ## Author
 Shlomi Benshlomo 
