@@ -67,16 +67,20 @@ To run an existing demo, use the following login credentials:
   - mLab
   
   - **Dev Environment**
+  
    - npm
    - Git
 
 - **Responsive**
+
 - The app is responsive and optimized for both desktop and mobile viewing and use.
 
 - **Security**
+
 - User passwords are encrypted using bcrypt.js.
     
 - **Development Roadmap:**
+
 - Option to select and to edit or delete multiple media files at once
 - Allow users to order the media files on the canvas
 - Allow users to resize the media files
