@@ -12,6 +12,9 @@ export class HomePage extends React.Component {
   constructor(props) {
     super(props);
     this.scrollRef = React.createRef();
+    this.state = {
+      loading: false
+    }
   }
 
   handleScrollToElement(event) {
@@ -19,6 +22,9 @@ export class HomePage extends React.Component {
   }
 
   handleDemo() {
+    this.setState({
+      loading: true
+    });
     return this.props.dispatch(login("demo", "tryItNow123"));
   }
 
@@ -69,6 +75,9 @@ export class HomePage extends React.Component {
       if (this.props.currentUser.username === "demo") {
         return <Redirect to="/dashboard" />;
       }
+    }
+    if (this.state.loading) {
+      return <div className="spinnerModal" />;
     }
     return (
       <div className="home-view">
