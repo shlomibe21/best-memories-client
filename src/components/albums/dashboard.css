@@ -1,11 +1,29 @@
 .albums-container {
-  padding-top: 10px;
-  margin-top: 20px;
-  /*border: solid 1px black;*/
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.albums-container li {
+  /*flex-basis: 98%;*/
+  align-items: flex-start;
+  padding: 15px 0px 15px 0px;
 }
 
 .emapty-page-msg {
     font-size: 25px;
     font-weight: 700;
     margin-top: 50px;
+}
+
+@media screen and (min-width: 600px) {
+  .albums-container li {
+    padding: 20px 0px 20px 20px;
+  }
+}
+
+@media screen and (min-width: 890px) {
+  .albums-container li {
+    padding: 20px 0px 20px 20px;
+  }
 }

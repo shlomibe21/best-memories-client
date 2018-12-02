@@ -32,7 +32,7 @@ export default class dropzoneArea extends React.Component {
       );
     }
     return (
-      <section className="deopzone-area">
+      <section className="dropzone-area">
         <legend>Dropzone</legend>
         <div className="centered-text">
           <Dropzone

@@ -46,7 +46,7 @@ export class Dashboard extends React.Component {
     let searchComponent;
     let emptyPageMsg;
     const albums = this.props.albums.map((album, index) => (
-      <li key={index} className="col-3">
+      <li key={index} className="">
         <AlbumTile index={index} {...album} />
       </li>
     ));
@@ -97,7 +97,7 @@ export class Dashboard extends React.Component {
         {addNewAlbumLink}
         {searchComponent}
         {emptyPageMsg}
-        <ul className="row albums-container">{albums}</ul>
+        <ul className="albums-container">{albums}</ul>
       </div>
     );
   }
