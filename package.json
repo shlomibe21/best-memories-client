@@ -10,7 +10,7 @@
     "jwt-decode": "^2.2.0",
     "merge": "^1.2.1",
     "moment": "^2.24.0",
-    "npm": "^6.10.0",
+    "npm": "^6.10.1",
     "react": "^16.8.6",
     "react-datetime": "^2.16.3",
     "react-dom": "^16.8.6",
@@ -26,7 +26,7 @@
     "react-widgets": "^4.4.11",
     "react-widgets-moment": "^4.0.27",
     "react-widgets-moment-localizer": "^1.0.2",
-    "redux": "^4.0.3",
+    "redux": "^4.0.4",
     "redux-form": "^7.4.2",
     "redux-thunk": "^2.3.0"
   },
