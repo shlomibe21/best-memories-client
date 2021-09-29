@@ -6,7 +6,7 @@
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "font-awesome": "^4.7.0",
-    "i": "^0.3.6",
+    "i": "^0.3.7",
     "jwt-decode": "^2.2.0",
     "merge": "^1.2.1",
     "moment": "^2.24.0",
